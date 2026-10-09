@@ -1,0 +1,90 @@
+@import 'tailwindcss';
+@import '@fontsource/ibm-plex-sans-thai/400.css';
+@import '@fontsource/ibm-plex-sans-thai/600.css';
+@import '@fontsource/ibm-plex-sans-thai/700.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+
+@theme {
+	--color-paper: #f6f4ef;
+	--color-ink: #141414;
+	--color-alarm: #d7261e;
+	--color-caution: #e8a317;
+	--color-rule: #d8d3c8;
+	--color-muted: #555555;
+	--font-sans: 'IBM Plex Sans Thai', system-ui, sans-serif;
+	--font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+@layer base {
+	html {
+		background: var(--color-paper);
+		color: var(--color-ink);
+	}
+	body {
+		font-family: var(--font-sans);
+		-webkit-font-smoothing: antialiased;
+	}
+	:focus-visible {
+		outline: 3px solid var(--color-ink);
+		outline-offset: 2px;
+	}
+}
+
+@layer components {
+	.page {
+		margin-inline: auto;
+		max-width: 48rem;
+		padding: calc(var(--header-h, 3.5rem) + 1.5rem) 1rem 7rem;
+	}
+	@media (min-width: 768px) {
+		.page {
+			padding-bottom: 3rem;
+		}
+	}
+
+	.glass {
+		background: color-mix(in srgb, var(--color-paper) 72%, transparent);
+		backdrop-filter: blur(16px) saturate(1.4);
+		-webkit-backdrop-filter: blur(16px) saturate(1.4);
+		border: 1px solid rgb(255 255 255 / 0.7);
+	}
+	@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+		.glass {
+			background: var(--color-paper);
+		}
+	}
+	@media (prefers-reduced-transparency: reduce) {
+		.glass {
+			background: var(--color-paper);
+			backdrop-filter: none;
+			-webkit-backdrop-filter: none;
+		}
+	}
+
+	.map-dot {
+		width: 16px;
+		height: 16px;
+		border-radius: 9999px;
+		border: 2px solid #fff;
+		box-shadow: 0 1px 3px rgb(0 0 0 / 0.4);
+		cursor: pointer;
+	}
+	.map-dot-shelter {
+		background: var(--color-ink);
+	}
+	.map-dot-quake {
+		background: var(--color-caution);
+	}
+	.map-dot-hazard {
+		background: var(--color-alarm);
+	}
+	.map-dot-sample {
+		background: #fff;
+		border: 3px solid var(--color-alarm);
+	}
+	.map-dot-me {
+		background: #1f6feb;
+		width: 14px;
+		height: 14px;
+	}
+}
