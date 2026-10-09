@@ -1,0 +1,164 @@
+[
+	{
+		"Province": "Bangkok",
+		"Region": "Central",
+		"Latitude": "13.75630000",
+		"Longitude": "100.50180000"
+	},
+	{
+		"Province": "Chanthaburi",
+		"Region": "Eastern",
+		"Latitude": "12.61130000",
+		"Longitude": "102.10390000"
+	},
+	{
+		"Province": "Chiang Mai",
+		"Region": "Northern",
+		"Latitude": "18.78830000",
+		"Longitude": "98.98530000"
+	},
+	{
+		"Province": "Chiang Rai",
+		"Region": "Northern",
+		"Latitude": "19.91050000",
+		"Longitude": "99.84060000"
+	},
+	{
+		"Province": "Chonburi",
+		"Region": "Eastern",
+		"Latitude": "13.36110000",
+		"Longitude": "100.98470000"
+	},
+	{
+		"Province": "Kanchanaburi",
+		"Region": "Western",
+		"Latitude": "14.02280000",
+		"Longitude": "99.53280000"
+	},
+	{
+		"Province": "Khon Kaen",
+		"Region": "Northeastern",
+		"Latitude": "16.43220000",
+		"Longitude": "102.82360000"
+	},
+	{
+		"Province": "Krabi",
+		"Region": "Southern",
+		"Latitude": "8.08630000",
+		"Longitude": "98.90630000"
+	},
+	{
+		"Province": "Lampang",
+		"Region": "Northern",
+		"Latitude": "18.28880000",
+		"Longitude": "99.49120000"
+	},
+	{
+		"Province": "Lamphun",
+		"Region": "Northern",
+		"Latitude": "18.57440000",
+		"Longitude": "99.00870000"
+	},
+	{
+		"Province": "Lopburi",
+		"Region": "Central",
+		"Latitude": "14.79950000",
+		"Longitude": "100.65340000"
+	},
+	{
+		"Province": "Mae Hong Son",
+		"Region": "Northern",
+		"Latitude": "19.30300000",
+		"Longitude": "97.96550000"
+	},
+	{
+		"Province": "Nakhon Pathom",
+		"Region": "Central",
+		"Latitude": "13.81990000",
+		"Longitude": "100.03780000"
+	},
+	{
+		"Province": "Nakhon Ratchasima",
+		"Region": "Northeastern",
+		"Latitude": "14.97990000",
+		"Longitude": "102.09770000"
+	},
+	{
+		"Province": "Nakhon Si Thammarat",
+		"Region": "Southern",
+		"Latitude": "8.43040000",
+		"Longitude": "99.96310000"
+	},
+	{
+		"Province": "Nonthaburi",
+		"Region": "Central",
+		"Latitude": "13.86210000",
+		"Longitude": "100.51440000"
+	},
+	{
+		"Province": "Pathum Thani",
+		"Region": "Central",
+		"Latitude": "14.02080000",
+		"Longitude": "100.52500000"
+	},
+	{
+		"Province": "Phra Nakhon Si Ayutthaya",
+		"Region": "Central",
+		"Latitude": "14.35320000",
+		"Longitude": "100.57710000"
+	},
+	{
+		"Province": "Phuket",
+		"Region": "Southern",
+		"Latitude": "7.88040000",
+		"Longitude": "98.39230000"
+	},
+	{
+		"Province": "Ratchaburi",
+		"Region": "Western",
+		"Latitude": "13.52820000",
+		"Longitude": "99.81330000"
+	},
+	{
+		"Province": "Rayong",
+		"Region": "Eastern",
+		"Latitude": "12.68140000",
+		"Longitude": "101.28160000"
+	},
+	{
+		"Province": "Samut Prakan",
+		"Region": "Central",
+		"Latitude": "13.59910000",
+		"Longitude": "100.59980000"
+	},
+	{
+		"Province": "Songkhla",
+		"Region": "Southern",
+		"Latitude": "7.17560000",
+		"Longitude": "100.61400000"
+	},
+	{
+		"Province": "Suphan Buri",
+		"Region": "Central",
+		"Latitude": "14.47450000",
+		"Longitude": "100.11730000"
+	},
+	{
+		"Province": "Surat Thani",
+		"Region": "Southern",
+		"Latitude": "9.13820000",
+		"Longitude": "99.33310000"
+	},
+	{
+		"Province": "Ubon Ratchathani",
+		"Region": "Northeastern",
+		"Latitude": "15.22860000",
+		"Longitude": "104.85600000"
+	},
+	{
+		"Province": "Udon Thani",
+		"Region": "Northeastern",
+		"Latitude": "17.41380000",
+		"Longitude": "102.78770000"
+	}
+]

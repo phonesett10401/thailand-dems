@@ -1,0 +1,42 @@
+[
+	{
+		"RouteID": 1,
+		"RouteName": "Highway 1 - North Route",
+		"StartPoint": "Bangkok City Center",
+		"EndPoint": "Ayutthaya Shelter",
+		"Status": "Clear",
+		"EstimatedTime": 45,
+		"Distance": 85,
+		"CurrentLoad": 35
+	},
+	{
+		"RouteID": 2,
+		"RouteName": "Coastal Road - East",
+		"StartPoint": "Pattaya",
+		"EndPoint": "Rayong Emergency Center",
+		"Status": "Moderate",
+		"EstimatedTime": 60,
+		"Distance": 95,
+		"CurrentLoad": 65
+	},
+	{
+		"RouteID": 3,
+		"RouteName": "Mountain Pass - West",
+		"StartPoint": "Kanchanaburi",
+		"EndPoint": "Ratchaburi Shelter",
+		"Status": "Clear",
+		"EstimatedTime": 90,
+		"Distance": 120,
+		"CurrentLoad": 25
+	},
+	{
+		"RouteID": 4,
+		"RouteName": "Southern Highway",
+		"StartPoint": "Phuket",
+		"EndPoint": "Krabi Safe Zone",
+		"Status": "Congested",
+		"EstimatedTime": 120,
+		"Distance": 165,
+		"CurrentLoad": 85
+	}
+]
