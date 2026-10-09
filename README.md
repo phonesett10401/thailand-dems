@@ -5,7 +5,7 @@
 
 A comprehensive full-stack disaster management system for Thailand, built with Next.js and Node.js.
 
-![DEMS](https://img.shields.io/badge/Status-Production%20Ready-green)
+![DEMS](https://img.shields.io/badge/Status-Student%20demo-blue)
 ![Next.js](https://img.shields.io/badge/Next.js-14.0-black)
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue)
@@ -29,13 +29,14 @@ See [QUICK_GITHUB_DEPLOY.md](QUICK_GITHUB_DEPLOY.md) for step-by-step guide.
 ## 🌟 Features
 
 ### For Citizens
-- 🔥 **Real-time Disaster Tracking** - View active disasters on interactive maps
-- 🏠 **Emergency Shelter Finder** - Locate nearest safe shelters with capacity info
-- 🚗 **Evacuation Planning** - AI-powered route planning to avoid danger zones
-- 🌤️ **Weather Monitoring** - 5-day forecasts and severe weather alerts
-- 📍 **Disaster Reporting** - Submit reports with photos and location
-- 👥 **Volunteer Portal** - Register to help during emergencies
-- 🤖 **AI Assistant** - 24/7 chatbot for emergency guidance
+- **Hazard map** - live GDACS disaster alerts and USGS earthquakes, plus sample disasters from the demo database
+- **Shelter finder** - sample shelters sorted by distance, with directions handed off to your phone's maps app
+- **Evacuation** - nearest open shelters and sample evacuation routes (no automatic route planning)
+- **Weather** - live forecast, PM2.5 air quality and river-flow model data from Open-Meteo
+- **Incident reporting** - three-step report with optional GPS location
+- **Volunteer portal** - register to help during emergencies
+- **English / Thai** - full language switch (Thai copy awaiting native review)
+- **Assistant** - placeholder; an offline, on-device assistant is planned
 
 ### For Administrators
 - 📊 **Comprehensive Dashboard** - Real-time statistics and analytics
@@ -45,7 +46,19 @@ See [QUICK_GITHUB_DEPLOY.md](QUICK_GITHUB_DEPLOY.md) for step-by-step guide.
 - 👥 **Volunteer Management** - Organize and assign volunteers
 - 🏛️ **Agency Coordination** - Collaborate with partner organizations
 - ⚠️ **Alert System** - Send emergency notifications
-- 📈 **Resource Intelligence** - Advanced analytics and predictions
+- 📈 **Capacity Planning** - Rule-based shelter and volunteer gap suggestions
+
+### What's real vs sample
+
+| Data | Where it comes from |
+|---|---|
+| Weather, air quality, river flow | Open-Meteo (live) |
+| Disaster alerts | GDACS (live) |
+| Earthquakes | USGS (live) |
+| Shelters, disasters, alerts, evacuation routes, volunteers, supplies | Demo MySQL database (sample data, marked **SAMPLE** in the UI) |
+| Admin login | Hard-coded demo credentials (`admin` / `admin123`); not real security |
+
+The new citizen UI lives in `web/` (SvelteKit). The old Next.js UI in `frontend/` is kept until the redesign is complete.
 
 ## 🚀 Quick Start
 
@@ -124,11 +137,11 @@ npm run dev
 - **Framework**: Express.js
 - **Database**: MySQL 8.0
 - **Authentication**: JWT (planned)
-- **Weather API**: OpenWeatherMap
+- **Weather**: `/api/weather` returns mock data; the new UI uses Open-Meteo directly
 
 ### Features
-- **AI Chatbot**: Context-aware assistance
-- **Real-time Updates**: Auto-refresh every 30s
+- **Assistant**: placeholder only (the old keyword-matching chatbot is not AI)
+- **Live data**: public hazard sources fetched on page load
 - **Responsive Design**: Mobile, Tablet, Desktop
 - **Role-based Access**: Admin vs User permissions
 - **Interactive Maps**: Disaster and shelter locations
@@ -236,8 +249,8 @@ For support and questions:
 - [ ] Mobile App (React Native)
 - [ ] Push Notifications
 - [ ] SMS Alerts Integration
-- [ ] Multi-language Support (Thai/English)
-- [ ] AI Disaster Prediction
+- [x] Multi-language Support (Thai/English)
+- [ ] Offline on-device emergency assistant (WebLLM + retrieval)
 - [ ] Drone Integration
 - [ ] Blockchain for Aid Tracking
 - [ ] API for Third-party Integration

@@ -51,7 +51,8 @@
 		</section>
 
 		<h2 class="mt-8 text-sm font-bold tracking-wide uppercase">{m.weather_next24()}</h2>
-		<ol class="mt-2 flex gap-2 overflow-x-auto pb-2">
+		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+		<ol class="mt-2 flex gap-2 overflow-x-auto pb-2" tabindex="0" aria-label={m.weather_next24()}>
 			{#each fc.data.hours.filter((_, i) => i % 3 === 0) as h (h.time.getTime())}
 				<li class="flex min-w-16 flex-col items-center rounded-xl border border-rule px-2 py-2 text-sm">
 					<span class="font-mono text-xs text-muted">{fmtHour(h.time)}</span>

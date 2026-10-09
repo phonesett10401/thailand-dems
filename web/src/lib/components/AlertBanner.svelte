@@ -29,7 +29,7 @@
 {:else}
 	<div role="alert" class="rounded-xl px-4 py-3 shadow-sm {solid}" in:fly={{ y: -12, duration: ms(220) }}>
 		{#if banner.kind === 'live'}
-			<p class="font-mono text-[11px] font-medium tracking-wider uppercase opacity-90">
+			<p class="font-mono text-[11px] font-medium tracking-wider uppercase">
 				{m.banner_live_source()} · {fmtDateTime(banner.event.time)}
 			</p>
 			<p class="text-base leading-snug font-bold">{banner.event.title}</p>
@@ -42,11 +42,11 @@
 				{m.open_source_link()}<ExternalLink size={14} aria-hidden="true" />
 			</a>
 		{:else}
-			<p class="font-mono text-[11px] font-medium tracking-wider uppercase opacity-90">
+			<p class="font-mono text-[11px] font-medium tracking-wider uppercase">
 				{banner.alert.AffectedRegion} <SampleBadge />
 			</p>
 			<p class="text-base leading-snug font-bold">{banner.alert.Title}</p>
-			<p class="text-sm opacity-90">{banner.alert.Message}</p>
+			<p class="text-sm">{banner.alert.Message}</p>
 		{/if}
 	</div>
 {/if}
