@@ -1,0 +1,17 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"id": "us7000abcd",
+			"properties": { "mag": 5.3, "place": "81 km SSW of Banda Aceh, Indonesia", "time": 1791070654235, "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000abcd" },
+			"geometry": { "type": "Point", "coordinates": [95.1, 4.9, 10] }
+		},
+		{
+			"type": "Feature",
+			"id": "us7000efgh",
+			"properties": { "mag": null, "place": "Myanmar", "time": 1791500000000, "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000efgh" },
+			"geometry": { "type": "Point", "coordinates": [97.0, 20.1, 15] }
+		}
+	]
+}

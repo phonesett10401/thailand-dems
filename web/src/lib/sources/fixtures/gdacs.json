@@ -1,0 +1,15 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"geometry": { "type": "Point", "coordinates": [101.141, 6.3345] },
+			"properties": { "eventtype": "FL", "eventid": 1103621, "name": "Flood in Thailand", "alertlevel": "Orange", "iscurrent": "false", "fromdate": "2025-11-17T01:00:00", "url": { "report": "https://www.gdacs.org/report.aspx?eventid=1103621&episodeid=2&eventtype=FL" } }
+		},
+		{
+			"type": "Feature",
+			"geometry": { "type": "Point", "coordinates": [108.6, 16] },
+			"properties": { "eventtype": "TC", "eventid": 1001229, "name": "Tropical Cyclone FENGSHEN-25", "alertlevel": "Orange", "iscurrent": "false", "fromdate": "2025-10-18T00:00:00", "url": { "report": "https://www.gdacs.org/report.aspx?eventid=1001229&episodeid=21&eventtype=TC" } }
+		}
+	]
+}
