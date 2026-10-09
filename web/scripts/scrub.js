@@ -15,13 +15,12 @@ export function scrubRecords(rows) {
 	});
 }
 
-const TEST = /\btest\b/i;
+// Any word starting with "test" (test, Tester, testing123) in any text field marks a dev leftover.
+const TEST = /\btest/i;
 
 /** @param {Record<string, unknown>[]} rows */
 export function dropTestRecords(rows) {
-	return rows.filter(
-		(r) => ![r.DisasterName, r.ShelterName, r.Title, r.Description].some((v) => typeof v === 'string' && TEST.test(v))
-	);
+	return rows.filter((r) => !Object.values(r).some((v) => typeof v === 'string' && TEST.test(v)));
 }
 
 const EMAIL_RE = /[\w.+-]+@[\w-]+\.[\w.-]+/g;

@@ -1,21 +1,5 @@
 [
 	{
-		"AlertID": 16,
-		"AlertType": "Other",
-		"Severity": "Info",
-		"Title": "testing123",
-		"Message": "testing123",
-		"AffectedRegion": "Rangsit",
-		"IssuedBy": "tester",
-		"IssuedAt": "2025-11-23T12:30:38.000Z",
-		"ExpiresAt": "2025-11-25T17:00:00.000Z",
-		"Status": "Active",
-		"DisasterID": 13,
-		"DisasterName": "Rangsit Earthquake",
-		"DisasterType": "Earthquake",
-		"DisasterSeverity": "Minor"
-	},
-	{
 		"AlertID": 15,
 		"AlertType": "Early Warning",
 		"Severity": "Info",

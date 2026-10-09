@@ -20,6 +20,16 @@ describe('dropTestRecords', () => {
 		const rows = [{ DisasterName: '2nd Test' }, { DisasterName: 'Chiang Mai Flood' }, { Title: 'x', DisasterName: 'Test' }, { Description: 'contest results' }];
 		expect(dropTestRecords(rows)).toEqual([{ DisasterName: 'Chiang Mai Flood' }, { Description: 'contest results' }]);
 	});
+	it('also catches "Tester"/"testing" leftovers in alert messages', () => {
+		const rows = [
+			{ Title: 'Storm Alert', Message: 'A storm has been reported. Tester' },
+			{ Message: 'testing 123' },
+			{ Title: 'testing123' },
+			{ ShelterName: 'Camp', Facilities: 'Testing' },
+			{ Message: 'Real alert' }
+		];
+		expect(dropTestRecords(rows)).toEqual([{ Message: 'Real alert' }]);
+	});
 });
 
 describe('findPii', () => {

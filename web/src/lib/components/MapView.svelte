@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { MapPinOff } from '@lucide/svelte';
-	import { Map as MlMap, Marker, NavigationControl } from 'maplibre-gl';
+	import { Map as MlMap, Marker, NavigationControl, setWorkerUrl } from 'maplibre-gl';
 	import 'maplibre-gl/dist/maplibre-gl.css';
+	// MapLibre looks for its worker next to its own file, which Vite's bundling moves.
+	// Point it at the emitted worker file instead.
+	import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 	import { untrack } from 'svelte';
 	import { ms } from '$lib/motion';
 	import { m } from '$lib/paraglide/messages.js';
@@ -14,7 +17,7 @@
 		zoom = 5,
 		focus = null,
 		onselect,
-		class: klass = ''
+		class: klass = 'relative'
 	}: {
 		markers: MapMarker[];
 		center: Pt;
@@ -23,6 +26,8 @@
 		onselect?: (id: string) => void;
 		class?: string;
 	} = $props();
+
+	setWorkerUrl(workerUrl);
 
 	let el: HTMLDivElement;
 	let map = $state<MlMap | null>(null);
@@ -71,8 +76,10 @@
 	});
 </script>
 
-<div class="relative {klass}">
-	<div bind:this={el} class="absolute inset-0" class:hidden={failed}></div>
+<!-- The caller sets positioning (`relative ...` or `fixed inset-0`) and size via `class`. -->
+<div class={klass}>
+	<!-- maplibre-gl.css forces position:relative on this element, so size it with h-full, not inset-0. -->
+	<div bind:this={el} class="h-full w-full" class:hidden={failed}></div>
 	{#if failed}
 		<div class="absolute inset-0 flex items-center justify-center p-6">
 			<EmptyState icon={MapPinOff} text={m.map_unavailable()} />
