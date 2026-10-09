@@ -22,7 +22,7 @@ A comprehensive full-stack disaster management system for Thailand, built with N
 4. Done! 🎉
 
 **Option 2: Manual Deploy**
-See [QUICK_GITHUB_DEPLOY.md](QUICK_GITHUB_DEPLOY.md) for step-by-step guide.
+See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for step-by-step guide.
 
 ---
 
@@ -199,7 +199,7 @@ DEMS/
 
 See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for complete deployment instructions.
 
-**Quick Deploy (5 minutes)**: See [QUICK_GITHUB_DEPLOY.md](QUICK_GITHUB_DEPLOY.md)
+**New citizen UI (`web/`)**: import the repo in Vercel with Root Directory `web` and set `PUBLIC_API_URL` to your backend URL + `/api`.
 
 **Recommended Free Stack:**
 - **Frontend**: Vercel (Perfect for Next.js)
@@ -209,8 +209,8 @@ See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for complete deployment instructi
 
 ## 📖 Documentation
 
-- [Deployment Guide](docs/DEPLOYMENT_GUIDE.md) - How to deploy online
-- [Project Organization](docs/PROJECT_ORGANIZATION.md) - Code structure
+- [Deployment Guide](DEPLOYMENT_GUIDE.md) - How to deploy online
+- [UI redesign spec](docs/superpowers/specs/2026-10-09-ui-redesign-design.md) - Design of the new `web/` UI
 - [Agency System](docs/AGENCY_SYSTEM_DOCUMENTATION.md) - Partner coordination
 - [Shelter System](docs/SHELTER_SYSTEM_DOCUMENTATION.md) - Shelter management
 - [Volunteer System](docs/VOLUNTEER_SYSTEM_DOCUMENTATION.md) - Volunteer coordination

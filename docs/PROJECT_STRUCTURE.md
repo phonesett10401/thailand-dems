@@ -5,7 +5,6 @@ DEMS/
 │
 ├── 📄 README.md                    # Complete documentation
 ├── 📄 QUICKSTART.md                # 5-minute setup guide
-├── 📄 UPDATES_SUMMARY.md           # Recent changes & features
 ├── 📄 .gitignore                   # Git ignore rules
 │
 ├── 📂 backend/                     # Node.js + Express Backend
@@ -329,7 +328,7 @@ POST   /api/volunteers/assign
 
 1. **README.md** - Complete system documentation
 2. **QUICKSTART.md** - 5-minute setup guide
-3. **UPDATES_SUMMARY.md** - Feature changes & updates
+3. **git log** - Feature changes & updates
 4. **This file** - Project structure overview
 
 ---

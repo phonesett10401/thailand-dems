@@ -257,7 +257,7 @@ Or modify inline styles in page components
 ## 🆘 Need Help?
 
 1. Check `README.md` for detailed documentation
-2. Review `UPDATES_SUMMARY.md` for recent changes
+2. Review `git log` for recent changes
 3. Inspect browser console for errors
 4. Check backend terminal for API errors
 5. Verify database data: `SELECT * FROM Disasters LIMIT 5;`

@@ -13,7 +13,7 @@ This guide will help you get Thailand DEMS deployed and running in **5 minutes**
 **Time**: 5-10 minutes  
 **Cost**: 100% Free
 
-➡️ **Follow**: [QUICK_GITHUB_DEPLOY.md](QUICK_GITHUB_DEPLOY.md)
+➡️ **Follow**: [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)
 
 ### 💻 Path 2: Run Locally (Development)
 **Perfect for**: Testing and development  
@@ -255,14 +255,9 @@ SOURCE path/to/enhanced_system_schema.sql;
 When ready to go live:
 
 1. **Read the guides**:
-   - [QUICK_GITHUB_DEPLOY.md](QUICK_GITHUB_DEPLOY.md) - Fast deployment
    - [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) - Detailed guide
-   - [PRE_DEPLOYMENT_CHECKLIST_COMPLETE.md](PRE_DEPLOYMENT_CHECKLIST_COMPLETE.md) - Checklist
 
-2. **Run deployment script**:
-   ```powershell
-   .\deploy-to-github.ps1
-   ```
+2. **Push to GitHub** (`git push`); Vercel and Railway deploy from the repo.
 
 3. **Follow platform setup**:
    - Vercel (Frontend): 2 minutes
@@ -276,7 +271,6 @@ When ready to go live:
 ## 📚 Additional Resources
 
 ### Documentation
-- [Project Organization](docs/PROJECT_ORGANIZATION.md)
 - [ERD Diagram](backend/db/ENHANCED_SYSTEM_ERD.md)
 - [API Documentation](docs/API_DOCUMENTATION.md)
 - [Agency System](docs/AGENCY_SYSTEM_DOCUMENTATION.md)

@@ -80,7 +80,7 @@ DEMS/
 │   └── tests/         # Health checks
 ├── start-dems.bat     # Quick launcher
 ├── README.md          # This file
-└── SYSTEM_FIXES.md    # Detailed changelog
+
 ```
 
 ---
@@ -146,4 +146,4 @@ Restart-Service -Name MySQL80
 **Status**: All systems operational ✅  
 **Next Steps**: System ready for deployment
 
-For detailed fixes see `SYSTEM_FIXES.md`
+For history see `git log`.
