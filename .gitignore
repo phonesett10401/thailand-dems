@@ -1,6 +1,8 @@
 # Dependencies
 node_modules/
 package-lock.json
+# web/ commits its lockfile so CI, Vercel and local installs match exactly
+!web/package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
