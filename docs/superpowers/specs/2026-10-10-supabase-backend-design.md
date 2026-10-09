@@ -47,7 +47,7 @@ Browser ──► Vercel: web/ (SvelteKit pages + /api/* + /auth/*) ──► Su
 |---|---|---|
 | `PUBLIC_SUPABASE_URL` | browser + server | no |
 | `PUBLIC_SUPABASE_PUBLISHABLE_KEY` | browser + server (auth) | no |
-| `SUPABASE_SECRET_KEY` | server-only scripts (create users) | **yes** |
+| `SUPABASE_SECRET_KEY` | server-only: scripts (create users) and the runtime salt for report IP hashes (required on Vercel) | **yes** |
 | `DATABASE_URL` | server-only (`$env/dynamic/private`) | **yes** |
 
 `web/.env.example` lists the four names with empty values.

@@ -53,6 +53,12 @@ describe('createApi submitReport', () => {
 		expect(init.method).toBe('POST');
 		expect(JSON.parse(init.body as string)).toEqual(report);
 	});
+	it('treats a server failure (5xx, e.g. paused database) as unreachable, not as a bad report', async () => {
+		for (const status of [500, 502, 503]) {
+			const down = createApi('http://x/api', () => {}, async () => json({ error: 'db' }, status));
+			expect(await down.submitReport(report)).toEqual({ ok: false, reason: 'offline' });
+		}
+	});
 	it('reports a rate limit separately', async () => {
 		const limited = createApi('http://x/api', () => {}, async () => json({ error: 'Too many reports' }, 429));
 		expect(await limited.submitReport(report)).toEqual({ ok: false, reason: 'limited' });
@@ -61,7 +67,7 @@ describe('createApi submitReport', () => {
 		const down = createApi('http://x/api', () => {}, async () => {
 			throw new TypeError('Failed to fetch');
 		});
-		const rejected = createApi('http://x/api', () => {}, async () => json({ error: 'bad' }, 500));
+		const rejected = createApi('http://x/api', () => {}, async () => json({ error: 'bad' }, 400));
 		expect(await down.submitReport(report)).toEqual({ ok: false, reason: 'offline' });
 		expect(await rejected.submitReport(report)).toEqual({ ok: false, reason: 'rejected' });
 	});

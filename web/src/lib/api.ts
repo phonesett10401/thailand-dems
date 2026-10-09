@@ -29,7 +29,9 @@ export function createApi(base: string, onOffline: () => void, fetchFn: FetchFn 
 				signal: AbortSignal.timeout(10_000)
 			});
 			if (res.ok) return { ok: true };
-			return { ok: false, reason: res.status === 429 ? 'limited' : 'rejected' };
+			if (res.status === 429) return { ok: false, reason: 'limited' };
+			// 5xx means the server or database is down (e.g. paused Supabase): same message as no signal.
+			return { ok: false, reason: res.status >= 500 ? 'offline' : 'rejected' };
 		} catch {
 			return { ok: false, reason: 'offline' };
 		}

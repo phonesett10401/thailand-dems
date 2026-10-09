@@ -53,6 +53,52 @@ try {
 	if (!(e instanceof Rollback)) check(false, `trigger checks crashed: ${e.message}`);
 }
 
+// 2b. An absurdly overfull shelter is clamped, not an error (numeric overflow fix).
+try {
+	await sql.begin(async (tx) => {
+		const [s] = await tx`insert into public.shelters (shelter_name, shelter_type, address, city, capacity, current_occupancy)
+		  values ('smoke', 'Evacuation Center', 'x', 'x', 100, 0) returning shelter_id`;
+		const [u] = await tx`update public.shelters set current_occupancy = 1500 where shelter_id = ${s.shelter_id}
+		  returning current_occupancy, status`;
+		check(u.current_occupancy === 100 && u.status === 'Full', 'overfull shelter update is clamped to capacity');
+		throw new Rollback();
+	});
+} catch (e) {
+	if (!(e instanceof Rollback)) check(false, `overfull shelter update failed: ${e.message}`);
+}
+
+// 2c. Rate limit holds under concurrency: 4 used, two simultaneous requests → exactly one gets the 5th slot.
+{
+	const hash = `smoke-${Date.now()}-${Math.random()}`;
+	const pool = postgres(web.DATABASE_URL, { prepare: false, max: 4, onnotice: () => {} });
+	try {
+		await pool`insert into public.report_rate_limits (ip_hash) select ${hash} from generate_series(1, 4)`;
+		const attempt = () =>
+			pool.begin(async (tx) => {
+				const [{ ok }] = await tx`select public.reserve_report_slot(${hash}, 5, 10) as ok`;
+				await tx`select pg_sleep(0.3)`; // widen the race window
+				return ok;
+			});
+		const results = await Promise.all([attempt(), attempt(), attempt()]);
+		check(results.filter(Boolean).length === 1, `concurrent rate limit grants exactly one slot (got ${results.filter(Boolean).length})`);
+	} catch (e) {
+		check(false, `concurrent rate limit check failed: ${e.message}`);
+	} finally {
+		await pool`delete from public.report_rate_limits where ip_hash = ${hash}`;
+		await pool.end();
+	}
+}
+
+// 2d. The anonymous Data API cannot call the rate-limit function.
+{
+	const res = await fetch(`${base}/rest/v1/rpc/reserve_report_slot`, {
+		method: 'POST',
+		headers: { apikey: web.PUBLIC_SUPABASE_PUBLISHABLE_KEY, 'content-type': 'application/json' },
+		body: JSON.stringify({ p_hash: 'x', p_max: 5, p_window_minutes: 10 })
+	});
+	check(!res.ok, `Data API cannot call reserve_report_slot (HTTP ${res.status})`);
+}
+
 // 3. The publishable key cannot read tables through the Data API.
 for (const t of ['shelters', 'user_reports', 'volunteer_accounts']) {
 	const res = await fetch(`${base}/rest/v1/${t}?select=*&limit=1`, {

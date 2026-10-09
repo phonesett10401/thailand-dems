@@ -38,6 +38,17 @@ test('too many reports shows a wait message and keeps the form', async ({ page }
 	await expect(page.getByRole('button', { name: 'Send report' })).toBeEnabled();
 });
 
+test('a database outage (503) says the server is unreachable and keeps the form', async ({ page }) => {
+	await page.route(
+		(url) => url.pathname === '/api/reports',
+		(r) => r.fulfill({ status: 503, contentType: 'application/json', body: '{"message":"db down"}' })
+	);
+	await fill(page);
+	await page.getByRole('button', { name: 'Send report' }).click();
+	await expect(page.getByText(/Couldn't reach the server/)).toBeVisible();
+	await expect(page.getByText(/rejected/)).toHaveCount(0);
+});
+
 test.describe('backend down', () => {
 	test.use({ backend: 'down' });
 	test('keeps the form and explains the problem', async ({ page }) => {
