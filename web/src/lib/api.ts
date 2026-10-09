@@ -6,7 +6,7 @@ import type { FetchFn } from './sources/http';
 import type { DbAlert, Disaster, EvacRoute, ReportInput, Shelter } from './types';
 
 export type Loaded<T> = { data: T; live: boolean };
-export type PostResult = { ok: true } | { ok: false; reason: 'offline' | 'rejected' };
+export type PostResult = { ok: true } | { ok: false; reason: 'offline' | 'rejected' | 'limited' };
 
 export function createApi(base: string, onOffline: () => void, fetchFn: FetchFn = (u, i) => fetch(u, i)) {
 	async function get<T>(path: string, fallback: T): Promise<Loaded<T>> {
@@ -28,7 +28,8 @@ export function createApi(base: string, onOffline: () => void, fetchFn: FetchFn 
 				body: JSON.stringify(body),
 				signal: AbortSignal.timeout(10_000)
 			});
-			return res.ok ? { ok: true } : { ok: false, reason: 'rejected' };
+			if (res.ok) return { ok: true };
+			return { ok: false, reason: res.status === 429 ? 'limited' : 'rejected' };
 		} catch {
 			return { ok: false, reason: 'offline' };
 		}
@@ -39,7 +40,6 @@ export function createApi(base: string, onOffline: () => void, fetchFn: FetchFn 
 		disasters: () => get<Disaster[]>('/disasters', sampleDisasters as Disaster[]),
 		alerts: () => get<DbAlert[]>('/alerts', sampleAlerts as DbAlert[]),
 		evacuationRoutes: () => get<EvacRoute[]>('/evacuation/routes', sampleRoutes as EvacRoute[]),
-		// backend/routes/userReports.js: router.post('/create', …)
-		submitReport: (r: ReportInput) => post('/reports/create', r)
+		submitReport: (r: ReportInput) => post('/reports', r)
 	};
 }

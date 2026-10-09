@@ -12,7 +12,7 @@
 	let step = $state<1 | 2 | 3 | 'done'>(1);
 	let errors = $state<StepErrors>({});
 	let sending = $state(false);
-	let failure = $state<'offline' | 'rejected' | null>(null);
+	let failure = $state<'offline' | 'rejected' | 'limited' | null>(null);
 	let gpsError = $state(false);
 
 	const msg = (e: 'required' | 'short' | undefined) =>
@@ -170,7 +170,11 @@
 				>
 				{#if failure}
 					<p class="rounded-md border border-alarm p-3 text-sm text-alarm" role="alert">
-						{failure === 'offline' ? m.report_error_offline() : m.report_error_rejected()}
+						{failure === 'offline'
+							? m.report_error_offline()
+							: failure === 'limited'
+								? m.report_error_limited()
+								: m.report_error_rejected()}
 					</p>
 				{/if}
 			{/if}

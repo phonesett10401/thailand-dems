@@ -24,14 +24,17 @@ export const test = base.extend<{ backend: 'up' | 'down'; mocks: void }>({
 			await page.route('https://flood-api.open-meteo.com/**', (r) => r.fulfill({ ...json, body: fx('river') }));
 			await page.route('https://earthquake.usgs.gov/**', (r) => r.fulfill({ ...json, body: fx('usgs') }));
 			await page.route('https://www.gdacs.org/**', (r) => r.fulfill({ ...json, body: fx('gdacs') }));
-			await page.route('http://localhost:5000/api/**', async (r) => {
-				if (backend === 'down') return r.abort('connectionrefused');
-				if (r.request().method() === 'POST') {
-					return r.fulfill({ ...json, status: 201, body: '{"message":"ok","reportId":99}' });
+			await page.route(
+				(url) => url.pathname.startsWith('/api/'),
+				async (r) => {
+					if (backend === 'down') return r.abort('connectionrefused');
+					if (r.request().method() === 'POST') {
+						return r.fulfill({ ...json, status: 201, body: '{"reportId":99}' });
+					}
+					const file = API[new URL(r.request().url()).pathname.replace(/^\/api/, '')];
+					return file ? r.fulfill({ ...json, body: sample(file) }) : r.fulfill({ status: 404, body: '' });
 				}
-				const file = API[new URL(r.request().url()).pathname.replace(/^\/api/, '')];
-				return file ? r.fulfill({ ...json, body: sample(file) }) : r.fulfill({ status: 404, body: '' });
-			});
+			);
 			await use();
 		},
 		{ auto: true }

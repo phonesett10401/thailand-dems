@@ -19,12 +19,23 @@ test('validates step 1 before moving on', async ({ page }) => {
 
 test('sends one report and shows the done screen', async ({ page }) => {
 	let posts = 0;
-	page.on('request', (r) => r.method() === 'POST' && r.url().endsWith('/api/reports/create') && posts++);
+	page.on('request', (r) => r.method() === 'POST' && r.url().endsWith('/api/reports') && posts++);
 	await fill(page);
 	const send = page.getByRole('button', { name: 'Send report' });
 	await send.dblclick();
 	await expect(page.getByRole('heading', { name: 'Report sent' })).toBeVisible();
 	expect(posts).toBe(1);
+});
+
+test('too many reports shows a wait message and keeps the form', async ({ page }) => {
+	await page.route(
+		(url) => url.pathname === '/api/reports',
+		(r) => r.fulfill({ status: 429, contentType: 'application/json', body: '{"message":"Too many reports"}' })
+	);
+	await fill(page);
+	await page.getByRole('button', { name: 'Send report' }).click();
+	await expect(page.getByText(/Too many reports from this connection/)).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Send report' })).toBeEnabled();
 });
 
 test.describe('backend down', () => {

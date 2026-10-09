@@ -49,9 +49,13 @@ describe('createApi submitReport', () => {
 		const api = createApi('http://x/api', () => {}, fetchFn);
 		expect(await api.submitReport(report)).toEqual({ ok: true });
 		const [url, init] = fetchFn.mock.calls[0] as unknown as [string, RequestInit];
-		expect(url).toBe('http://x/api/reports/create');
+		expect(url).toBe('http://x/api/reports');
 		expect(init.method).toBe('POST');
 		expect(JSON.parse(init.body as string)).toEqual(report);
+	});
+	it('reports a rate limit separately', async () => {
+		const limited = createApi('http://x/api', () => {}, async () => json({ error: 'Too many reports' }, 429));
+		expect(await limited.submitReport(report)).toEqual({ ok: false, reason: 'limited' });
 	});
 	it('distinguishes no connection from a rejected report', async () => {
 		const down = createApi('http://x/api', () => {}, async () => {

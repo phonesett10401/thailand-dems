@@ -135,6 +135,7 @@
 	"report_done_body": "Thank you. If anyone is in danger right now, call 1669 or 191.",
 	"report_again": "Send another report",
 	"report_error_offline": "Couldn't reach the server. Your report is still here; try again when you have signal.",
+	"report_error_limited": "Too many reports from this connection. Please wait a few minutes and try again.",
 	"report_error_rejected": "The server rejected the report. Please check the details and try again.",
 	"report_required": "Please fill this in.",
 	"report_description_short": "Please write at least 10 characters.",
