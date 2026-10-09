@@ -159,5 +159,18 @@
 	"about_sample_disasters": "Disasters and alerts in the database",
 	"about_sample_routes": "Evacuation routes",
 	"about_reports": "Reports you send are stored in the demo database only and are not seen by any authority.",
-	"about_th_note": "Thai translations are drafts awaiting native review."
+	"about_th_note": "Thai translations are drafts awaiting native review.",
+	"login_admin_title": "Admin sign in",
+	"login_volunteer_title": "Volunteer sign in",
+	"login_email": "Email",
+	"login_username": "Username",
+	"login_password": "Password",
+	"login_submit": "Sign in",
+	"login_failed": "Email/username or password is incorrect.",
+	"login_wrong_role": "This account can't sign in here.",
+	"login_required": "Please fill in both fields.",
+	"signed_in_as": "Signed in as {who}",
+	"sign_out": "Sign out",
+	"admin_coming": "The admin console arrives in Phase 2.",
+	"volunteer_coming": "Volunteer tools arrive in Phase 3."
 }

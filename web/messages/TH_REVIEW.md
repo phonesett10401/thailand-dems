@@ -8,4 +8,6 @@ Before relying on the Thai UI, ask a Thai speaker to read `th.json` next to `en.
 - Terms: `sample` ("ตัวอย่าง") is shown as a badge on sample data; check it reads as "not real data".
 - Province names and database text (shelter names, alert titles) stay in English: they come from the demo database.
 
+Login (Supabase backend) keys added later, also drafts: `login_admin_title`, `login_volunteer_title`, `login_email`, `login_username`, `login_password`, `login_submit`, `login_failed`, `login_wrong_role`, `login_required`, `signed_in_as`, `sign_out`, `admin_coming`, `volunteer_coming`.
+
 When reviewed, delete this file in the same commit as the fixes.
