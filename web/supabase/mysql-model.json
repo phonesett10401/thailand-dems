@@ -1,0 +1,4716 @@
+{
+	"tables": [
+		{
+			"name": "affectedpopulations",
+			"columns": [
+				{
+					"name": "RecordID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Region",
+					"dataType": "varchar",
+					"columnType": "varchar(200)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "TotalAffected",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Displaced",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Injured",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Deceased",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Missing",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "InShelters",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "NeedMedical",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "NeedFood",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "RecordedDate",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "UpdatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"RecordID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterID"
+				],
+				[
+					"Region"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "affectedpopulations_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "agencies",
+			"columns": [
+				{
+					"name": "AgencyID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "AgencyName",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AgencyType",
+					"dataType": "enum",
+					"columnType": "enum('Government','NGO','International','Private Sector','Military','Medical')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ContactPerson",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "PhoneNumber",
+					"dataType": "varchar",
+					"columnType": "varchar(20)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Email",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Address",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Province",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Region",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ResponseCapability",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ActivationTime",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Active','Inactive','Suspended')",
+					"nullable": true,
+					"default": "Active",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "UpdatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"AgencyID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"AgencyType"
+				],
+				[
+					"Province"
+				],
+				[
+					"Status"
+				]
+			],
+			"foreignKeys": []
+		},
+		{
+			"name": "agencyactivations",
+			"columns": [
+				{
+					"name": "ActivationID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AgencyID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "RequestedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "ActivatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Requested','Confirmed','Deployed','Completed','Cancelled')",
+					"nullable": true,
+					"default": "Requested",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ResourcesDeployed",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "PersonnelDeployed",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Notes",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"ActivationID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"AgencyID"
+				],
+				[
+					"DisasterID"
+				],
+				[
+					"Status"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "agencyactivations_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "CASCADE"
+				},
+				{
+					"name": "agencyactivations_ibfk_2",
+					"columns": [
+						"AgencyID"
+					],
+					"refTable": "agencies",
+					"refColumns": [
+						"AgencyID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "agencymou",
+			"columns": [
+				{
+					"name": "MOUID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "AgencyID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "MOUTitle",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "SignedDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ExpiryDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DocumentPath",
+					"dataType": "varchar",
+					"columnType": "varchar(500)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ResourcesPledged",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "TermsAndConditions",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Active','Expired','Pending Renewal','Cancelled')",
+					"nullable": true,
+					"default": "Active",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"MOUID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"AgencyID"
+				],
+				[
+					"ExpiryDate"
+				],
+				[
+					"Status"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "agencymou_ibfk_1",
+					"columns": [
+						"AgencyID"
+					],
+					"refTable": "agencies",
+					"refColumns": [
+						"AgencyID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "agencyresources",
+			"columns": [
+				{
+					"name": "ResourceID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "AgencyID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ResourceType",
+					"dataType": "enum",
+					"columnType": "enum('Volunteers','Shelter Space','Medical Supplies','Food','Water','Transport','Equipment','Financial','Other')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ResourceName",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Quantity",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Unit",
+					"dataType": "varchar",
+					"columnType": "varchar(50)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AvailabilityStatus",
+					"dataType": "enum",
+					"columnType": "enum('Available','Deployed','Reserved','Unavailable')",
+					"nullable": true,
+					"default": "Available",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DeploymentTime",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Notes",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "UpdatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"ResourceID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"AgencyID"
+				],
+				[
+					"AvailabilityStatus"
+				],
+				[
+					"ResourceType"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "agencyresources_ibfk_1",
+					"columns": [
+						"AgencyID"
+					],
+					"refTable": "agencies",
+					"refColumns": [
+						"AgencyID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "alerts",
+			"columns": [
+				{
+					"name": "AlertID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "AlertType",
+					"dataType": "enum",
+					"columnType": "enum('Early Warning','Evacuation','All Clear','Supply Request','Volunteer Needed','Other')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Severity",
+					"dataType": "enum",
+					"columnType": "enum('Info','Warning','Critical','Emergency')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Title",
+					"dataType": "varchar",
+					"columnType": "varchar(200)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Message",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AffectedRegion",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "IssuedBy",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "IssuedAt",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "ExpiresAt",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Active','Expired','Cancelled')",
+					"nullable": true,
+					"default": "Active",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"AlertID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterID"
+				],
+				[
+					"IssuedAt"
+				],
+				[
+					"Severity"
+				],
+				[
+					"Status"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "alerts_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "SET NULL"
+				}
+			]
+		},
+		{
+			"name": "capacityalerts",
+			"columns": [
+				{
+					"name": "AlertID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AlertType",
+					"dataType": "enum",
+					"columnType": "enum('Shelter Shortage','Volunteer Shortage','Supply Shortage','Medical Shortage','Transport Shortage')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Severity",
+					"dataType": "enum",
+					"columnType": "enum('Low','Medium','High','Critical')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CurrentCapacity",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "RequiredCapacity",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Gap",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "GapPercentage",
+					"dataType": "decimal",
+					"columnType": "decimal(5,2)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Recommendations",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Active','Resolved','Acknowledged')",
+					"nullable": true,
+					"default": "Active",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "ResolvedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"AlertID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterID"
+				],
+				[
+					"Severity"
+				],
+				[
+					"Status"
+				],
+				[
+					"AlertType"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "capacityalerts_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "damageassessments",
+			"columns": [
+				{
+					"name": "AssessmentID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Location",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AssessmentDate",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "AssessedBy",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "StructuralDamage",
+					"dataType": "enum",
+					"columnType": "enum('None','Minor','Moderate','Severe','Destroyed')",
+					"nullable": true,
+					"default": "None",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Casualties",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Injuries",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DisplacedPersons",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "EstimatedCost",
+					"dataType": "decimal",
+					"columnType": "decimal(15,2)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Description",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Photos",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Preliminary','Confirmed','Final')",
+					"nullable": true,
+					"default": "Preliminary",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "UpdatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"AssessmentID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterID"
+				],
+				[
+					"Status"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "damageassessments_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "disasters",
+			"columns": [
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "DisasterName",
+					"dataType": "varchar",
+					"columnType": "varchar(200)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DisasterType",
+					"dataType": "enum",
+					"columnType": "enum('Earthquake','Flood','Hurricane','Wildfire','Tsunami','Tornado','Drought','Landslide','Volcanic Eruption','Industrial Accident','Storm','Other')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Severity",
+					"dataType": "enum",
+					"columnType": "enum('Minor','Moderate','Severe','Catastrophic')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Description",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AffectedRegion",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Latitude",
+					"dataType": "decimal",
+					"columnType": "decimal(10,8)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Longitude",
+					"dataType": "decimal",
+					"columnType": "decimal(11,8)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "StartDate",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "EndDate",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Active','Contained','Recovery','Closed')",
+					"nullable": true,
+					"default": "Active",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "EstimatedAffectedPopulation",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "EstimatedDamage",
+					"dataType": "decimal",
+					"columnType": "decimal(15,2)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "UpdatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+					"generation": ""
+				},
+				{
+					"name": "ResponseTier",
+					"dataType": "enum",
+					"columnType": "enum('Tier 1 - Local','Tier 2 - Regional','Tier 3 - National','Tier 4 - International')",
+					"nullable": true,
+					"default": "Tier 1 - Local",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "EscalationHistory",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CommandCenter",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"DisasterID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"AffectedRegion"
+				],
+				[
+					"ResponseTier"
+				],
+				[
+					"Severity"
+				],
+				[
+					"Status"
+				],
+				[
+					"DisasterType"
+				]
+			],
+			"foreignKeys": []
+		},
+		{
+			"name": "disastershelters",
+			"columns": [
+				{
+					"name": "ID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ShelterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ActivatedAt",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "DeactivatedAt",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "PeakOccupancy",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"ID"
+			],
+			"uniques": [
+				[
+					"DisasterID",
+					"ShelterID"
+				]
+			],
+			"indexes": [
+				[
+					"ShelterID"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "disastershelters_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "CASCADE"
+				},
+				{
+					"name": "disastershelters_ibfk_2",
+					"columns": [
+						"ShelterID"
+					],
+					"refTable": "shelters",
+					"refColumns": [
+						"ShelterID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "facilityactivations",
+			"columns": [
+				{
+					"name": "ActivationID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "FacilityID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ActivationDate",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "DeactivationDate",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ActivationTier",
+					"dataType": "enum",
+					"columnType": "enum('Tier 1 - Local','Tier 2 - Regional','Tier 3 - National')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CurrentOccupancy",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ResourcesDeployed",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ActivationStatus",
+					"dataType": "enum",
+					"columnType": "enum('Requested','Active','Standby','Deactivated')",
+					"nullable": true,
+					"default": "Active",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Notes",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "UpdatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"ActivationID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterID"
+				],
+				[
+					"FacilityID"
+				],
+				[
+					"ActivationStatus"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "facilityactivations_ibfk_1",
+					"columns": [
+						"FacilityID"
+					],
+					"refTable": "partnerfacilities",
+					"refColumns": [
+						"FacilityID"
+					],
+					"onDelete": "NO ACTION"
+				},
+				{
+					"name": "facilityactivations_ibfk_2",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "NO ACTION"
+				}
+			]
+		},
+		{
+			"name": "hostfamilies",
+			"columns": [
+				{
+					"name": "HostFamilyID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "FamilyName",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ContactPerson",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "PhoneNumber",
+					"dataType": "varchar",
+					"columnType": "varchar(20)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Email",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Address",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Province",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "District",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "MaxGuests",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CurrentGuests",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "PreferredGuestType",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "LanguagesSpoken",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Amenities",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "BackgroundCheckStatus",
+					"dataType": "enum",
+					"columnType": "enum('Pending','Verified','Rejected')",
+					"nullable": true,
+					"default": "Pending",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "VerifiedDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Active','Inactive','Full','Suspended')",
+					"nullable": true,
+					"default": "Active",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Rating",
+					"dataType": "decimal",
+					"columnType": "decimal(3,2)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "UpdatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"HostFamilyID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"Province"
+				],
+				[
+					"Status"
+				],
+				[
+					"BackgroundCheckStatus"
+				]
+			],
+			"foreignKeys": []
+		},
+		{
+			"name": "partnerfacilities",
+			"columns": [
+				{
+					"name": "FacilityID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "FacilityName",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "FacilityType",
+					"dataType": "enum",
+					"columnType": "enum('School','University','Temple','Hotel','Community Center','Sports Complex','Government Building','Other')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "PartnerAgencyID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Address",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Province",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Region",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Latitude",
+					"dataType": "decimal",
+					"columnType": "decimal(10,8)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Longitude",
+					"dataType": "decimal",
+					"columnType": "decimal(11,8)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "MaxCapacity",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ActivationAgreement",
+					"dataType": "tinyint",
+					"columnType": "tinyint(1)",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ActivationTime",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ContactPerson",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "PhoneNumber",
+					"dataType": "varchar",
+					"columnType": "varchar(20)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Amenities",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Available','Activated','Unavailable','Under Maintenance')",
+					"nullable": true,
+					"default": "Available",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "UpdatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"FacilityID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"Province"
+				],
+				[
+					"Status"
+				],
+				[
+					"FacilityType"
+				],
+				[
+					"PartnerAgencyID"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "partnerfacilities_ibfk_1",
+					"columns": [
+						"PartnerAgencyID"
+					],
+					"refTable": "agencies",
+					"refColumns": [
+						"AgencyID"
+					],
+					"onDelete": "SET NULL"
+				}
+			]
+		},
+		{
+			"name": "recoveryprojects",
+			"columns": [
+				{
+					"name": "ProjectID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ProjectName",
+					"dataType": "varchar",
+					"columnType": "varchar(200)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ProjectType",
+					"dataType": "enum",
+					"columnType": "enum('Infrastructure','Housing','Healthcare','Education','Livelihood','Community Services','Other')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Description",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Location",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Budget",
+					"dataType": "decimal",
+					"columnType": "decimal(15,2)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "FundingSource",
+					"dataType": "varchar",
+					"columnType": "varchar(200)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "StartDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ExpectedEndDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ActualEndDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Planned','In Progress','Completed','On Hold','Cancelled')",
+					"nullable": true,
+					"default": "Planned",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ProjectManager",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Beneficiaries",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ProgressPercentage",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "UpdatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"ProjectID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterID"
+				],
+				[
+					"Status"
+				],
+				[
+					"ProjectType"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "recoveryprojects_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "recruitmentcampaigns",
+			"columns": [
+				{
+					"name": "CampaignID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "CampaignName",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "TargetVolunteers",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "RequiredSkills",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "StartDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "EndDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Active','Completed','Cancelled')",
+					"nullable": true,
+					"default": "Active",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "VolunteersRecruited",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Description",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"CampaignID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterID"
+				],
+				[
+					"Status"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "recruitmentcampaigns_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "SET NULL"
+				}
+			]
+		},
+		{
+			"name": "reliefsupplies",
+			"columns": [
+				{
+					"name": "SupplyID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "SupplyName",
+					"dataType": "varchar",
+					"columnType": "varchar(200)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Category",
+					"dataType": "enum",
+					"columnType": "enum('Food','Water','Medical','Clothing','Blankets','Shelter Materials','Hygiene Kits','Tools','Other')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Unit",
+					"dataType": "varchar",
+					"columnType": "varchar(50)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "TotalQuantity",
+					"dataType": "decimal",
+					"columnType": "decimal(10,2)",
+					"nullable": true,
+					"default": "0.00",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AllocatedQuantity",
+					"dataType": "decimal",
+					"columnType": "decimal(10,2)",
+					"nullable": true,
+					"default": "0.00",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AvailableQuantity",
+					"dataType": "decimal",
+					"columnType": "decimal(10,2)",
+					"nullable": true,
+					"default": null,
+					"extra": "STORED GENERATED",
+					"generation": "(`TotalQuantity` - `AllocatedQuantity`)"
+				},
+				{
+					"name": "MinimumThreshold",
+					"dataType": "decimal",
+					"columnType": "decimal(10,2)",
+					"nullable": true,
+					"default": "0.00",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "StorageLocation",
+					"dataType": "varchar",
+					"columnType": "varchar(200)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ExpiryDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Available','Low Stock','Out of Stock','Expired')",
+					"nullable": true,
+					"default": "Available",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "UpdatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"SupplyID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"Category"
+				],
+				[
+					"Status"
+				]
+			],
+			"foreignKeys": []
+		},
+		{
+			"name": "resourcerequests",
+			"columns": [
+				{
+					"name": "RequestID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ResourceType",
+					"dataType": "enum",
+					"columnType": "enum('Volunteers','Shelter Space','Medical Supplies','Food','Water','Transport','Equipment','Other')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "QuantityNeeded",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Priority",
+					"dataType": "enum",
+					"columnType": "enum('Low','Medium','High','Critical')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "RequestedBy",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "RequiredBy",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Pending','Approved','Fulfilled','Partially Fulfilled','Cancelled')",
+					"nullable": true,
+					"default": "Pending",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "QuantityFulfilled",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AllocatedAgencies",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Notes",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "UpdatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"RequestID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterID"
+				],
+				[
+					"Priority"
+				],
+				[
+					"Status"
+				],
+				[
+					"ResourceType"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "resourcerequests_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "responsetierdefinitions",
+			"columns": [
+				{
+					"name": "TierID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "TierLevel",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "TierName",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "TriggerCriteria",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ResourcesAvailable",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AgenciesInvolved",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CommandStructure",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "EscalationThreshold",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Description",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"TierID"
+			],
+			"uniques": [
+				[
+					"TierLevel"
+				]
+			],
+			"indexes": [],
+			"foreignKeys": []
+		},
+		{
+			"name": "shelteractivationrequests",
+			"columns": [
+				{
+					"name": "RequestID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "FacilityID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ShelterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "RequestedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "ActivatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ExpectedCapacity",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ActualCapacity",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Requested','Approved','Activated','Declined','Deactivated')",
+					"nullable": true,
+					"default": "Requested",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "RequestedBy",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Notes",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"RequestID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"FacilityID"
+				],
+				[
+					"DisasterID"
+				],
+				[
+					"Status"
+				],
+				[
+					"ShelterID"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "shelteractivationrequests_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "CASCADE"
+				},
+				{
+					"name": "shelteractivationrequests_ibfk_2",
+					"columns": [
+						"FacilityID"
+					],
+					"refTable": "partnerfacilities",
+					"refColumns": [
+						"FacilityID"
+					],
+					"onDelete": "SET NULL"
+				},
+				{
+					"name": "shelteractivationrequests_ibfk_3",
+					"columns": [
+						"ShelterID"
+					],
+					"refTable": "shelters",
+					"refColumns": [
+						"ShelterID"
+					],
+					"onDelete": "SET NULL"
+				}
+			]
+		},
+		{
+			"name": "shelters",
+			"columns": [
+				{
+					"name": "ShelterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "ShelterName",
+					"dataType": "varchar",
+					"columnType": "varchar(200)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ShelterType",
+					"dataType": "enum",
+					"columnType": "enum('Temporary','Permanent','Evacuation Center','Relief Camp','Community Center')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Address",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "City",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Latitude",
+					"dataType": "decimal",
+					"columnType": "decimal(10,8)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Longitude",
+					"dataType": "decimal",
+					"columnType": "decimal(11,8)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Capacity",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CurrentOccupancy",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Available','Full','Closed','Under Maintenance')",
+					"nullable": true,
+					"default": "Available",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Facilities",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ContactPerson",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ContactPhone",
+					"dataType": "varchar",
+					"columnType": "varchar(20)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "UpdatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"ShelterID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"City"
+				],
+				[
+					"Status"
+				]
+			],
+			"foreignKeys": []
+		},
+		{
+			"name": "skills",
+			"columns": [
+				{
+					"name": "SkillID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "SkillName",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Category",
+					"dataType": "enum",
+					"columnType": "enum('Medical','Logistics','Communication','Construction','Food Service','Translation','Technical','Administrative','Other')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Description",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "RequiresCertification",
+					"dataType": "tinyint",
+					"columnType": "tinyint(1)",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"SkillID"
+			],
+			"uniques": [
+				[
+					"SkillName"
+				]
+			],
+			"indexes": [],
+			"foreignKeys": []
+		},
+		{
+			"name": "smartrecommendations",
+			"columns": [
+				{
+					"name": "RecommendationID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "RecommendationType",
+					"dataType": "enum",
+					"columnType": "enum('Activate Shelter','Request Volunteers','Contact Agency','Escalate Tier','Deploy Resources','Evacuate Area')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Priority",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "RecommendationText",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ActionRequired",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "EstimatedImpact",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Pending','Implemented','Dismissed','Deferred')",
+					"nullable": true,
+					"default": "Pending",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "ImplementedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"RecommendationID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterID"
+				],
+				[
+					"Priority"
+				],
+				[
+					"Status"
+				],
+				[
+					"RecommendationType"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "smartrecommendations_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "supplydistributions",
+			"columns": [
+				{
+					"name": "DistributionID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ShelterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "SupplyID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Quantity",
+					"dataType": "decimal",
+					"columnType": "decimal(10,2)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DistributionDate",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "DistributedBy",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ReceivedBy",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Notes",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"DistributionID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DistributionDate"
+				],
+				[
+					"DisasterID"
+				],
+				[
+					"ShelterID"
+				],
+				[
+					"SupplyID"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "supplydistributions_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "SET NULL"
+				},
+				{
+					"name": "supplydistributions_ibfk_2",
+					"columns": [
+						"ShelterID"
+					],
+					"refTable": "shelters",
+					"refColumns": [
+						"ShelterID"
+					],
+					"onDelete": "SET NULL"
+				},
+				{
+					"name": "supplydistributions_ibfk_3",
+					"columns": [
+						"SupplyID"
+					],
+					"refTable": "reliefsupplies",
+					"refColumns": [
+						"SupplyID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "thailandlocations",
+			"columns": [
+				{
+					"name": "LocationID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "LocationName",
+					"dataType": "varchar",
+					"columnType": "varchar(200)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "LocationType",
+					"dataType": "enum",
+					"columnType": "enum('Province','District','City','University','Landmark','Airport','Hospital','Government')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Province",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Region",
+					"dataType": "enum",
+					"columnType": "enum('Northern','Northeastern','Central','Eastern','Western','Southern')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Latitude",
+					"dataType": "decimal",
+					"columnType": "decimal(10,8)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Longitude",
+					"dataType": "decimal",
+					"columnType": "decimal(11,8)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Address",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "PostalCode",
+					"dataType": "varchar",
+					"columnType": "varchar(10)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Population",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "IsActive",
+					"dataType": "tinyint",
+					"columnType": "tinyint(1)",
+					"nullable": true,
+					"default": "1",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"LocationID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"LocationName"
+				],
+				[
+					"Province"
+				],
+				[
+					"Region"
+				],
+				[
+					"LocationType"
+				]
+			],
+			"foreignKeys": []
+		},
+		{
+			"name": "tierescalations",
+			"columns": [
+				{
+					"name": "EscalationID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "FromTier",
+					"dataType": "varchar",
+					"columnType": "varchar(50)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ToTier",
+					"dataType": "varchar",
+					"columnType": "varchar(50)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "EscalatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "EscalatedBy",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Reason",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AutoEscalation",
+					"dataType": "tinyint",
+					"columnType": "tinyint(1)",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Criteria",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"EscalationID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterID"
+				],
+				[
+					"ToTier"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "tierescalations_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "tierresourcedeployments",
+			"columns": [
+				{
+					"name": "DeploymentID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "TierLevel",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ResourceType",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ResourceDescription",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Quantity",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DeployedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Deployed','Active','Withdrawn','Completed')",
+					"nullable": true,
+					"default": "Deployed",
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"DeploymentID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterID"
+				],
+				[
+					"TierLevel"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "tierresourcedeployments_ibfk_1",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "trainingprograms",
+			"columns": [
+				{
+					"name": "TrainingID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "TrainingName",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Category",
+					"dataType": "enum",
+					"columnType": "enum('First Aid','Search and Rescue','Disaster Management','Communication','Logistics','Leadership','Other')",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Duration",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Description",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CertificationValid",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"TrainingID"
+			],
+			"uniques": [],
+			"indexes": [],
+			"foreignKeys": []
+		},
+		{
+			"name": "userreports",
+			"columns": [
+				{
+					"name": "ReportID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "UserName",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "UserEmail",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "UserPhone",
+					"dataType": "varchar",
+					"columnType": "varchar(20)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ReportedLocation",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DisasterType",
+					"dataType": "enum",
+					"columnType": "enum('Flood','Earthquake','Fire','Storm','Landslide','Tsunami','Drought','Other')",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Severity",
+					"dataType": "enum",
+					"columnType": "enum('Minor','Moderate','Severe','Critical')",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Description",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ReportedAt",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Pending','Verified','Dismissed','Escalated')",
+					"nullable": true,
+					"default": "Pending",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AdminNotes",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "VerifiedBy",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "VerifiedAt",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Latitude",
+					"dataType": "decimal",
+					"columnType": "decimal(10,8)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Longitude",
+					"dataType": "decimal",
+					"columnType": "decimal(11,8)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"ReportID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterType"
+				],
+				[
+					"ReportedAt"
+				],
+				[
+					"Status"
+				]
+			],
+			"foreignKeys": []
+		},
+		{
+			"name": "volunteeraccounts",
+			"columns": [
+				{
+					"name": "AccountID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "VolunteerID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Username",
+					"dataType": "varchar",
+					"columnType": "varchar(50)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Password",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "LastLogin",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "IsActive",
+					"dataType": "tinyint",
+					"columnType": "tinyint(1)",
+					"nullable": true,
+					"default": "1",
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"AccountID"
+			],
+			"uniques": [
+				[
+					"Username"
+				]
+			],
+			"indexes": [
+				[
+					"Username"
+				],
+				[
+					"VolunteerID"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "volunteeraccounts_ibfk_1",
+					"columns": [
+						"VolunteerID"
+					],
+					"refTable": "volunteers",
+					"refColumns": [
+						"VolunteerID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "volunteerassignments",
+			"columns": [
+				{
+					"name": "AssignmentID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "VolunteerID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ShelterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Role",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AssignedDate",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "CompletedDate",
+					"dataType": "datetime",
+					"columnType": "datetime",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "HoursWorked",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Active','Completed','Cancelled')",
+					"nullable": true,
+					"default": "Active",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Notes",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"AssignmentID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterID"
+				],
+				[
+					"Status"
+				],
+				[
+					"VolunteerID"
+				],
+				[
+					"ShelterID"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "volunteerassignments_ibfk_1",
+					"columns": [
+						"VolunteerID"
+					],
+					"refTable": "volunteers",
+					"refColumns": [
+						"VolunteerID"
+					],
+					"onDelete": "CASCADE"
+				},
+				{
+					"name": "volunteerassignments_ibfk_2",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "CASCADE"
+				},
+				{
+					"name": "volunteerassignments_ibfk_3",
+					"columns": [
+						"ShelterID"
+					],
+					"refTable": "shelters",
+					"refColumns": [
+						"ShelterID"
+					],
+					"onDelete": "SET NULL"
+				}
+			]
+		},
+		{
+			"name": "volunteeravailability",
+			"columns": [
+				{
+					"name": "AvailabilityID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "VolunteerID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AvailableFrom",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AvailableTo",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DaysOfWeek",
+					"dataType": "varchar",
+					"columnType": "varchar(50)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Available','On Deployment','Unavailable','On Leave')",
+					"nullable": true,
+					"default": "Available",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Notes",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"AvailabilityID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"AvailableFrom",
+					"AvailableTo"
+				],
+				[
+					"Status"
+				],
+				[
+					"VolunteerID"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "volunteeravailability_ibfk_1",
+					"columns": [
+						"VolunteerID"
+					],
+					"refTable": "volunteers",
+					"refColumns": [
+						"VolunteerID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "volunteerdeployments",
+			"columns": [
+				{
+					"name": "DeploymentID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "VolunteerID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DisasterID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "DeployedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "ReturnedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Role",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Location",
+					"dataType": "varchar",
+					"columnType": "varchar(255)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "PerformanceRating",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Notes",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Deployed','Completed','Recalled','Unavailable')",
+					"nullable": true,
+					"default": "Deployed",
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"DeploymentID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"DisasterID"
+				],
+				[
+					"Status"
+				],
+				[
+					"VolunteerID"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "volunteerdeployments_ibfk_1",
+					"columns": [
+						"VolunteerID"
+					],
+					"refTable": "volunteers",
+					"refColumns": [
+						"VolunteerID"
+					],
+					"onDelete": "CASCADE"
+				},
+				{
+					"name": "volunteerdeployments_ibfk_2",
+					"columns": [
+						"DisasterID"
+					],
+					"refTable": "disasters",
+					"refColumns": [
+						"DisasterID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "volunteers",
+			"columns": [
+				{
+					"name": "VolunteerID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "auto_increment",
+					"generation": ""
+				},
+				{
+					"name": "FirstName",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "LastName",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Email",
+					"dataType": "varchar",
+					"columnType": "varchar(150)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Phone",
+					"dataType": "varchar",
+					"columnType": "varchar(20)",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Skills",
+					"dataType": "text",
+					"columnType": "text",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Certification",
+					"dataType": "varchar",
+					"columnType": "varchar(200)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "AvailabilityStatus",
+					"dataType": "enum",
+					"columnType": "enum('Available','Deployed','On Leave','Inactive')",
+					"nullable": true,
+					"default": "Available",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "TotalHoursContributed",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": "0",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "EmergencyContact",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "EmergencyPhone",
+					"dataType": "varchar",
+					"columnType": "varchar(20)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "JoinedDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CreatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED",
+					"generation": ""
+				},
+				{
+					"name": "UpdatedAt",
+					"dataType": "timestamp",
+					"columnType": "timestamp",
+					"nullable": true,
+					"default": "CURRENT_TIMESTAMP",
+					"extra": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"VolunteerID"
+			],
+			"uniques": [
+				[
+					"Email"
+				]
+			],
+			"indexes": [
+				[
+					"LastName",
+					"FirstName"
+				],
+				[
+					"AvailabilityStatus"
+				]
+			],
+			"foreignKeys": []
+		},
+		{
+			"name": "volunteerskills",
+			"columns": [
+				{
+					"name": "VolunteerID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "SkillID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ProficiencyLevel",
+					"dataType": "enum",
+					"columnType": "enum('Beginner','Intermediate','Advanced','Expert')",
+					"nullable": true,
+					"default": "Intermediate",
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CertificationNumber",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CertifiedDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ExpiryDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"VolunteerID",
+				"SkillID"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"ProficiencyLevel"
+				],
+				[
+					"SkillID"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "volunteerskills_ibfk_1",
+					"columns": [
+						"VolunteerID"
+					],
+					"refTable": "volunteers",
+					"refColumns": [
+						"VolunteerID"
+					],
+					"onDelete": "CASCADE"
+				},
+				{
+					"name": "volunteerskills_ibfk_2",
+					"columns": [
+						"SkillID"
+					],
+					"refTable": "skills",
+					"refColumns": [
+						"SkillID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		},
+		{
+			"name": "volunteertraining",
+			"columns": [
+				{
+					"name": "VolunteerID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "TrainingID",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CompletedDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": false,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "ExpiryDate",
+					"dataType": "date",
+					"columnType": "date",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Score",
+					"dataType": "int",
+					"columnType": "int",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "CertificateNumber",
+					"dataType": "varchar",
+					"columnType": "varchar(100)",
+					"nullable": true,
+					"default": null,
+					"extra": "",
+					"generation": ""
+				},
+				{
+					"name": "Status",
+					"dataType": "enum",
+					"columnType": "enum('Valid','Expired','Pending Renewal')",
+					"nullable": true,
+					"default": "Valid",
+					"extra": "",
+					"generation": ""
+				}
+			],
+			"primaryKey": [
+				"VolunteerID",
+				"TrainingID",
+				"CompletedDate"
+			],
+			"uniques": [],
+			"indexes": [
+				[
+					"Status"
+				],
+				[
+					"VolunteerID"
+				],
+				[
+					"TrainingID"
+				]
+			],
+			"foreignKeys": [
+				{
+					"name": "volunteertraining_ibfk_1",
+					"columns": [
+						"VolunteerID"
+					],
+					"refTable": "volunteers",
+					"refColumns": [
+						"VolunteerID"
+					],
+					"onDelete": "CASCADE"
+				},
+				{
+					"name": "volunteertraining_ibfk_2",
+					"columns": [
+						"TrainingID"
+					],
+					"refTable": "trainingprograms",
+					"refColumns": [
+						"TrainingID"
+					],
+					"onDelete": "CASCADE"
+				}
+			]
+		}
+	]
+}
