@@ -12,7 +12,14 @@
 		"check": "npm run i18n && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"test": "vitest run",
 		"test:e2e": "playwright test",
-		"export-sample": "node scripts/export-sample.js"
+		"export-sample": "node scripts/export-sample.js",
+		"schema:introspect": "node scripts/schema/introspect-mysql.js",
+		"schema:generate": "node scripts/schema/generate.js",
+		"db:apply": "node scripts/db/apply-migrations.js",
+		"db:migrate-data": "node scripts/db/migrate-from-mysql.js",
+		"db:volunteers": "node scripts/db/create-volunteer-users.js",
+		"db:create-admin": "node scripts/db/create-admin.js",
+		"db:smoke": "node scripts/db/smoke-supabase.js"
 	},
 	"devDependencies": {
 		"@axe-core/playwright": "^4.13.0",
@@ -23,6 +30,7 @@
 		"@sveltejs/vite-plugin-svelte": "^7.2.0",
 		"@tailwindcss/vite": "^4.3.3",
 		"@types/node": "^24",
+		"mysql2": "^3.24.5",
 		"svelte": "^5.57.2",
 		"svelte-check": "^4.6.0",
 		"tailwindcss": "^4.3.3",
@@ -34,7 +42,10 @@
 		"@fontsource/ibm-plex-mono": "^5.3.0",
 		"@fontsource/ibm-plex-sans-thai": "^5.3.0",
 		"@lucide/svelte": "^1.53.0",
+		"@supabase/ssr": "^0.12.7",
+		"@supabase/supabase-js": "^2.117.3",
 		"bits-ui": "^2.19.5",
-		"maplibre-gl": "^6.13.0"
+		"maplibre-gl": "^6.13.0",
+		"postgres": "^3.4.9"
 	}
 }

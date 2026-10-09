@@ -8,3 +8,4 @@ playwright-report/
 .env
 .env.*
 !.env.example
+volunteer-logins.local.txt
