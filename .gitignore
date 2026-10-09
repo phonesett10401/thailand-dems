@@ -86,3 +86,6 @@ public/uploads/
 .Trashes
 ehthumbs.db
 Desktop.ini
+
+# Brainstorm companion mockups
+.superpowers/
