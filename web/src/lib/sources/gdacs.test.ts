@@ -34,4 +34,17 @@ describe('parseGdacs', () => {
 		};
 		expect(parseGdacs(raw as never)).toHaveLength(1);
 	});
+	it('skips incomplete events instead of failing the whole list', () => {
+		const f = gdacs.features[0];
+		const raw = {
+			features: [
+				{ ...f, properties: { ...f.properties, eventid: 10, fromdate: undefined } },
+				{ ...f, properties: { ...f.properties, eventid: 11, url: undefined } },
+				{ ...f, properties: { ...f.properties, eventid: 12, fromdate: 'not a date' } },
+				{ ...f, properties: undefined },
+				f
+			]
+		};
+		expect(parseGdacs(raw as never).map((e) => e.id)).toEqual(['GDACS-FL-1103621']);
+	});
 });

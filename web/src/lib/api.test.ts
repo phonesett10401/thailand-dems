@@ -49,7 +49,7 @@ describe('createApi submitReport', () => {
 		const api = createApi('http://x/api', () => {}, fetchFn);
 		expect(await api.submitReport(report)).toEqual({ ok: true });
 		const [url, init] = fetchFn.mock.calls[0] as unknown as [string, RequestInit];
-		expect(url).toBe('http://x/api/reports');
+		expect(url).toBe('http://x/api/reports/create');
 		expect(init.method).toBe('POST');
 		expect(JSON.parse(init.body as string)).toEqual(report);
 	});

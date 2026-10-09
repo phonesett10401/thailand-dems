@@ -25,7 +25,9 @@ export function quakeLevel(mag: number): Level {
 }
 
 export function parseQuakes(raw: RawQuakes | null, now = Date.now()): HazardEvent[] {
-	return (raw?.features ?? []).map((f) => {
+	const seen = new Set<string>();
+	const unique = (raw?.features ?? []).filter((f) => !seen.has(f.id) && seen.add(f.id));
+	return unique.map((f) => {
 		const mag = f.properties.mag ?? 0;
 		return {
 			id: `USGS-${f.id}`,

@@ -26,11 +26,15 @@
 	let gdacs = $state<Sourced<HazardEvent[]> | null>(null);
 	let quakes = $state<Sourced<HazardEvent[]> | null>(null);
 
+	function loadLive() {
+		gdacs = quakes = null;
+		sourced('GDACS', getGdacs).then((r) => (gdacs = r));
+		sourced('USGS', getQuakes).then((r) => (quakes = r));
+	}
 	onMount(() => {
 		api.shelters().then((r) => (shelters = r.data));
 		api.alerts().then((r) => (alerts = r.data));
-		sourced('GDACS', getGdacs).then((r) => (gdacs = r));
-		sourced('USGS', getQuakes).then((r) => (quakes = r));
+		loadLive();
 	});
 
 	const ok = (s: Sourced<HazardEvent[]> | null) => (s && 'data' in s ? s.data : []);
@@ -109,7 +113,10 @@
 		{/if}
 		{#each [gdacs, quakes] as s}
 			{#if s && 'error' in s}
-				<p class="text-sm text-alarm">{m.source_unavailable({ source: s.source })}</p>
+				<p class="text-sm text-alarm">
+					{m.source_unavailable({ source: s.source })}
+					<button type="button" class="ml-1 font-semibold underline" onclick={loadLive}>{m.retry()}</button>
+				</p>
 			{:else if s}
 				<SourceStamp source={s.source} updatedAt={s.updatedAt} />
 			{/if}

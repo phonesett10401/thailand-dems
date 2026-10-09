@@ -32,6 +32,10 @@ describe('parseQuakes', () => {
 		expect(out[1].title).toBe('M0.0 · Myanmar');
 		expect(out[1].current).toBe(true);
 	});
+	it('drops duplicate event ids (a keyed list would crash on them)', () => {
+		const raw = { features: [usgs.features[0], usgs.features[0], usgs.features[1]] };
+		expect(parseQuakes(raw, 1791520000000).map((e) => e.id)).toEqual(['USGS-us7000abcd', 'USGS-us7000efgh']);
+	});
 	it('handles null input', () => {
 		expect(parseQuakes(null)).toEqual([]);
 	});

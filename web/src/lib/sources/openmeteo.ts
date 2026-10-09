@@ -44,20 +44,27 @@ export function parseForecast(r: RawForecast): Forecast {
 			wind: r.current.wind_speed_10m,
 			code: r.current.weather_code
 		},
-		hours: r.hourly.time.map((t, i) => ({
-			time: unix(t),
-			temp: r.hourly.temperature_2m[i],
-			rainChance: r.hourly.precipitation_probability[i]
-		})),
-		days: r.daily.time.map((t, i) => ({
-			date: unix(t),
-			code: r.daily.weather_code[i],
-			max: r.daily.temperature_2m_max[i],
-			min: r.daily.temperature_2m_min[i],
-			rain: r.daily.precipitation_sum[i]
-		}))
+		hours: r.hourly.time
+			.map((t, i) => ({
+				time: unix(t),
+				temp: r.hourly.temperature_2m[i],
+				rainChance: r.hourly.precipitation_probability[i]
+			}))
+			.filter(complete),
+		days: r.daily.time
+			.map((t, i) => ({
+				date: unix(t),
+				code: r.daily.weather_code[i],
+				max: r.daily.temperature_2m_max[i],
+				min: r.daily.temperature_2m_min[i],
+				rain: r.daily.precipitation_sum[i]
+			}))
+			.filter(complete)
 	};
 }
+
+/** Open-Meteo returns null for gaps at the edge of a model run; drop those rows. */
+const complete = (row: object) => Object.values(row).every((v) => v !== null && v !== undefined);
 
 export function parseAir(r: RawAir): Air {
 	return { time: unix(r.current.time), pm25: r.current.pm2_5, aqi: r.current.us_aqi };

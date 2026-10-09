@@ -39,6 +39,7 @@ export function createApi(base: string, onOffline: () => void, fetchFn: FetchFn 
 		disasters: () => get<Disaster[]>('/disasters', sampleDisasters as Disaster[]),
 		alerts: () => get<DbAlert[]>('/alerts', sampleAlerts as DbAlert[]),
 		evacuationRoutes: () => get<EvacRoute[]>('/evacuation/routes', sampleRoutes as EvacRoute[]),
-		submitReport: (r: ReportInput) => post('/reports', r)
+		// backend/routes/userReports.js: router.post('/create', …)
+		submitReport: (r: ReportInput) => post('/reports/create', r)
 	};
 }

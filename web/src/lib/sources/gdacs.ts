@@ -39,8 +39,10 @@ export function parseGdacs(raw: RawGdacs | null): HazardEvent[] {
 	const byId = new Map<string, HazardEvent>();
 	for (const f of raw?.features ?? []) {
 		const p = f.properties;
-		const kind = KIND[p.eventtype];
-		if (!kind || f.geometry?.type !== 'Point') continue;
+		const kind = KIND[p?.eventtype];
+		if (!kind || f.geometry?.type !== 'Point' || typeof p.fromdate !== 'string' || !p.url?.report) continue;
+		const time = new Date(p.fromdate.endsWith('Z') ? p.fromdate : `${p.fromdate}Z`);
+		if (Number.isNaN(time.getTime())) continue;
 		const [lon, lat] = f.geometry.coordinates as [number, number];
 		const id = `GDACS-${p.eventtype}-${p.eventid}`;
 		byId.set(id, {
@@ -51,7 +53,7 @@ export function parseGdacs(raw: RawGdacs | null): HazardEvent[] {
 			level: levelOf(p.alertlevel),
 			lat,
 			lon,
-			time: new Date(p.fromdate.endsWith('Z') ? p.fromdate : `${p.fromdate}Z`).toISOString(),
+			time: time.toISOString(),
 			current: p.iscurrent === 'true',
 			url: p.url.report
 		});

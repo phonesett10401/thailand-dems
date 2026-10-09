@@ -53,7 +53,7 @@
 		<span class="flex items-center gap-1 text-xs font-semibold text-muted"
 			><CloudRain size={14} class="shrink-0" aria-hidden="true" />{m.rain_title()}</span
 		>
-		{#if fc && 'data' in fc}
+		{#if fc && 'data' in fc && fc.data.hours.length}
 			<span class="font-mono text-xl font-medium">{Math.max(...fc.data.hours.map((h) => h.rainChance))}%</span>
 		{:else}
 			<span class="font-mono text-xl text-muted">—</span>

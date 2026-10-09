@@ -15,6 +15,22 @@ describe('parseForecast', () => {
 	});
 });
 
+describe('parseForecast with gaps', () => {
+	it('drops hours and days that contain null values instead of crashing later', () => {
+		const raw = structuredClone(forecast) as unknown as {
+			hourly: { temperature_2m: (number | null)[] };
+			daily: { precipitation_sum: (number | null)[]; temperature_2m_max: (number | null)[] };
+		};
+		raw.hourly.temperature_2m[0] = null;
+		raw.daily.precipitation_sum[6] = null;
+		raw.daily.temperature_2m_max[5] = null;
+		const f = parseForecast(raw as never);
+		expect(f.hours).toHaveLength(23);
+		expect(f.days).toHaveLength(5);
+		expect(f.days.every((d) => typeof d.rain === 'number' && typeof d.max === 'number')).toBe(true);
+	});
+});
+
 describe('parseAir', () => {
 	it('reads PM2.5 and AQI', () => {
 		expect(parseAir(air)).toEqual({ time: new Date(1791518400 * 1000), pm25: 41.2, aqi: 114 });

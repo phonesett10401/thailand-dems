@@ -43,6 +43,35 @@ test('a public source being down only affects its own card', async ({ page }) =>
 	await expect(page.getByRole('link', { name: /Find nearest shelter/ })).toBeVisible();
 });
 
+test('GDACS down on home offers a retry that recovers', async ({ page }) => {
+	let fail = true;
+	await page.route('https://www.gdacs.org/**', (r) =>
+		fail ? r.fulfill({ status: 503, body: '' }) : r.fallback()
+	);
+	await page.goto('/');
+	await expect(page.getByText('GDACS unavailable right now.')).toBeVisible();
+	fail = false;
+	await page.getByRole('button', { name: 'Try again' }).click();
+	await expect(page.getByText('GDACS unavailable right now.')).toHaveCount(0);
+	await expect(page.getByText('Flood in Thailand')).toBeVisible();
+});
+
+test('an empty forecast shows a dash, never "-Infinity"', async ({ page }) => {
+	await page.route('https://api.open-meteo.com/**', (r) =>
+		r.fulfill({
+			contentType: 'application/json',
+			body: JSON.stringify({
+				current: { time: 1791518400, temperature_2m: 30, precipitation: 0, wind_speed_10m: 5, weather_code: 0 },
+				hourly: { time: [], temperature_2m: [], precipitation_probability: [] },
+				daily: { time: [], weather_code: [], temperature_2m_max: [], temperature_2m_min: [], precipitation_sum: [] }
+			})
+		})
+	);
+	await page.goto('/');
+	await expect(page.getByText('41.2')).toBeVisible();
+	await expect(page.getByText(/Infinity/)).toHaveCount(0);
+});
+
 test('no WebGL: map area explains itself, actions still work', async ({ page }) => {
 	await page.addInitScript(() => {
 		const orig = HTMLCanvasElement.prototype.getContext;

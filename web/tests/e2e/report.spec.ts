@@ -19,7 +19,7 @@ test('validates step 1 before moving on', async ({ page }) => {
 
 test('sends one report and shows the done screen', async ({ page }) => {
 	let posts = 0;
-	page.on('request', (r) => r.method() === 'POST' && r.url().endsWith('/api/reports') && posts++);
+	page.on('request', (r) => r.method() === 'POST' && r.url().endsWith('/api/reports/create') && posts++);
 	await fill(page);
 	const send = page.getByRole('button', { name: 'Send report' });
 	await send.dblclick();
