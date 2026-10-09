@@ -1,3 +1,5 @@
+import type { Component } from 'svelte';
+
 export type Pt = { lat: number; lon: number };
 
 /** Rows from the project's Express API. Numeric columns arrive as strings from MySQL DECIMAL. */
@@ -97,3 +99,11 @@ export type MapMarker = {
 	lon: number;
 	label: string;
 };
+
+/** Any @lucide/svelte icon. */
+export type IconComponent = Component<{
+	size?: number;
+	strokeWidth?: number;
+	class?: string;
+	'aria-hidden'?: boolean | 'true' | 'false';
+}>;
