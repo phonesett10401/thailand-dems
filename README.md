@@ -55,8 +55,9 @@ See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for step-by-step guide.
 | Weather, air quality, river flow | Open-Meteo (live) |
 | Disaster alerts | GDACS (live) |
 | Earthquakes | USGS (live) |
-| Shelters, disasters, alerts, evacuation routes, volunteers, supplies | Demo MySQL database (sample data, marked **SAMPLE** in the UI) |
-| Admin login | Hard-coded demo credentials (`admin` / `admin123`); not real security |
+| Shelters, disasters, alerts, volunteers, supplies | Demo data in Supabase Postgres (marked **SAMPLE** in the UI) |
+| Evacuation routes | Hard-coded sample list (marked **SAMPLE**) |
+| Admin / volunteer login | Supabase Auth, invite-only; the old Next.js `frontend/` still has the legacy demo login |
 
 The new citizen UI lives in `web/` (SvelteKit). The old Next.js UI in `frontend/` is kept until the redesign is complete.
 
@@ -199,7 +200,7 @@ DEMS/
 
 See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for complete deployment instructions.
 
-**New citizen UI (`web/`)**: import the repo in Vercel with Root Directory `web` and set `PUBLIC_API_URL` to your backend URL + `/api`.
+**New UI + API (`web/`)**: import the repo in Vercel with Root Directory `web` and set `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, `DATABASE_URL` (see `web/.env.example`).
 
 **Recommended Free Stack:**
 - **Frontend**: Vercel (Perfect for Next.js)
@@ -251,6 +252,7 @@ For support and questions:
 - [ ] SMS Alerts Integration
 - [x] Multi-language Support (Thai/English)
 - [ ] Offline on-device emergency assistant (WebLLM + retrieval)
+- [ ] Phase 2: optional citizen accounts ("my reports" status, saved province alerts, notifications) as a `citizen` role; needs self sign-up with email confirmation + CAPTCHA, and everything must keep working without an account
 - [ ] Drone Integration
 - [ ] Blockchain for Aid Tracking
 - [ ] API for Third-party Integration

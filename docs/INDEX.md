@@ -10,6 +10,8 @@
 ## New citizen UI (`web/`)
 - [UI redesign spec](superpowers/specs/2026-10-09-ui-redesign-design.md)
 - [Phase 1 implementation plan](superpowers/plans/2026-10-09-phase-1-citizen-core.md)
+- [Supabase backend spec](superpowers/specs/2026-10-10-supabase-backend-design.md)
+- [Supabase backend plan](superpowers/plans/2026-10-10-supabase-backend.md)
 
 ## Backend subsystems
 - [AGENCY_SYSTEM_DOCUMENTATION.md](AGENCY_SYSTEM_DOCUMENTATION.md) - Partner agencies

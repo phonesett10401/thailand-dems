@@ -184,6 +184,7 @@ Express + MySQL remain untouched as a local fallback until Phase 2.
 - Google sign-in.
 - Supabase GitHub integration / automatic migrations (connect after `0001` is applied and stable).
 - Changing API JSON field names to camelCase.
+- **Citizen accounts (noted for Phase 2):** citizens stay anonymous now. If added later: a `citizen` role, self sign-up re-enabled with email confirmation + CAPTCHA, used only for extras ("my reports", saved province alerts, notifications); nothing that works anonymously today may require an account.
 
 ## 11. Risks
 
