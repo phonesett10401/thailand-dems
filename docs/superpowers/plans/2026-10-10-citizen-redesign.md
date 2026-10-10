@@ -3504,7 +3504,7 @@ describe('orsRoute', () => {
 		const f = vi.fn(async () => res(200, ORS));
 		const r = await orsRoute(q.value, 'KEY', f as typeof fetch, 0);
 		const [url, init] = f.mock.calls[0] as unknown as [string, RequestInit];
-		expect(url).toBe('https://api.openrouteservice.org/v2/directions/foot-walking/geojson');
+		expect(url).toBe('https://api.heigit.org/openrouteservice/v2/directions/foot-walking/geojson');
 		expect((init.headers as Record<string, string>).Authorization).toBe('KEY');
 		const body = JSON.parse(init.body as string);
 		expect(body.coordinates).toEqual([[100.5018, 13.7563], [100.53, 13.73]]);
@@ -3608,7 +3608,7 @@ export async function orsRoute(q: RouteReq, apiKey: string, fetchFn: typeof fetc
 	if (hit && now - hit.at < TTL) return hit.value;
 
 	const call = (avoid: Zone[]) =>
-		fetchFn(`https://api.openrouteservice.org/v2/directions/${PROFILE[q.mode]}/geojson`, {
+		fetchFn(`https://api.heigit.org/openrouteservice/v2/directions/${PROFILE[q.mode]}/geojson`, {
 			method: 'POST',
 			headers: { Authorization: apiKey, 'content-type': 'application/json', accept: 'application/geo+json' },
 			body: JSON.stringify({
