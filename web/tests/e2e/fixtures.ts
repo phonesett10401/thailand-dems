@@ -13,6 +13,18 @@ const API: Record<string, string> = {
 	'/evacuation/routes': 'evacuation-routes'
 };
 
+export const ROUTE = JSON.stringify({
+	line: [[100.5018, 13.7563], [100.51, 13.75], [100.5232, 13.7307]],
+	distance: 3874,
+	duration: 2790,
+	steps: [
+		{ type: 11, name: 'Ratchadamnoen Road', distance: 900, duration: 650, at: 0 },
+		{ type: 0, name: 'Rama IV Road', distance: 2974, duration: 2140, at: 1 },
+		{ type: 10, name: '', distance: 0, duration: 0, at: 2 }
+	],
+	avoided: false
+});
+
 /** Every external host is mocked so tests are deterministic and work offline. */
 export const test = base.extend<{ backend: 'up' | 'down'; seenNote: boolean; mocks: void }>({
 	backend: ['up', { option: true }],
@@ -30,6 +42,9 @@ export const test = base.extend<{ backend: 'up' | 'down'; seenNote: boolean; moc
 				(url) => url.pathname.startsWith('/api/'),
 				async (r) => {
 					if (backend === 'down') return r.abort('connectionrefused');
+					if (new URL(r.request().url()).pathname === '/api/route') {
+						return r.fulfill({ ...json, body: ROUTE });
+					}
 					if (r.request().method() === 'POST') {
 						return r.fulfill({ ...json, status: 201, body: '{"reportId":99}' });
 					}
