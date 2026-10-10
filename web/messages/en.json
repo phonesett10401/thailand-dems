@@ -309,5 +309,6 @@
 	"dir_s": "south",
 	"dir_sw": "south-west",
 	"dir_w": "west",
-	"dir_nw": "north-west"
+	"dir_nw": "north-west",
+	"route_gps_error": "Couldn't get your location. Check location permission."
 }

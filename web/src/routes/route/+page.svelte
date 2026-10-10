@@ -12,7 +12,7 @@
 	import { localizeHref } from '$lib/paraglide/runtime.js';
 	import { bearing, compass, currentStep, getRoute, nearestIndex, offRoute, stepText, type Mode, type RouteFail, type RouteRes } from '$lib/route';
 	import type { MapMarker, Pt, Shelter } from '$lib/types';
-	import { zonesFrom } from '$lib/zones';
+	import { zonesFrom, type Zone } from '$lib/zones';
 
 	const to = page.url.searchParams.get('to') ?? '';
 	let mode = $state<Mode>((['foot', 'car', 'bike'].includes(page.url.searchParams.get('mode') ?? '') ? page.url.searchParams.get('mode') : 'foot') as Mode);
@@ -36,17 +36,23 @@
 	});
 
 	const zones = $derived(zonesFrom(live.a?.hazards ?? []));
+	const zoneKey = $derived(JSON.stringify(zones));
+	// The zones the shown route was actually requested with (hazards may arrive after the first request).
+	let sentZones = $state<Zone[]>([]);
+	let gpsError = $state(false);
 	async function load() {
 		if (!dest) return;
 		const mine = ++seq;
 		result = null;
+		sentZones = zones;
 		const r = await getRoute({ from: me ?? here.place, to: dest.at, mode, avoid: zones });
 		if (mine === seq) result = r;
 	}
-	// Reload when the destination or mode changes; `me`/zones are read inside load() untracked.
+	// Reload when the destination or mode changes; `me` is read inside load() untracked; new hazards re-request.
 	$effect(() => {
 		void dest;
 		void mode;
+		void zoneKey;
 		untrack(load);
 	});
 
@@ -56,11 +62,22 @@
 	const off = $derived(!!(route && me && offRoute(route.line, me)));
 
 	function start() {
-		if (!('geolocation' in navigator)) return;
-		watchId = navigator.geolocation.watchPosition((p) => (me = { lat: p.coords.latitude, lon: p.coords.longitude }), () => {}, {
-			enableHighAccuracy: true,
-			maximumAge: 5000
-		});
+		gpsError = false;
+		if (!('geolocation' in navigator)) {
+			gpsError = true;
+			return;
+		}
+		watchId = navigator.geolocation.watchPosition(
+			(p) => (me = { lat: p.coords.latitude, lon: p.coords.longitude }),
+			() => {
+				stop();
+				gpsError = true;
+			},
+			{
+				enableHighAccuracy: true,
+				maximumAge: 5000
+			}
+		);
 	}
 	function stop() {
 		if (watchId !== null) navigator.geolocation.clearWatch(watchId);
@@ -76,7 +93,7 @@
 	const lines = $derived(route ? [{ id: 'route', coords: route.line, color: '#0a84ff' }] : []);
 	const areas = $derived(zones.map((z, i) => ({ id: `z${i}`, ...z, color: LEVEL_HEX.warning })));
 	const DIR = { n: m.dir_n, ne: m.dir_ne, e: m.dir_e, se: m.dir_se, s: m.dir_s, sw: m.dir_sw, w: m.dir_w, nw: m.dir_nw };
-	const straight = $derived(dest ? { km: distanceKm(here.place, dest.at).toFixed(1), dir: DIR[compass(bearing(here.place, dest.at))]() } : null);
+	const straight = $derived(dest ? { km: distanceKm(me ?? here.place, dest.at).toFixed(1), dir: DIR[compass(bearing(me ?? here.place, dest.at))]() } : null);
 	const MODES: [Mode, () => string, typeof Footprints][] = [
 		['foot', m.mode_foot, Footprints],
 		['car', m.mode_car, Car],
@@ -101,7 +118,7 @@
 			<p class="mt-4 text-sm text-muted" role="status">{m.route_loading()}</p>
 		{:else if route}
 			<p class="mt-4 text-3xl font-semibold tracking-tight">{m.route_summary({ km: (route.distance / 1000).toFixed(1), min: Math.max(1, Math.round(route.duration / 60)) })}</p>
-			{#if route.avoided}<p class="mt-1 text-sm text-safe">{m.route_avoided({ count: zones.length })}</p>{:else if zones.length}<p class="mt-1 text-sm text-watch">{m.route_not_avoided()}</p>{/if}
+			{#if route.avoided}<p class="mt-1 text-sm text-safe">{m.route_avoided({ count: sentZones.length })}</p>{:else if sentZones.length}<p class="mt-1 text-sm text-watch">{m.route_not_avoided()}</p>{/if}
 			<div class="mt-3 flex gap-2">
 				{#if watchId === null}
 					<button type="button" onclick={start} class="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-text font-semibold text-bg"><Navigation size={16} aria-hidden="true" />{m.route_start()}</button>
@@ -109,6 +126,7 @@
 					<button type="button" onclick={stop} class="min-h-11 flex-1 rounded-xl border border-line font-semibold">{m.route_stop()}</button>
 				{/if}
 			</div>
+			{#if gpsError}<p class="mt-2 text-sm" role="status">{m.route_gps_error()}</p>{/if}
 			{#if off}<button type="button" onclick={load} class="mt-2 min-h-11 w-full rounded-xl bg-watch font-semibold text-bg">{m.route_recalc()}</button>{/if}
 			<h2 class="label mt-5 mb-2">{m.route_steps()}</h2>
 			<ol class="flex flex-col gap-1">
