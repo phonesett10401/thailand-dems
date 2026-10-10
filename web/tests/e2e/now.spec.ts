@@ -27,6 +27,7 @@ test('every feed down → Unknown, never Safe', async ({ page }) => {
 	await page.goto('/');
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Status unknown');
 	await expect(page.getByText('Safe', { exact: true })).toHaveCount(1); // only the scale label, never the badge
+	await expect(page.getByText('no risk here right now')).toHaveCount(0);
 });
 
 test('one feed down: level still computed, the missing feed is named', async ({ page }) => {
@@ -34,6 +35,7 @@ test('one feed down: level still computed, the missing feed is named', async ({ 
 	await page.goto('/');
 	await expect(page.getByText('Unavailable right now: Air quality.')).toBeVisible();
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Flooding near you');
+	await expect(page.getByText('no risk here right now')).not.toContainText('Haze');
 });
 
 test('tapping a hazard opens its detail with source and guide link', async ({ page }) => {

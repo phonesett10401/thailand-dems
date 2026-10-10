@@ -28,9 +28,9 @@
 		</li>
 	{/each}
 	{#if quiet.length}
-		<li class="flex items-center gap-3 px-3 py-2.5 opacity-60">
+		<li class="flex items-center gap-3 px-3 py-2.5 text-muted">
 			<span class="grid size-8 shrink-0 place-items-center rounded-lg bg-white/10 font-mono text-[11px] text-muted" aria-hidden="true">~</span>
-			<span class="text-sm"><b class="font-semibold">{quiet.join(' · ')}</b> <span class="text-muted">{m.now_quiet()}</span></span>
+			<span class="text-sm"><b class="font-semibold text-muted">{quiet.join(' · ')}</b> <span class="text-muted">{m.now_quiet()}</span></span>
 		</li>
 	{/if}
 </ul>

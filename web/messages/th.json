@@ -212,7 +212,6 @@
 	"feed_river": "แบบจำลองแม่น้ำ",
 	"feed_gdacs": "GDACS",
 	"feed_quakes": "แผ่นดินไหว",
-	"now_where": "{place} · ตำแหน่งของคุณ",
 	"now_updated": "อัปเดต {time}",
 	"now_safe_title": "ไม่มีการเตือนภัยใกล้คุณ",
 	"now_safe_body": "ไม่มีเหตุการณ์ใกล้ {place}",
@@ -249,5 +248,7 @@
 	"hazard_distance": "ห่างจากคุณ {km} กม.",
 	"hazard_sample_note": "ข้อมูลตัวอย่างจากฐานข้อมูลของเดโมนี้ ไม่มีผลต่อระดับเตือนภัยของคุณ",
 	"hazard_guide": "อ่านคู่มือฉบับเต็ม",
-	"hazard_open_source": "เปิดรายงานต้นทาง"
+	"hazard_open_source": "เปิดรายงานต้นทาง",
+	"now_all_shelters": "ที่พักพิงทั้งหมด",
+	"now_checking_title": "กำลังตรวจสอบภัยใกล้คุณ…"
 }

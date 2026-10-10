@@ -2,7 +2,7 @@
 	import { ArrowRight, TriangleAlert } from '@lucide/svelte';
 	import { fmtTime } from '$lib/format';
 	import { feedName, hazName, nowTitle } from '$lib/labels';
-	import type { Assessment, Feeds, Hazard, HazardType, Overall } from '$lib/levels';
+	import type { Assessment, FeedKey, Feeds, Hazard, HazardType, Overall } from '$lib/levels';
 	import { here } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
 	import { localizeHref } from '$lib/paraglide/runtime.js';
@@ -32,9 +32,22 @@
 	);
 	const active = $derived(a ? a.hazards.filter((h) => !h.sample && h.level !== 'safe') : []);
 	const QUIET: HazardType[] = ['flood', 'storm', 'earthquake', 'smoke', 'heat'];
-	const quiet = $derived(a ? QUIET.filter((t) => !a.hazards.some((h) => h.type === t)).map(hazName) : []);
+	const NEEDS: Partial<Record<HazardType, FeedKey[]>> = {
+		smoke: ['air'],
+		heat: ['forecast'],
+		flood: ['river', 'gdacs'],
+		storm: ['gdacs'],
+		earthquake: ['quakes']
+	};
+	// a type whose feed failed is unknown, not quiet
+	const quiet = $derived(
+		a && level !== 'unknown'
+			? QUIET.filter((t) => !a.hazards.some((h) => h.type === t) && !NEEDS[t]?.some((k) => a.failed.includes(k))).map(hazName)
+			: []
+	);
+	const checking = $derived(a === null); // assess() always returns an Assessment once a refresh finishes
 	const title = $derived(
-		level === 'unknown' ? m.now_unknown_title() : level === 'safe' ? m.now_safe_title() : nowTitle(active.map((h) => h.type))
+		checking ? m.now_checking_title() : level === 'unknown' ? m.now_unknown_title() : level === 'safe' ? m.now_safe_title() : nowTitle(active.map((h) => h.type))
 	);
 	const reason = $derived(
 		level === 'unknown'
@@ -53,12 +66,12 @@
 
 <div class="flex flex-col gap-4">
 	<div class="flex items-baseline justify-between gap-2 text-sm text-muted">
-		<span>{m.now_where({ place })}</span>
+		<span>{place}</span>
 		{#if a}<span class="font-mono text-[11px]">{m.now_updated({ time: fmtTime(new Date(a.checkedAt)) })}</span>{/if}
 	</div>
 	<LevelBadge {level} />
 	<h1 class="headline text-[2.4rem]">{title}</h1>
-	<p class="-mt-1 text-[15px] leading-snug text-[#c9c9cf]">{reason}</p>
+	{#if !checking}<p class="-mt-1 text-[15px] leading-snug text-[#c9c9cf]">{reason}</p>{/if}
 	{#if a && a.failed.length && level !== 'unknown'}
 		<p class="text-xs text-watch">{m.now_partial({ feeds: a.failed.map(feedName).join(', ') })}</p>
 	{/if}

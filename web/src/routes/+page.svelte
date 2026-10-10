@@ -28,7 +28,7 @@
 	const closest = $derived(sortByDistance(shelters, here.place, coords).filter((x) => x.km !== null).slice(0, 3));
 	const hours = $derived(live.feeds?.forecast?.hours ?? []);
 	const recent = $derived(
-		(live.a?.hazards ?? []).filter((h) => !h.sample && h.time).sort((a, b) => b.time!.localeCompare(a.time!)).slice(0, 4)
+		(live.a?.hazards ?? []).filter((h) => !h.sample && h.name && h.time).sort((a, b) => b.time!.localeCompare(a.time!)).slice(0, 4)
 	);
 	const markers = $derived<MapMarker[]>([
 		{ id: 'me', kind: 'me', lat: here.place.lat, lon: here.place.lon, label: m.location_label() },
@@ -52,7 +52,7 @@
 			<MapView class="relative" {markers} center={here.place} zoom={8} focus={here.place} onselect={select} />
 			<div class="grid grid-cols-[1.35fr_1fr_1fr] gap-3 border-t border-line p-3">
 				<div class="glass flex flex-col gap-2 rounded-2xl p-3.5">
-					<div class="flex justify-between"><h2 class="label">{m.now_shelters()}</h2><a class="text-xs text-muted" href={localizeHref('/shelters')}>→</a></div>
+					<div class="flex justify-between"><h2 class="label">{m.now_shelters()}</h2><a class="grid min-h-11 min-w-11 place-items-center text-xs text-muted" href={localizeHref('/shelters')} aria-label={m.now_all_shelters()}>→</a></div>
 					{#each closest as { item: s, km } (s.ShelterID)}
 						{@const pct = occupancyPct(s.CurrentOccupancy, s.Capacity)}
 						<div class="grid grid-cols-[1fr_64px_56px] items-center gap-3 text-sm">

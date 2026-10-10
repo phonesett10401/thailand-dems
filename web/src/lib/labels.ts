@@ -127,7 +127,8 @@ export function hazLine(h: Hazard): string {
 	if (h.type === 'heat' && h.value !== null) return m.line_heat({ value: h.value.toFixed(0) });
 	if (h.type === 'rain' && h.value !== null) return m.line_rain({ value: h.value.toFixed(0) });
 	if (h.id === 'river') return m.line_river();
-	if (h.type === 'earthquake' && h.value !== null) return m.line_quake({ mag: h.value.toFixed(1), km: km0(h.km) });
+	if (h.type === 'earthquake' && h.value !== null)
+		return h.km === null ? `M${h.value.toFixed(1)}` : m.line_quake({ mag: h.value.toFixed(1), km: km0(h.km) });
 	if (h.name && h.km !== null) return m.line_event({ name: h.name, km: km0(h.km) });
 	return h.name ?? '';
 }
@@ -140,6 +141,7 @@ export const feedName = (k: FeedKey): string =>
 
 /** "Haze and flooding": distinct hazard names, worst first, at most three. */
 export function nowTitle(types: HazardType[]): string {
+	if (!types.length) return '';
 	const names = [...new Set(types)].slice(0, 3).map(hazName);
 	const s =
 		names.length === 1

@@ -212,7 +212,6 @@
 	"feed_river": "River model",
 	"feed_gdacs": "GDACS",
 	"feed_quakes": "Earthquakes",
-	"now_where": "{place} · your location",
 	"now_updated": "updated {time}",
 	"now_safe_title": "No warnings near you",
 	"now_safe_body": "Nothing active near {place}.",
@@ -249,5 +248,7 @@
 	"hazard_distance": "{km} km from you",
 	"hazard_sample_note": "Sample record from this demo's database. It never changes your level.",
 	"hazard_guide": "Read the full guide",
-	"hazard_open_source": "Open source report"
+	"hazard_open_source": "Open source report",
+	"now_all_shelters": "All shelters",
+	"now_checking_title": "Checking hazards near you…"
 }
