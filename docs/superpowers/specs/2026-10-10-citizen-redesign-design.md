@@ -36,7 +36,7 @@ Dark only for this version. Tokens live in Tailwind v4 `@theme` and replace the 
 | `watch` | `#ffb020` | level Watch |
 | `warning` | `#ff453a` | level Warning, SOS, brand arc |
 | `unknown` | `#6b6b72` | level Unknown (no data) |
-| `info` | `#0a84ff` | your location, links, rain radar, route line |
+| `info` | `#0a84ff` | your location, links, route line |
 
 Glass is used only on floating things: the top bar, tab bar, cards over the map, sheets, popups and the level "sky". Lists and long text sit on plain `bg`.
 
@@ -95,8 +95,8 @@ The header **Assistant** button is removed. Its slot moves into More as "Ask DEM
 
 | Tab | Route | Question | Phone | Desktop |
 |---|---|---|---|---|
-| Now | `/` | Am I safe where I am? | level sky, headline, hazard list, condition tiles, nearest-shelter button, "Report something" link | **dashboard**: left = phone content; right = map; bottom row = nearest shelters with fill bars, 24 h forecast of the worst hazard, timeline of today's changes |
-| Map | `/map` | What is happening anywhere? | full-screen map, layer chips (each hazard type, rain radar, shelters, evacuation routes), tap → bottom sheet, floating Report button | map plus a left list of all hazards with filters |
+| Now | `/` | Am I safe where I am? | level sky, headline, hazard list, condition tiles, nearest-shelter button, "Report something" link | **dashboard**: left = phone content; right = map; bottom row = nearest shelters with fill bars, next-24 h rain chance (the only hourly series we fetch), recent live events by time |
+| Map | `/map` | What is happening anywhere? | full-screen map, layer chips (each hazard type present, shelters), tap → bottom sheet, floating Report button | map plus a left list of all hazards with filters |
 | Shelters | `/shelters` | Where do I go? | list by distance, filters (open, has space, medical, pets, clean air) → detail sheet → **Route** | list left, map right |
 | Prepare | `/prepare`, `/prepare/[hazard]` | How do I get ready? | hazard guide cards, go-bag checklist, emergency numbers | guide list left, content right |
 | More | `/more` | everything else | Report an incident, Language, About & data, Demo (Spec 2), Staff sign-in, Ask DEMS (coming soon) | top-bar menu |
@@ -110,7 +110,7 @@ The header **Assistant** button is removed. Its slot moves into More as "Ask DEM
 - `/disasters` → `/map`
 - `/info` → `/about`
 - `/weather` → `/`
-- `/evacuation` → `/map?layer=routes`
+- `/evacuation` → `/shelters` (sample evacuation routes have only start and end names, no coordinates, so they are listed at the bottom of Shelters instead of drawn on the map)
 
 Thai stays under `/th/...`. The `/admin` and `/volunteer` routes are untouched, except that they use the new tokens.
 
