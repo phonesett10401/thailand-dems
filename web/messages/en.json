@@ -256,5 +256,17 @@
 	"map_all_hazards": "Hazards in Thailand",
 	"map_none": "No hazards to show.",
 	"map_report": "Report",
-	"map_list": "List"
+	"map_list": "List",
+	"f_open": "Open",
+	"f_space": "Has space",
+	"f_medical": "Medical",
+	"f_pets": "Pets",
+	"f_cleanAir": "Clean air",
+	"shelters_filters": "Filter shelters",
+	"shelters_none": "No shelters match these filters.",
+	"shelter_route": "Route",
+	"shelter_gmaps": "Open in Google Maps",
+	"shelter_facilities": "Facilities",
+	"evac_list_title": "Evacuation routes",
+	"evac_line": "{from} → {to} · {km} km · {min} min"
 }

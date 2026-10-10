@@ -256,5 +256,17 @@
 	"map_all_hazards": "ภัยในประเทศไทย",
 	"map_none": "ไม่มีภัยที่จะแสดง",
 	"map_report": "แจ้งเหตุ",
-	"map_list": "รายการ"
+	"map_list": "รายการ",
+	"f_open": "เปิดอยู่",
+	"f_space": "ยังมีที่ว่าง",
+	"f_medical": "มีแพทย์",
+	"f_pets": "รับสัตว์เลี้ยง",
+	"f_cleanAir": "อากาศสะอาด",
+	"shelters_filters": "กรองที่พักพิง",
+	"shelters_none": "ไม่มีที่พักพิงที่ตรงกับตัวกรอง",
+	"shelter_route": "เส้นทาง",
+	"shelter_gmaps": "เปิดใน Google Maps",
+	"shelter_facilities": "สิ่งอำนวยความสะดวก",
+	"evac_list_title": "เส้นทางอพยพ",
+	"evac_line": "{from} → {to} · {km} กม. · {min} นาที"
 }
