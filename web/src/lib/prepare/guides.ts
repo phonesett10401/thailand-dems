@@ -23,8 +23,8 @@ export const GUIDE: Record<GuideId, Guide> = {
 		],
 		during: [
 			t('Move to higher ground or the nearest shelter now.', 'ไปยังที่สูงหรือที่พักพิงที่ใกล้ที่สุดทันที'),
-			t('Turn off electricity at the main switch before water reaches sockets.', 'ตัดไฟที่เบรกเกอร์หลักก่อนน้ำถึงปลั๊กไฟ'),
-			t('Never walk or drive through moving water; 15 cm can knock you down.', 'ห้ามเดินหรือขับรถผ่านน้ำไหลเชี่ยว น้ำสูงเพียง 15 ซม. ก็ทำให้ล้มได้'),
+			t('Turn off electricity at the main switch, but only if you are dry and not standing in water.', 'ตัดไฟที่เบรกเกอร์หลัก เฉพาะเมื่อตัวคุณแห้งและไม่ได้ยืนอยู่ในน้ำ'),
+			t('Never walk or drive through moving water; 15 cm can knock you down.', 'ห้ามเดินหรือขับรถผ่านน้ำที่ไหล น้ำสูงเพียง 15 ซม. ก็ทำให้ล้มได้'),
 			t('Take ID, medicine, phone, charger and drinking water.', 'นำบัตรประชาชน ยา โทรศัพท์ ที่ชาร์จ และน้ำดื่มติดตัวไป')
 		],
 		after: [
@@ -66,10 +66,10 @@ export const GUIDE: Record<GuideId, Guide> = {
 			t('Know which room in your home is the strongest.', 'รู้ว่าห้องไหนในบ้านแข็งแรงที่สุด')
 		],
 		during: [
+			t('If told to evacuate, leave early while roads are open.', 'หากได้รับแจ้งให้อพยพ ให้ออกเดินทางแต่เนิ่นๆ ขณะถนนยังใช้ได้'),
 			t('Stay indoors, away from windows and glass doors.', 'อยู่ในอาคาร ห่างจากหน้าต่างและประตูกระจก'),
 			t('Unplug electrical devices if lightning is close.', 'ถอดปลั๊กเครื่องใช้ไฟฟ้าเมื่อฟ้าผ่าใกล้'),
-			t('Do not go out on boats or to the beach.', 'ห้ามออกเรือหรือลงชายหาด'),
-			t('If told to evacuate, leave early while roads are open.', 'หากได้รับแจ้งให้อพยพ ให้ออกเดินทางแต่เนิ่นๆ ขณะถนนยังใช้ได้')
+			t('Do not go out on boats or to the beach.', 'ห้ามออกเรือหรือลงชายหาด')
 		],
 		after: [
 			t('Stay away from fallen power lines and report them.', 'อยู่ห่างจากสายไฟที่ขาดและแจ้งการไฟฟ้า'),
@@ -94,7 +94,7 @@ export const GUIDE: Record<GuideId, Guide> = {
 			t('See a doctor if you have chest pain or trouble breathing.', 'พบแพทย์หากเจ็บหน้าอกหรือหายใจลำบาก')
 		],
 		after: [
-			t('Air out your home once PM2.5 drops below 37.5.', 'เปิดระบายอากาศเมื่อค่า PM2.5 ลดต่ำกว่า 37.5'),
+			t('Air out your home once PM2.5 drops below 37.5 µg/m³.', 'เปิดระบายอากาศเมื่อค่า PM2.5 ลดต่ำกว่า 37.5 มคก./ลบ.ม.'),
 			t('Change or clean air purifier filters.', 'เปลี่ยนหรือทำความสะอาดแผ่นกรองเครื่องฟอกอากาศ'),
 			t('Report burning you see to local authorities.', 'แจ้งการเผาที่พบเห็นต่อหน่วยงานท้องถิ่น'),
 			t('Keep spare masks for the next haze season.', 'เก็บหน้ากากสำรองไว้ใช้ในฤดูหมอกควันครั้งหน้า')
@@ -112,8 +112,8 @@ export const GUIDE: Record<GuideId, Guide> = {
 		during: [
 			t('Stay out of the sun between 11:00 and 15:00.', 'หลีกเลี่ยงแดดช่วง 11:00 ถึง 15:00 น.'),
 			t('Drink water every 20 minutes, even if you are not thirsty.', 'ดื่มน้ำทุก 20 นาที แม้ไม่รู้สึกกระหาย'),
-			t('Never leave children or pets in a parked car.', 'ห้ามทิ้งเด็กหรือสัตว์เลี้ยงไว้ในรถที่จอดอยู่'),
-			t('Dizziness, confusion or no sweating means heatstroke: call 1669.', 'เวียนหัว สับสน หรือเหงื่อไม่ออก คือสัญญาณฮีทสโตรก ให้โทร 1669')
+			t('Confusion, fainting or very hot skin (with or without sweat) means heatstroke: call 1669 and cool the person with water and shade.', 'สับสน หมดสติ หรือตัวร้อนจัด (มีหรือไม่มีเหงื่อก็ได้) คือสัญญาณฮีทสโตรก ให้โทร 1669 และช่วยลดความร้อนด้วยน้ำและที่ร่ม'),
+			t('Never leave children or pets in a parked car.', 'ห้ามทิ้งเด็กหรือสัตว์เลี้ยงไว้ในรถที่จอดอยู่')
 		],
 		after: [
 			t('Keep drinking water for the rest of the day.', 'ดื่มน้ำต่อเนื่องตลอดวัน'),
@@ -156,7 +156,7 @@ export const GUIDE: Record<GuideId, Guide> = {
 		during: [
 			t('Strong shaking or the sea pulling back: run to high ground now.', 'แผ่นดินไหวแรงหรือน้ำทะเลลดลงผิดปกติ ให้วิ่งขึ้นที่สูงทันที'),
 			t('Go on foot; roads jam quickly.', 'เดินเท้า เพราะถนนจะติดอย่างรวดเร็ว'),
-			t('Go at least 10 m above sea level or 2 km inland.', 'ขึ้นที่สูงอย่างน้อย 10 เมตรจากระดับน้ำทะเล หรือเข้าฝั่งอย่างน้อย 2 กม.'),
+			t('Go as high and as far inland as you can: at least 30 m up, 3 km inland, or the 3rd floor or higher of a strong concrete building.', 'ขึ้นที่สูงและห่างจากชายฝั่งให้มากที่สุด อย่างน้อยสูง 30 เมตร หรือห่างจากชายฝั่ง 3 กม. หรือขึ้นชั้น 3 ขึ้นไปของอาคารคอนกรีตที่แข็งแรง'),
 			t('Do not go back for belongings.', 'อย่าย้อนกลับไปเอาของ')
 		],
 		after: [
@@ -222,12 +222,12 @@ export const GUIDE: Record<GuideId, Guide> = {
 		during: [
 			t('Go indoors, close windows, turn off fans and air conditioning.', 'เข้าอาคาร ปิดหน้าต่าง ปิดพัดลมและเครื่องปรับอากาศ'),
 			t('If told to evacuate, leave upwind and uphill.', 'หากได้รับแจ้งให้อพยพ ให้ไปทางเหนือลมและที่สูง'),
-			t('Cover your nose and mouth with a wet cloth.', 'ปิดจมูกและปากด้วยผ้าชุบน้ำ'),
+			t('If nothing better is at hand, cover your nose and mouth with a wet cloth.', 'หากไม่มีอุปกรณ์อื่น ให้ปิดจมูกและปากด้วยผ้าชุบน้ำ'),
 			t('Do not touch spilled liquids or smoke residue.', 'ห้ามสัมผัสของเหลวที่หกหรือคราบควัน')
 		],
 		after: [
 			t('Return only when officials say the air is safe.', 'กลับเมื่อทางการแจ้งว่าอากาศปลอดภัยแล้วเท่านั้น'),
-			t('Wash skin and clothes that were exposed.', 'ล้างผิวหนังและเสื้อผ้าที่สัมผัสสารเคมี'),
+			t('Take off and bag exposed clothes; wash your skin with soap and water.', 'ถอดเสื้อผ้าที่สัมผัสสารเคมีใส่ถุงปิดไว้ และล้างผิวด้วยสบู่และน้ำ'),
 			t('See a doctor if your eyes, skin or breathing hurt.', 'พบแพทย์หากแสบตา ระคายผิว หรือหายใจลำบาก'),
 			t('Do not eat garden vegetables until they are checked.', 'อย่ากินผักในสวนจนกว่าจะได้รับการตรวจ')
 		]
@@ -256,7 +256,7 @@ export function stepsFor(type: HazardType, level: Lvl): Text[] {
 }
 
 export const GO_BAG: { id: string; text: Text }[] = [
-	{ id: 'water', text: t('Water: 3 litres per person per day, for 3 days', 'น้ำดื่ม 3 ลิตรต่อคนต่อวัน สำหรับ 3 วัน') },
+	{ id: 'water', text: t('Water: 2 litres per person in the bag, more stored at home', 'น้ำดื่ม 2 ลิตรต่อคนในกระเป๋า และสำรองเพิ่มไว้ที่บ้าน') },
 	{ id: 'food', text: t('Ready-to-eat food for 3 days', 'อาหารพร้อมกินสำหรับ 3 วัน') },
 	{ id: 'meds', text: t('Medicine for 7 days and copies of prescriptions', 'ยาประจำตัว 7 วันและสำเนาใบสั่งยา') },
 	{ id: 'docs', text: t('Copies of ID card, passport and house registration in a waterproof bag', 'สำเนาบัตรประชาชน พาสปอร์ต และทะเบียนบ้าน ใส่ถุงกันน้ำ') },
