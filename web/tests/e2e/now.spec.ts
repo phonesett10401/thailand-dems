@@ -47,7 +47,7 @@ test('while checking: neutral title, no Unknown badge', async ({ page }) => {
 	}
 	await page.goto('/');
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Checking hazards near you…');
-	await expect(page.getByText('Unknown')).toHaveCount(0);
+	expect(await page.locator('body').textContent()).not.toContain('Unknown'); // one-shot: auto-retrying negatives would pass once loading ends
 });
 
 test('tapping a hazard opens its detail with source and guide link', async ({ page }) => {
