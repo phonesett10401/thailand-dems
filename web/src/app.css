@@ -161,6 +161,9 @@
 	.map-dot-me::before {
 		inset: -17px;
 	}
+	.map-dot-sample::before {
+		inset: -17px;
+	}
 	.map-dot-me {
 		width: 14px;
 		height: 14px;

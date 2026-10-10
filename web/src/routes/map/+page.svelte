@@ -80,7 +80,7 @@
 			<Chip on={!hidden.has('shelters')} color="#f2f2f4" onclick={() => toggle('shelters')}>{m.map_shelters()}</Chip>
 		</div>
 		{#if showList}
-			<div class="glass absolute inset-x-3 bottom-3 max-h-[55%] overflow-y-auto rounded-2xl bg-bg/80 p-3 lg:hidden">
+			<div class="glass absolute inset-x-3 {failed ? 'bottom-40' : 'bottom-3'} max-h-[55%] overflow-y-auto rounded-2xl bg-bg/80 p-3 lg:hidden">
 				{#if shown.length}<HazardList hazards={shown} onselect={(h) => (picked = h)} />{:else}<p class="text-sm text-muted">{m.map_none()}</p>{/if}
 			</div>
 		{/if}
