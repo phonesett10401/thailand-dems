@@ -24,12 +24,11 @@ test('the map loads its worker without errors', async ({ page }) => {
 test('layer chips toggle hazard types and shelters', async ({ page }) => {
 	await page.route('https://www.gdacs.org/**', (r) => r.fulfill({ contentType: 'application/json', body: currentFlood }));
 	await page.goto('/map');
-	const layers = page.getByRole('group', { name: 'Map layers' });
-	const chip = layers.getByRole('button', { name: 'Flooding' });
+	const chip = page.getByRole('button', { name: 'Flooding', exact: true });
 	await expect(chip).toHaveAttribute('aria-pressed', 'true');
 	await chip.click();
 	await expect(chip).toHaveAttribute('aria-pressed', 'false');
-	await expect(layers.getByRole('button', { name: 'Shelters' })).toHaveAttribute('aria-pressed', 'true');
+	await expect(page.getByRole('button', { name: 'Shelters', exact: true })).toHaveAttribute('aria-pressed', 'true');
 });
 
 test('floating Report button goes to the report form', async ({ page }) => {
@@ -37,7 +36,17 @@ test('floating Report button goes to the report form', async ({ page }) => {
 	await expect(page.getByRole('link', { name: 'Report' })).toHaveAttribute('href', '/report');
 });
 
+test('phone: List chip shows every hazard', async ({ page }) => {
+	await page.route('https://www.gdacs.org/**', (r) => r.fulfill({ contentType: 'application/json', body: currentFlood }));
+	await page.goto('/map');
+	const row = page.getByRole('button', { name: /^Flooding Flood in Ayutthaya/ });
+	await expect(row).toBeHidden();
+	await page.getByRole('button', { name: 'List', exact: true }).click();
+	await expect(row).toBeVisible();
+});
+
 test('no WebGL: map area explains itself', async ({ page }) => {
+	await page.route('https://www.gdacs.org/**', (r) => r.fulfill({ contentType: 'application/json', body: currentFlood }));
 	await page.addInitScript(() => {
 		const orig = HTMLCanvasElement.prototype.getContext;
 		// @ts-expect-error test override
@@ -47,6 +56,7 @@ test('no WebGL: map area explains itself', async ({ page }) => {
 	});
 	await page.goto('/map');
 	await expect(page.getByText("Map can't be shown on this device.")).toBeVisible();
+	await expect(page.getByRole('button', { name: /^Flooding Flood in Ayutthaya/ })).toBeVisible();
 });
 
 test.describe('desktop', () => {
@@ -55,6 +65,6 @@ test.describe('desktop', () => {
 		await page.route('https://www.gdacs.org/**', (r) => r.fulfill({ contentType: 'application/json', body: currentFlood }));
 		await page.goto('/map');
 		await expect(page.getByRole('heading', { name: 'Hazards in Thailand' })).toBeVisible();
-		await expect(page.getByRole('button', { name: /Flooding.*Flood in Ayutthaya/ })).toBeVisible();
+		await expect(page.getByRole('button', { name: /^Flooding Flood in Ayutthaya/ })).toBeVisible();
 	});
 });

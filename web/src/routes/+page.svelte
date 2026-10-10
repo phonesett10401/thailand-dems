@@ -8,7 +8,7 @@
 	import { fmtHour, fmtTime } from '$lib/format';
 	import { occupancyPct, sortByDistance, toNum } from '$lib/geo';
 	import { currentLevel, live } from '$lib/hazards.svelte';
-	import { hazName, nearestOpen } from '$lib/labels';
+	import { hazName, markerLabel, nearestOpen } from '$lib/labels';
 	import type { Hazard } from '$lib/levels';
 	import { here } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
@@ -33,7 +33,7 @@
 	const markers = $derived<MapMarker[]>([
 		{ id: 'me', kind: 'me', lat: here.place.lat, lon: here.place.lon, label: m.location_label() },
 		...(live.a?.hazards ?? []).flatMap((h): MapMarker[] =>
-			h.lat === null || h.lon === null ? [] : [{ id: h.id, kind: h.sample ? 'sample' : h.level, lat: h.lat, lon: h.lon, label: hazName(h.type) }]
+			h.lat === null || h.lon === null ? [] : [{ id: h.id, kind: h.sample ? 'sample' : h.level, lat: h.lat, lon: h.lon, label: markerLabel(h) }]
 		),
 		...shelters.flatMap((s): MapMarker[] => {
 			const c = coords(s);

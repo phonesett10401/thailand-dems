@@ -255,5 +255,6 @@
 	"map_shelters": "ที่พักพิง",
 	"map_all_hazards": "ภัยในประเทศไทย",
 	"map_none": "ไม่มีภัยที่จะแสดง",
-	"map_report": "แจ้งเหตุ"
+	"map_report": "แจ้งเหตุ",
+	"map_list": "รายการ"
 }

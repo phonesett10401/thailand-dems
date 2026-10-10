@@ -255,5 +255,6 @@
 	"map_shelters": "Shelters",
 	"map_all_hazards": "Hazards in Thailand",
 	"map_none": "No hazards to show.",
-	"map_report": "Report"
+	"map_report": "Report",
+	"map_list": "List"
 }

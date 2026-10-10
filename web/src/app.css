@@ -152,6 +152,12 @@
 		box-shadow: 0 0 0 1px rgb(255 255 255 / 0.35);
 		cursor: pointer;
 	}
+	/* 44 px hit area, 16 px visible dot. */
+	.map-dot::before {
+		content: "";
+		position: absolute;
+		inset: -14px;
+	}
 	.map-dot-me {
 		width: 14px;
 		height: 14px;

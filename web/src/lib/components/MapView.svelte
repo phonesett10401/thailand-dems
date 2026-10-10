@@ -22,6 +22,7 @@
 		areas = [],
 		lines = [],
 		fit = null,
+		failed = $bindable(false),
 		class: klass = 'relative'
 	}: {
 		markers: MapMarker[];
@@ -32,6 +33,7 @@
 		areas?: Area[];
 		lines?: Line[];
 		fit?: [number, number][] | null;
+		failed?: boolean;
 		class?: string;
 	} = $props();
 
@@ -40,7 +42,6 @@
 	let el: HTMLDivElement;
 	let map = $state<MlMap | null>(null);
 	let ready = $state(false);
-	let failed = $state(false);
 	const empty = { type: 'FeatureCollection' as const, features: [] };
 
 	$effect(() => {

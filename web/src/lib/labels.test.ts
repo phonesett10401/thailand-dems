@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { nearestOpen, nowTitle } from './labels';
+import type { Hazard } from './levels';
+import { markerLabel, nearestOpen, nowTitle } from './labels';
 import type { Shelter } from './types';
 
 describe('nowTitle', () => {
@@ -19,5 +20,13 @@ describe('nearestOpen', () => {
 		const r = nearestOpen([s(1, '13.76', 'Full'), s(2, null), s(3, '14.5')], { lat: 13.75, lon: 100.5 });
 		expect(r?.s.ShelterID).toBe(3);
 		expect(nearestOpen([s(2, null)], { lat: 13.75, lon: 100.5 })).toBeNull();
+	});
+});
+
+describe('markerLabel', () => {
+	const h = (o: Partial<Hazard>): Hazard => ({ id: 'x', type: 'flood', level: 'warning', name: null, value: null, km: null, lat: 1, lon: 1, time: null, source: 's', sample: false, url: null, ...o });
+	it('names type, place and level; tags samples', () => {
+		expect(markerLabel(h({ name: 'Ayutthaya' }))).toBe('Flooding: Ayutthaya · Warning');
+		expect(markerLabel(h({ level: 'watch', sample: true }))).toBe('Flooding · Watch · Sample');
 	});
 });

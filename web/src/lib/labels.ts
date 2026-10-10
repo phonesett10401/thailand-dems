@@ -161,3 +161,6 @@ export function nearestOpen(shelters: Shelter[], at: Pt): { s: Shelter; km: numb
 	).find((x) => x.km !== null);
 	return hit ? { s: hit.item, km: hit.km! } : null;
 }
+
+export const markerLabel = (h: Hazard): string =>
+	[hazName(h.type) + (h.name ? `: ${h.name}` : ''), levelWord(h.level), ...(h.sample ? [m.sample_tag()] : [])].join(' · ');
