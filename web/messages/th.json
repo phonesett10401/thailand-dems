@@ -250,5 +250,10 @@
 	"hazard_guide": "อ่านคู่มือฉบับเต็ม",
 	"hazard_open_source": "เปิดรายงานต้นทาง",
 	"now_all_shelters": "ที่พักพิงทั้งหมด",
-	"now_checking_title": "กำลังตรวจสอบภัยใกล้คุณ…"
+	"now_checking_title": "กำลังตรวจสอบภัยใกล้คุณ…",
+	"map_layers": "ชั้นข้อมูลแผนที่",
+	"map_shelters": "ที่พักพิง",
+	"map_all_hazards": "ภัยในประเทศไทย",
+	"map_none": "ไม่มีภัยที่จะแสดง",
+	"map_report": "แจ้งเหตุ"
 }

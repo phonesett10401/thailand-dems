@@ -250,5 +250,10 @@
 	"hazard_guide": "Read the full guide",
 	"hazard_open_source": "Open source report",
 	"now_all_shelters": "All shelters",
-	"now_checking_title": "Checking hazards near you…"
+	"now_checking_title": "Checking hazards near you…",
+	"map_layers": "Map layers",
+	"map_shelters": "Shelters",
+	"map_all_hazards": "Hazards in Thailand",
+	"map_none": "No hazards to show.",
+	"map_report": "Report"
 }
