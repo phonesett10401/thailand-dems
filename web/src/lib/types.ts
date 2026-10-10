@@ -95,7 +95,7 @@ export type Sourced<T> = { data: T; source: string; updatedAt: Date } | { error:
 
 export type MapMarker = {
 	id: string;
-	kind: 'shelter' | 'quake' | 'hazard' | 'sample' | 'me';
+	kind: 'shelter' | 'quake' | 'hazard' | 'sample' | 'me' | 'safe' | 'watch' | 'warning';
 	lat: number;
 	lon: number;
 	label: string;
