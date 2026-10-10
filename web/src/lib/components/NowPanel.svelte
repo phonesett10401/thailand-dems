@@ -69,14 +69,14 @@
 		<span>{place}</span>
 		{#if a}<span class="font-mono text-[11px]">{m.now_updated({ time: fmtTime(new Date(a.checkedAt)) })}</span>{/if}
 	</div>
-	<LevelBadge {level} />
+	{#if !checking}<LevelBadge {level} />{/if}
 	<h1 class="headline text-[2.4rem]">{title}</h1>
 	{#if !checking}<p class="-mt-1 text-[15px] leading-snug text-[#c9c9cf]">{reason}</p>{/if}
 	{#if a && a.failed.length && level !== 'unknown'}
 		<p class="text-xs text-watch">{m.now_partial({ feeds: a.failed.map(feedName).join(', ') })}</p>
 	{/if}
 	<p class="text-xs text-muted">{m.now_guidance()}</p>
-	<LevelScale {level} />
+	{#if !checking}<LevelScale {level} />{/if}
 	{#if steps.length}
 		<section class="lv-warning">
 			<h2 class="label mb-2">{m.now_steps()}</h2>

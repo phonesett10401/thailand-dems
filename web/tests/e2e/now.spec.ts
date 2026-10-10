@@ -38,6 +38,18 @@ test('one feed down: level still computed, the missing feed is named', async ({ 
 	await expect(page.getByText('no risk here right now')).not.toContainText('Haze');
 });
 
+test('while checking: neutral title, no Unknown badge', async ({ page }) => {
+	for (const host of ['api.open-meteo.com', 'air-quality-api.open-meteo.com', 'flood-api.open-meteo.com', 'earthquake.usgs.gov', 'www.gdacs.org']) {
+		await page.route(`https://${host}/**`, async (r) => {
+			await new Promise((res) => setTimeout(res, 3000));
+			await r.fallback();
+		});
+	}
+	await page.goto('/');
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Checking hazards near you…');
+	await expect(page.getByText('Unknown')).toHaveCount(0);
+});
+
 test('tapping a hazard opens its detail with source and guide link', async ({ page }) => {
 	await page.goto('/');
 	await page.getByRole('button', { name: /Haze/ }).click();
