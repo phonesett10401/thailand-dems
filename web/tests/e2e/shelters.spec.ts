@@ -12,10 +12,3 @@ test('shelters are sorted by distance, labelled as sample, with directions', asy
 	expect(kms.length).toBeGreaterThan(1);
 	expect(kms).toEqual([...kms].sort((a, b) => a - b));
 });
-
-test('evacuation shows nearest open shelters and sample routes', async ({ page }) => {
-	await page.goto('/evacuation');
-	await expect(page.getByText('In danger now? Call 1669 (ambulance) or 191 (police) first.')).toBeVisible();
-	await expect(page.getByRole('heading', { name: 'Planned routes' })).toContainText('SAMPLE');
-	await expect(page.getByRole('link', { name: 'Directions' }).first()).toBeVisible();
-});

@@ -14,10 +14,12 @@ const API: Record<string, string> = {
 };
 
 /** Every external host is mocked so tests are deterministic and work offline. */
-export const test = base.extend<{ backend: 'up' | 'down'; mocks: void }>({
+export const test = base.extend<{ backend: 'up' | 'down'; seenNote: boolean; mocks: void }>({
 	backend: ['up', { option: true }],
+	seenNote: [true, { option: true }],
 	mocks: [
-		async ({ page, backend }, use) => {
+		async ({ page, backend, seenNote }, use) => {
+			if (seenNote) await page.addInitScript(() => localStorage.setItem('dems.seen-note', '1'));
 			await page.route('https://tiles.openfreemap.org/**', (r) => r.abort());
 			await page.route('https://api.open-meteo.com/**', (r) => r.fulfill({ ...json, body: fx('forecast') }));
 			await page.route('https://air-quality-api.open-meteo.com/**', (r) => r.fulfill({ ...json, body: fx('air') }));

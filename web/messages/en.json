@@ -172,5 +172,20 @@
 	"signed_in_as": "Signed in as {who}",
 	"sign_out": "Sign out",
 	"admin_coming": "The admin console arrives in Phase 2.",
-	"volunteer_coming": "Volunteer tools arrive in Phase 3."
+	"volunteer_coming": "Volunteer tools arrive in Phase 3.",
+	"nav_now": "Now",
+	"nav_prepare": "Prepare",
+	"nav_more": "More",
+	"live_label": "Live",
+	"sos_aria": "Call 1784, Thailand's disaster hotline",
+	"demo_chip": "Demo",
+	"demo_chip_aria": "About this demo and its data",
+	"place_change": "Change location",
+	"search_label": "Search a province or shelter",
+	"first_visit_body": "DEMS is a student project. Levels are estimates from public data, not official warnings. Follow TMD and DDPM instructions. In an emergency call 1784.",
+	"first_visit_ok": "Got it",
+	"lvl_safe": "Safe",
+	"lvl_watch": "Watch",
+	"lvl_warning": "Warning",
+	"lvl_unknown": "Unknown"
 }

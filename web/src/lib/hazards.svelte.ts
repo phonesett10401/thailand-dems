@@ -1,5 +1,5 @@
 import { api } from './config';
-import { assess, keepLast, type Assessment, type Feeds } from './levels';
+import { assess, keepLast, shown, type Assessment, type Feeds, type Overall } from './levels';
 import { here } from './location.svelte';
 import { getGdacs } from './sources/gdacs';
 import { getAir, getForecast, getRiver } from './sources/openmeteo';
@@ -34,3 +34,7 @@ export async function refresh(): Promise<void> {
 	live.a = keepLast(live.a, assess(feeds, at, Date.now()));
 	live.loading = false;
 }
+
+/** Ticks once a minute (Shell drives it) so stale data turns Unknown without a reload. */
+export const clock = $state({ now: Date.now() });
+export const currentLevel = (): Overall => (live.a ? shown(live.a, clock.now) : 'unknown');
