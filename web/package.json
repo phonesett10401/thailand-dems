@@ -39,8 +39,9 @@
 		"vitest": "^4.1.11"
 	},
 	"dependencies": {
-		"@fontsource/ibm-plex-mono": "^5.3.0",
-		"@fontsource/ibm-plex-sans-thai": "^5.3.0",
+		"@fontsource-variable/anuphan": "^5.3.0",
+		"@fontsource-variable/geist": "^5.3.0",
+		"@fontsource-variable/geist-mono": "^5.3.0",
 		"@lucide/svelte": "^1.53.0",
 		"@supabase/ssr": "^0.12.7",
 		"@supabase/supabase-js": "^2.117.3",
