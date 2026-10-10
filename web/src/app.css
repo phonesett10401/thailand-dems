@@ -156,7 +156,10 @@
 	.map-dot::before {
 		content: "";
 		position: absolute;
-		inset: -14px;
+		inset: -16px;
+	}
+	.map-dot-me::before {
+		inset: -17px;
 	}
 	.map-dot-me {
 		width: 14px;

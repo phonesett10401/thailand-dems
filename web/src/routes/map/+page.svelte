@@ -73,7 +73,7 @@
 	<div class="relative h-full">
 		<MapView class="relative h-full" bind:failed {markers} {areas} center={here.place} zoom={6} onselect={select} />
 		<div role="group" aria-label={m.map_layers()} class="absolute inset-x-3 top-3 flex gap-1.5 overflow-x-auto pb-1">
-			<span class="contents lg:hidden"><Chip on={showList} onclick={() => (listOn = !listOn)}>{m.map_list()}</Chip></span>
+			{#if !failed}<span class="contents lg:hidden"><Chip on={showList} onclick={() => (listOn = !listOn)}>{m.map_list()}</Chip></span>{/if}
 			{#each types as t (t)}
 				<Chip on={!hidden.has(t)} color={LEVEL_HEX[worst(all.filter((h) => h.type === t).map((h) => h.level))]} onclick={() => toggle(t)}>{hazName(t)}</Chip>
 			{/each}
@@ -86,7 +86,7 @@
 		{/if}
 		<a
 			href={localizeHref('/report')}
-			class:max-lg:hidden={showList}
+			class:max-lg:hidden={listOn}
 			class="absolute right-3 bottom-24 flex min-h-11 items-center gap-1.5 rounded-full bg-text px-4 text-sm font-semibold text-bg shadow-lg md:bottom-28"
 		>
 			<TriangleAlert size={16} aria-hidden="true" />{m.map_report()}
