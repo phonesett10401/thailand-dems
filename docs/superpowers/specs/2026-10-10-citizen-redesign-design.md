@@ -97,7 +97,7 @@ The header **Assistant** button is removed. Its slot moves into More as "Ask DEM
 |---|---|---|---|---|
 | Now | `/` | Am I safe where I am? | level sky, headline, hazard list, condition tiles, nearest-shelter button, "Report something" link | **dashboard**: left = phone content; right = map; bottom row = nearest shelters with fill bars, 24 h forecast of the worst hazard, timeline of today's changes |
 | Map | `/map` | What is happening anywhere? | full-screen map, layer chips (each hazard type, rain radar, shelters, evacuation routes), tap → bottom sheet, floating Report button | map plus a left list of all hazards with filters |
-| Shelters | `/shelters` | Where do I go? | list by distance, filters (open, has space, pets, clean-air, cooling) → detail sheet → **Route** | list left, map right |
+| Shelters | `/shelters` | Where do I go? | list by distance, filters (open, has space, medical, pets, clean air) → detail sheet → **Route** | list left, map right |
 | Prepare | `/prepare`, `/prepare/[hazard]` | How do I get ready? | hazard guide cards, go-bag checklist, emergency numbers | guide list left, content right |
 | More | `/more` | everything else | Report an incident, Language, About & data, Demo (Spec 2), Staff sign-in, Ask DEMS (coming soon) | top-bar menu |
 
@@ -130,13 +130,13 @@ Thai stays under `/th/...`. The `/admin` and `/volunteer` routes are untouched, 
 
 ### 3.4 Hazard detail (sheet on phone, side panel on desktop)
 - what it is, and its level
-- what to do now (3 steps per hazard and level)
+- what to do now: 3 steps, the first three **Before** items of the hazard's guide at Watch, the first three **During** items at Warning
 - source and age, e.g. "Open-Meteo · 2 min ago"
 - distance from you
 - link to `/prepare/[hazard]`
 
 ### 3.5 Prepare: content
-- **Hazard guides**, each with Before / During / After lists, for: flood, flash flood, storm, wildfire smoke and haze, extreme heat, earthquake, tsunami, landslide, drought, chemical incident. Text lives in Paraglide messages (EN plus a Thai draft).
+- **Hazard guides**, each with Before / During / After lists, for: flood, flash flood, storm, wildfire smoke and haze, extreme heat, earthquake, tsunami, landslide, drought, chemical incident. Guide text lives in `web/src/lib/prepare/guides.ts`, keyed by locale (EN plus a Thai draft), because these are long lists rather than UI strings.
 - **Go-bag checklist:** about 15 items you can tick, saved in localStorage, with a count of how many are ready. A reset button clears it.
 - **Emergency numbers,** each a tap-to-call `tel:` link:
 
@@ -171,11 +171,11 @@ Thai stays under `/th/...`. The `/admin` and `/volunteer` routes are untouched, 
 | Earthquake (last 24 h) | M ≥ 4.5 within 300 km | M ≥ 6.0 within 300 km | USGS |
 | GDACS events (storm, flood, wildfire, drought, tsunami, volcano) | orange within the radius | red within the radius | GDACS alert level; radius 300 km (cyclone 500 km) |
 | River model | rising and peak ≥ 1.5 × today | never | model, not a measurement |
-| DB alerts and disasters (sample) | Severity Warning or Severe | Critical, Emergency or Catastrophic | existing columns |
+| DB disasters and alerts (sample; Active, within 100 km; an alert takes its disaster's position) | Severity Moderate/Severe or Warning | Critical, Emergency or Catastrophic | existing columns. **Listed with a Sample tag but never counted in the overall level**, so fake data never tells anyone to leave |
 
 GDACS green events are listed as information at level Safe.
 
-**Overall level** is the worst of all hazards.
+**Overall level** is the worst of the **live** hazards.
 
 **Unknown:** if every feed fails, or the data is older than 3 hours, the level is **Unknown** (grey, "last checked HH:MM"). Unknown is never shown as Safe. If only some feeds fail, the level is computed from what loaded, and the failed sources are listed: "Air quality unavailable".
 
