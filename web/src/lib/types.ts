@@ -88,6 +88,7 @@ export type HazardEvent = {
 	time: string; // ISO 8601 UTC
 	current: boolean;
 	url: string;
+	mag?: number;
 };
 
 export type Sourced<T> = { data: T; source: string; updatedAt: Date } | { error: true; source: string };

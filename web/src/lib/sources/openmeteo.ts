@@ -10,6 +10,7 @@ type RawForecast = {
 		temperature_2m_max: number[];
 		temperature_2m_min: number[];
 		precipitation_sum: number[];
+		apparent_temperature_max?: (number | null)[];
 	};
 };
 type RawAir = { current: { time: number; pm2_5: number; us_aqi: number } };
@@ -18,7 +19,7 @@ type RawRiver = { daily: { time: string[]; river_discharge: (number | null)[] } 
 export type Forecast = {
 	now: { time: Date; temp: number; precip: number; wind: number; code: number };
 	hours: { time: Date; temp: number; rainChance: number }[];
-	days: { date: Date; code: number; max: number; min: number; rain: number }[];
+	days: { date: Date; code: number; max: number; min: number; rain: number; feels: number | null }[];
 };
 export type Air = { time: Date; pm25: number; aqi: number };
 export type River = { today: number; peak: number; peakDate: string; rising: boolean };
@@ -29,7 +30,7 @@ const where = (p: Pt) => `latitude=${p.lat.toFixed(3)}&longitude=${p.lon.toFixed
 const TZ = 'timezone=Asia%2FBangkok&timeformat=unixtime';
 
 export const forecastUrl = (p: Pt) =>
-	`https://api.open-meteo.com/v1/forecast?${where(p)}&current=temperature_2m,precipitation,wind_speed_10m,weather_code&hourly=temperature_2m,precipitation_probability&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum&forecast_days=7&forecast_hours=24&${TZ}`;
+	`https://api.open-meteo.com/v1/forecast?${where(p)}&current=temperature_2m,precipitation,wind_speed_10m,weather_code&hourly=temperature_2m,precipitation_probability&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,apparent_temperature_max&forecast_days=7&forecast_hours=24&${TZ}`;
 export const airUrl = (p: Pt) =>
 	`https://air-quality-api.open-meteo.com/v1/air-quality?${where(p)}&current=pm2_5,us_aqi&${TZ}`;
 export const riverUrl = (p: Pt) =>
@@ -57,9 +58,11 @@ export function parseForecast(r: RawForecast): Forecast {
 				code: r.daily.weather_code[i],
 				max: r.daily.temperature_2m_max[i],
 				min: r.daily.temperature_2m_min[i],
-				rain: r.daily.precipitation_sum[i]
+				rain: r.daily.precipitation_sum[i],
+				feels: r.daily.apparent_temperature_max?.[i] ?? null
 			}))
-			.filter(complete)
+			// feels may be missing on old responses; it must not drop the whole day.
+			.filter((d) => complete({ ...d, feels: 0 }))
 	};
 }
 

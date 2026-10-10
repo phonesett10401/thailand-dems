@@ -39,7 +39,8 @@ export function parseQuakes(raw: RawQuakes | null, now = Date.now()): HazardEven
 			lon: f.geometry.coordinates[0],
 			time: new Date(f.properties.time).toISOString(),
 			current: now - f.properties.time < 3 * DAY,
-			url: f.properties.url
+			url: f.properties.url,
+			mag
 		};
 	});
 }

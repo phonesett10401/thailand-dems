@@ -24,7 +24,8 @@ describe('parseQuakes', () => {
 			lon: 95.1,
 			time: new Date(1791070654235).toISOString(),
 			current: false,
-			url: 'https://earthquake.usgs.gov/earthquakes/eventpage/us7000abcd'
+			url: 'https://earthquake.usgs.gov/earthquakes/eventpage/us7000abcd',
+			mag: 5.3
 		});
 	});
 	it('treats a missing magnitude as 0 and marks events from the last 3 days as current', () => {
