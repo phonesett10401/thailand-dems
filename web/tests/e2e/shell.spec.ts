@@ -57,3 +57,22 @@ test.describe('geolocation denied', () => {
 		await expect(picker.getByText('Location unavailable. Choose a province instead.')).toBeVisible();
 	});
 });
+
+test.describe('375 px width', () => {
+	test.use({ viewport: { width: 375, height: 812 } });
+	for (const [path, sos, demo] of [
+		['/', "Call 1784, Thailand's disaster hotline", 'About this demo and its data'],
+		['/th', 'โทร 1784 สายด่วนภัยพิบัติ', 'เกี่ยวกับเดโมนี้และข้อมูล']
+	]) {
+		test(`SOS and Demo chip fit inside the viewport on ${path}`, async ({ page }) => {
+			await page.goto(path);
+			for (const name of [sos, demo]) {
+				const box = await page.getByRole('link', { name }).boundingBox();
+				expect(box).not.toBeNull();
+				expect(box!.x).toBeGreaterThanOrEqual(0);
+				expect(box!.x + box!.width).toBeLessThanOrEqual(375);
+				expect(box!.height).toBeGreaterThanOrEqual(44);
+			}
+		});
+	}
+});

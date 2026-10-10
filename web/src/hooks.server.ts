@@ -13,10 +13,10 @@ const MOVED: Record<string, string> = {
 	'/evacuation': '/shelters'
 };
 const moved: Handle = ({ event, resolve }) => {
-	const to = MOVED[deLocalizeUrl(event.url).pathname];
+	const to = MOVED[deLocalizeUrl(event.url).pathname.replace(/\/$/, '') || '/'];
 	if (!to) return resolve(event);
 	const locale = extractLocaleFromUrl(event.url) ?? 'en';
-	redirect(308, localizeUrl(new URL(to, event.url), { locale }).pathname);
+	redirect(308, localizeUrl(new URL(to, event.url), { locale }).pathname + event.url.search);
 };
 
 const i18n: Handle = ({ event, resolve }) =>
