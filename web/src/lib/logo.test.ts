@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { faviconHref, faviconSvg, LEVEL_HEX } from './logo';
 
 describe('favicon', () => {
@@ -14,5 +15,12 @@ describe('favicon', () => {
 	});
 	it('is a data URL', () => {
 		expect(faviconHref('watch')).toMatch(/^data:image\/svg\+xml,/);
+	});
+});
+
+describe('static icons', () => {
+	it('static/favicon.svg matches the live logo (re-run scripts/make-icons.js if this fails)', () => {
+		const file = readFileSync(new URL('../../static/favicon.svg', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+		expect(file).toBe(faviconSvg('warning') + '\n');
 	});
 });

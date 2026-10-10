@@ -1,7 +1,7 @@
 // Writes static/favicon.svg (red arc, for places that can't show the live level) and
 // static/apple-touch-icon.png (180 px, full-bleed dark tile; iOS rounds the corners).
 // Run: node scripts/make-icons.js
-import { chromium } from 'playwright';
+import { chromium } from '@playwright/test';
 import { writeFileSync } from 'node:fs';
 
 const SHIELD = 'M32 4 L54 11 V30 C54 44 45 53 32 60 C19 53 10 44 10 30 V11 Z';
