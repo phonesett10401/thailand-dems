@@ -18,10 +18,12 @@ export function LevelScene({ layout, lang }: SceneProps) {
 	const swap = spring({ frame: f - (state === 'safe' ? 0 : state === 'watch' ? watchAt : warnAt), fps, config: { damping: 200 } });
 
 	// These follow the real rules: haze PM2.5 41.2 > 37.5 is Watch; 112 mm of rain ≥ 90 is Warning.
+	// Same sentence-casing as the app's nowTitle() (web/src/lib/labels.ts); no-op for Thai.
+	const sentence = (s: string) => s.toLowerCase().charAt(0).toUpperCase() + s.toLowerCase().slice(1);
 	const title =
 		state === 'safe' ? msg(lang, 'now_safe_title')
-		: state === 'watch' ? msg(lang, 'now_title_1', { a: msg(lang, 'haz_smoke') })
-		: msg(lang, 'now_title_2', { a: msg(lang, 'haz_rain'), b: msg(lang, 'haz_smoke') });
+		: state === 'watch' ? sentence(msg(lang, 'now_title_1', { a: msg(lang, 'haz_smoke') }))
+		: sentence(msg(lang, 'now_title_2', { a: msg(lang, 'haz_rain'), b: msg(lang, 'haz_smoke') }));
 	const lines =
 		state === 'safe' ? [msg(lang, 'now_safe_body', { place: LABELS.en.place })]
 		: state === 'watch' ? [msg(lang, 'line_pm25', { value: 41.2 })]
