@@ -14,4 +14,5 @@ test('About explains sources, sample data, thresholds and limits', async ({ page
 	await expect(page.getByText('PM2.5: Watch above 37.5 µg/m³, Warning above 75 (Thai PCD)')).toBeVisible();
 	await expect(page.getByText(/never Safe/)).toBeVisible();
 	await expect(page.getByRole('heading', { name: 'Limits' })).toBeVisible();
+	await expect(page.getByText(/openrouteservice/)).toBeVisible();
 });

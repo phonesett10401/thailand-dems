@@ -136,6 +136,7 @@
 					</li>
 				{/each}
 			</ol>
+			<p class="mt-4 text-xs text-muted">{m.route_attribution()}</p>
 		{:else if !result.ok}
 			<p class="mt-4 text-sm" role="alert">
 				{result.reason === 'limited' ? m.route_limited() : result.reason === 'outside' ? m.route_outside() : m.route_fallback({ km: straight!.km, dir: straight!.dir })}

@@ -169,7 +169,7 @@
 					/></label
 				>
 				{#if failure}
-					<p class="rounded-lg border border-alarm p-3 text-sm text-warning" role="alert">
+					<p class="rounded-lg border border-warning p-3 text-sm text-warning" role="alert">
 						{failure === 'offline'
 							? m.report_error_offline()
 							: failure === 'limited'

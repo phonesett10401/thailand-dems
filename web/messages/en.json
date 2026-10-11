@@ -340,9 +340,11 @@
 	"about_row_heat": "Heat: Watch from {w}°C feels-like, Warning from {x}°C",
 	"about_row_rain": "Rain today: Watch from {w} mm, Warning from {x} mm (TMD)",
 	"about_row_quake": "Earthquake within {km} km in 24 h: Watch from M{w}, Warning from M{x}",
-	"about_row_gdacs": "GDACS events within {km} km: orange = Watch, red = Warning",
+	"about_row_gdacs": "GDACS events within {km} km (cyclones {ckm} km): orange = Watch, red = Warning",
 	"about_row_river": "River model rising: Watch only (it is a forecast, not a measurement)",
 	"about_row_sample": "Sample disasters: listed with a Sample tag, never counted",
 	"about_limits_title": "Limits",
-	"about_limits_body": "This is a student project, not an official warning service. Data can be late or wrong. Routes avoid only hazard zones we know about and cannot see road closures. Always follow TMD and DDPM, and call 1784 in an emergency."
+	"about_limits_body": "This is a student project, not an official warning service. Data can be late or wrong. Routes avoid only hazard zones we know about and cannot see road closures. Always follow TMD and DDPM, and call 1784 in an emergency.",
+	"about_real_routes": "Walking, driving and cycling routes: openrouteservice by HeiGIT, on OpenStreetMap data",
+	"route_attribution": "Routes: © openrouteservice.org by HeiGIT · Map data © OpenStreetMap contributors"
 }

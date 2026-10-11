@@ -7,7 +7,7 @@
 		m.about_row_heat({ w: T.heat[0], x: T.heat[1] }),
 		m.about_row_rain({ w: T.rain[0], x: T.rain[1] }),
 		m.about_row_quake({ km: T.quakeKm, w: T.quake[0], x: T.quake[1] }),
-		m.about_row_gdacs({ km: T.gdacsKm }),
+		m.about_row_gdacs({ km: T.gdacsKm, ckm: T.cycloneKm }),
 		m.about_row_river(),
 		m.about_row_sample()
 	];
@@ -20,7 +20,7 @@
 	<section class="mt-8">
 		<h2 class="label mb-2">{m.about_real()}</h2>
 		<ul class="glass divide-y divide-line rounded-2xl text-sm">
-			{#each [m.about_real_weather(), m.about_real_events(), m.about_real_quakes(), m.about_real_map()] as t (t)}<li class="px-4 py-3">{t}</li>{/each}
+			{#each [m.about_real_weather(), m.about_real_events(), m.about_real_quakes(), m.about_real_map(), m.about_real_routes()] as t (t)}<li class="px-4 py-3">{t}</li>{/each}
 		</ul>
 	</section>
 	<section class="mt-6">
