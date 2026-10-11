@@ -41,7 +41,7 @@
 <div class="page max-w-4xl">
 	<div class="demo-frame relative mx-auto overflow-hidden rounded-3xl border border-line bg-black">
 		<!-- svelte-ignore a11y_media_has_caption (captions are burned into the video; it has no speech) -->
-		<video bind:this={video} bind:muted class="h-full w-full object-cover" loop playsinline controls preload="metadata" {poster} aria-label={m.demo_video_label()}>
+		<video bind:this={video} bind:muted class="h-full w-full object-contain" loop playsinline controls preload="metadata" {poster} aria-label={m.demo_video_label()}>
 			<source media={TALL} src="/demo/demo-9x16.mp4" type="video/mp4" />
 			<source src="/demo/demo-16x9.mp4" type="video/mp4" />
 		</video>
@@ -108,6 +108,7 @@
 	.demo-frame {
 		aspect-ratio: 16 / 9;
 		width: 100%;
+		max-width: calc((100svh - var(--header-h, 3.5rem) - 2rem) * 16 / 9);
 	}
 	@media (max-width: 767px) and (orientation: portrait) {
 		.demo-frame {

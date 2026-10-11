@@ -36,6 +36,13 @@ for (const [name, size] of [['landscape phone', { width: 915, height: 412 }], ['
 	});
 }
 
+test('landscape phone: the whole video frame fits on screen (controls reachable)', async ({ page }) => {
+	await page.setViewportSize({ width: 915, height: 412 });
+	await page.goto('/demo');
+	const bottom = await page.locator('.demo-frame').evaluate((el) => el.getBoundingClientRect().bottom);
+	expect(bottom).toBeLessThanOrEqual(412);
+});
+
 test('autoplays muted, and the sound button unmutes', async ({ page }) => {
 	await page.goto('/demo');
 	await expect.poll(() => page.evaluate(() => (window as unknown as { __plays: number }).__plays)).toBeGreaterThan(0);
