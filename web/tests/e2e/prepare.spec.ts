@@ -13,7 +13,7 @@ test('the go-bag defaults to the emergency active near you', async ({ page }) =>
 	await page.goto('/prepare');
 	const group = page.getByRole('group', { name: 'Emergency' });
 	await expect(group.getByRole('button', { name: 'Haze' })).toHaveAttribute('aria-pressed', 'true');
-	await expect(page.getByText(/Showing extras for .*, active near you now\./)).toBeVisible();
+	await expect(page.getByText(/Showing extras for Haze,/)).toBeVisible();
 	await expect(page.getByText('N95 masks')).toBeVisible();
 	await expect(page.getByText('0 of 16 ready')).toBeVisible();
 });

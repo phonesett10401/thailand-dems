@@ -296,7 +296,6 @@ export const EXTRAS: Record<KitId, BagItem[]> = {
 	earthquake: [I.shoes, { id: 'gloves', text: t('Work gloves', 'ถุงมือทำงาน') }, I.whistle, { id: 'dustmask', text: t('Dust masks', 'หน้ากากกันฝุ่น') }],
 	tsunami: [I.shoes, I.whistle, I.drybags],
 	chemical: [
-		I.masks,
 		I.sheet,
 		{ id: 'wipes', text: t('Wet wipes', 'ทิชชู่เปียก') },
 		{ id: 'sealedclothes', text: t('Spare clothes in a sealed bag', 'เสื้อผ้าสำรองในถุงปิดสนิท') }
@@ -304,6 +303,10 @@ export const EXTRAS: Record<KitId, BagItem[]> = {
 };
 
 export const KIT_NOTE: Partial<Record<KitId, Text>> = {
+	chemical: t(
+		'Masks do not stop chemical gases. Stay indoors with windows and doors sealed, or leave upwind if told to evacuate.',
+		'หน้ากากกันฝุ่นป้องกันแก๊สสารเคมีไม่ได้ ให้อยู่ในอาคารและปิดประตูหน้าต่างให้สนิท หรืออพยพไปทางเหนือลมเมื่อได้รับแจ้ง'
+	),
 	tsunami: t(
 		"Keep this bag by the door. If the warning comes, go on foot right away. Don't stop to pack.",
 		'วางกระเป๋านี้ไว้ใกล้ประตู เมื่อมีประกาศเตือน ให้เดินเท้าออกทันที อย่าเสียเวลาเก็บของ'

@@ -55,6 +55,7 @@ describe('go-bag by emergency', () => {
 	it('masks only for smoke', () => {
 		expect(bagFor('smoke').map((i) => i.id)).toContain('masks');
 		expect(bagFor('flood').map((i) => i.id)).not.toContain('masks');
+		expect(bagFor('chemical').map((i) => i.id)).not.toContain('masks');
 	});
 	it('every item has en and th text', () => {
 		for (const i of [...BASICS, ...Object.values(EXTRAS).flat()]) {
@@ -67,6 +68,7 @@ describe('go-bag by emergency', () => {
 		expect(defaultKit([hz('smoke', 'warning', true)])).toBeNull();
 		expect(defaultKit([hz('smoke', 'watch')])).toBe('smoke');
 		expect(defaultKit([hz('heat', 'watch'), hz('flood', 'warning')])).toBe('flood');
+		expect(defaultKit([hz('smoke', 'watch'), hz('flood', 'watch')])).toBe('smoke');
 		expect(defaultKit([hz('smoke', 'safe')])).toBeNull();
 		expect(defaultKit([hz('volcano', 'warning')])).toBeNull();
 	});
