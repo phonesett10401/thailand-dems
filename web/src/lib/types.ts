@@ -3,7 +3,7 @@ import type { Lvl } from './levels';
 
 export type Pt = { lat: number; lon: number };
 
-/** Rows from the project's Express API. Numeric columns arrive as strings from MySQL DECIMAL. */
+/** Row shapes served by /api/*. Numeric columns arrive as strings (Postgres numeric). */
 export type Shelter = {
 	ShelterID: number;
 	ShelterName: string;
@@ -55,13 +55,13 @@ export type EvacRoute = {
 	CurrentLoad: number;
 };
 
-/** Must match backend/db/create-user-reports.sql enums. */
+/** Must match the public.user_reports enums in supabase/migrations/0001_init.sql. */
 export const REPORT_TYPES = ['Flood', 'Earthquake', 'Fire', 'Storm', 'Landslide', 'Tsunami', 'Drought', 'Other'] as const;
 export type ReportType = (typeof REPORT_TYPES)[number];
 export const REPORT_SEVERITIES = ['Minor', 'Moderate', 'Severe', 'Critical'] as const;
 export type ReportSeverity = (typeof REPORT_SEVERITIES)[number];
 
-/** Body of POST /api/reports (backend/controllers/userReportController.js createReport). */
+/** Body of POST /api/reports (handled in src/routes/api/reports/+server.ts). */
 export type ReportInput = {
 	DisasterType: ReportType;
 	Severity: ReportSeverity;

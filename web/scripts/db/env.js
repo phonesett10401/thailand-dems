@@ -6,8 +6,7 @@ const read = (url) => (existsSync(url) ? parseEnv(readFileSync(url, 'utf8')) : {
 
 export function loadEnvs() {
 	return {
-		web: read(new URL('../../.env', import.meta.url)),
-		backend: read(new URL('../../../backend/.env', import.meta.url))
+		web: read(new URL('../../.env', import.meta.url))
 	};
 }
 
