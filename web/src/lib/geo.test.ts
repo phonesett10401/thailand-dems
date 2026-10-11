@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { distanceKm, occupancyPct, sortByDistance, toNum } from './geo';
 
 describe('toNum', () => {
-	it('parses MySQL decimal strings and rejects blanks', () => {
+	it('parses numeric strings from the database and rejects blanks', () => {
 		expect(toNum('14.35200000')).toBe(14.352);
 		expect(toNum(7)).toBe(7);
 		expect(toNum('')).toBeNull();

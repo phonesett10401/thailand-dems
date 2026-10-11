@@ -12,14 +12,7 @@ pnpm-lock.yaml
 .env.development
 .env.production
 .env.test
-backend/.env
-frontend/.env
-frontend/.env.local
-frontend/.env.production
-backend/.env.production
 
-# Next.js
-.next/
 out/
 build/
 dist/
@@ -56,7 +49,6 @@ coverage/
 
 # Production
 .vercel
-.railway
 .render
 
 # Database
