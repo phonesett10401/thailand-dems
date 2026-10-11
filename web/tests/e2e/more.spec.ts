@@ -4,6 +4,7 @@ test('More links to report, about and staff sign-in; coming-soon items are inert
 	await page.goto('/more');
 	await expect(page.getByRole('link', { name: 'Report an incident' })).toHaveAttribute('href', '/report');
 	await expect(page.getByRole('link', { name: 'About and data sources' })).toHaveAttribute('href', '/about');
+	await expect(page.getByRole('link', { name: 'Demo tour' })).toHaveAttribute('href', '/demo');
 	await expect(page.getByRole('link', { name: 'Admin' })).toHaveAttribute('href', '/admin/login');
 	await expect(page.getByText('Ask DEMS')).toBeVisible();
 	await expect(page.getByRole('link', { name: /Ask DEMS/ })).toHaveCount(0);

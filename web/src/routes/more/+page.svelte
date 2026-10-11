@@ -13,7 +13,7 @@
 		<li><a href={localizeHref('/report')} class={row}><TriangleAlert size={18} class="text-warning" aria-hidden="true" /><span class="flex-1">{m.more_report()}</span><ChevronRight size={16} aria-hidden="true" /></a></li>
 		<li class={row}><Languages size={18} aria-hidden="true" /><span class="flex-1">{m.more_language()}</span><LangToggle /></li>
 		<li><a href={localizeHref('/about')} class={row}><Info size={18} aria-hidden="true" /><span class="flex-1">{m.more_about()}</span><ChevronRight size={16} aria-hidden="true" /></a></li>
-		<li class={row}><PlayCircle size={18} aria-hidden="true" /><span class="flex-1 opacity-60">{m.more_demo()}</span><span class="label">{m.coming_soon()}</span></li>
+		<li><a href={localizeHref('/demo')} class={row}><PlayCircle size={18} aria-hidden="true" /><span class="flex-1">{m.more_demo()}</span><ChevronRight size={16} aria-hidden="true" /></a></li>
 		<li class={row}><MessagesSquare size={18} aria-hidden="true" /><span class="flex-1 opacity-60">{m.more_ask()}</span><span class="label">{m.coming_soon()}</span></li>
 		<li class="{row} flex-wrap py-3">
 			<ShieldUser size={18} aria-hidden="true" /><span class="flex-1">{m.more_staff()}</span>

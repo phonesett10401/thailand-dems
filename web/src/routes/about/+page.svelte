@@ -1,16 +1,8 @@
 <script lang="ts">
-	import { T } from '$lib/levels';
+	import { thresholdRows } from '$lib/thresholds';
 	import { m } from '$lib/paraglide/messages.js';
 
-	const rows = [
-		m.about_row_pm25({ w: T.pm25[0], x: T.pm25[1] }),
-		m.about_row_heat({ w: T.heat[0], x: T.heat[1] }),
-		m.about_row_rain({ w: T.rain[0], x: T.rain[1] }),
-		m.about_row_quake({ km: T.quakeKm, w: T.quake[0], x: T.quake[1] }),
-		m.about_row_gdacs({ km: T.gdacsKm, ckm: T.cycloneKm }),
-		m.about_row_river(),
-		m.about_row_sample()
-	];
+	const rows = thresholdRows();
 </script>
 
 <div class="page max-w-2xl">
