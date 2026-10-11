@@ -71,7 +71,7 @@ test('Thai: level and headline render in Thai', async ({ page }) => {
 	await page.goto('/th');
 	await expect(page.locator('html')).toHaveAttribute('lang', 'th');
 	await expect(page.getByText('เฝ้าระวัง', { exact: true }).first()).toBeVisible();
-	await expect(page.getByRole('heading', { level: 1 })).toHaveText('หมอกควัน และ น้ำท่วม');
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText('หมอกควันและน้ำท่วม');
 });
 
 test.describe('desktop', () => {

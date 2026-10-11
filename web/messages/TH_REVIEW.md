@@ -17,3 +17,15 @@ Keys added for the redesigned citizen app (all Thai drafts, need native review):
 The Prepare guide text in `src/lib/prepare/guides.ts` (the `th:` fields) also needs native review, especially the life-critical steps.
 
 When reviewed, delete this file in the same commit as the fixes.
+
+## 2026-10-11 automated consistency pass
+
+An automated pass (Claude, not a native speaker) changed 50 strings in `th.json` and 66 Thai strings in `src/lib/prepare/guides.ts`:
+
+- Terminology made consistent: ที่พักพิง/เปิดรับ for open shelters, พื้นที่เสี่ยงภัย for hazard zones, อากาศร้อนจัด and ฝุ่น PM2.5 in labels, พายุหมุนเขตร้อน for cyclones, โครงงานของนักศึกษา, เบอร์โทรฉุกเฉิน, ผู้ร่วมให้ข้อมูล OpenStreetMap, สายด่วนภัยพิบัติ (ปภ.) for 1784.
+- Meaning fixes against the English: "fainting" is now เป็นลม (was หมดสติ), "sturdy furniture" is no longer narrowed to a table, "two ways" no longer says "at least", 1182 now says it is the weather line, "feels like" uses อุณหภูมิที่รู้สึกได้.
+- Natural phrasing: no Thai question mark in `emergency_call_first`, shorter error and route messages, heatstroke named โรคลมร้อน (ฮีทสโตรก).
+- Typography: ๆ attached (เร็วๆ นี้, อื่นๆ), Arabic digits (2 เส้นทาง, 3 วัน), Thai time format 11.00–15.00 น., unit ม. in the tsunami step, curly quotes around level names. The Thai two-hazard headline is now `{a}และ{b}` (the e2e test was updated).
+- Life-critical steps kept: tsunami 30 ม. / 3 กม. / ชั้น 3, flood "switch off power only if dry", heatstroke 1669 + water and shade, chemical "bag exposed clothes".
+
+A native Thai speaker should still review all of the Thai before it is treated as final.
