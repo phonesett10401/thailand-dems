@@ -351,5 +351,6 @@
 	"about_real_routes": "Walking, driving and cycling routes: openrouteservice by HeiGIT, on OpenStreetMap data",
 	"route_attribution": "Routes: © openrouteservice.org by HeiGIT · Map data © OpenStreetMap contributors",
 	"error_title": "Page not found",
-	"error_home": "Go to Now"
+	"error_home": "Go to Now",
+	"login_unavailable": "Sign-in is unavailable right now. Please try again shortly."
 }

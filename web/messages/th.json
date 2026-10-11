@@ -351,5 +351,6 @@
 	"about_real_routes": "เส้นทางเดิน ขับรถ และจักรยาน: openrouteservice โดย HeiGIT จากข้อมูล OpenStreetMap",
 	"route_attribution": "เส้นทาง: © openrouteservice.org โดย HeiGIT · ข้อมูลแผนที่ © ผู้ร่วมให้ข้อมูล OpenStreetMap",
 	"error_title": "ไม่พบหน้านี้",
-	"error_home": "ไปหน้า “ตอนนี้”"
+	"error_home": "ไปหน้า “ตอนนี้”",
+	"login_unavailable": "เข้าสู่ระบบไม่ได้ในขณะนี้ โปรดลองใหม่อีกครั้งในไม่ช้า"
 }

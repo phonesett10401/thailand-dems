@@ -1,3 +1,4 @@
+import { error } from '@sveltejs/kit';
 import postgres from 'postgres';
 import { env } from '$env/dynamic/private';
 
@@ -10,7 +11,11 @@ export function sql(): postgres.Sql {
 	return client;
 }
 
-/** Fails after `ms` and drops a client whose socket went dead, so the next request reconnects. */
+/**
+ * Every query goes through here. A query that hangs (e.g. a dead pooler socket after the
+ * instance sat idle) fails after `ms` as a 503, and the dead client is dropped so the next
+ * request reconnects instead of hanging too.
+ */
 export async function withDb<T>(fn: (s: postgres.Sql) => Promise<T>, ms = 8000): Promise<T> {
 	const s = sql();
 	try {
@@ -20,6 +25,7 @@ export async function withDb<T>(fn: (s: postgres.Sql) => Promise<T>, ms = 8000):
 			client = null;
 			s.end({ timeout: 0 }).catch(() => {});
 		}
+		if ((e as Error).message === 'db timeout') error(503, 'Database unavailable');
 		throw e;
 	}
 }
