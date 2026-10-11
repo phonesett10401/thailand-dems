@@ -65,7 +65,7 @@ export function Phone({ layout, children }: { layout: Layout; children: ReactNod
 	const f = useCurrentFrame();
 	const { fps } = useVideoConfig();
 	const wide = layout === 'wide';
-	const s = wide ? 1.15 : 1.45;
+	const s = wide ? 1.12 : 1.45;
 	const k = 1 - spring({ frame: f, fps, config: { damping: 200 } });
 	const tilt = wide ? `perspective(1800px) rotateY(${18 * k}deg) translateX(${60 * k}px)` : `perspective(1800px) rotateX(${14 * k}deg) translateY(${60 * k}px)`;
 	return (

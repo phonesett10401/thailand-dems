@@ -3,7 +3,7 @@ import { C, FONT } from '../brand';
 import { CAPTIONS, LABELS } from '../captions';
 import { msg } from '../i18n';
 import { BPM, FPS, LEVEL_CUES, scene } from '../timeline';
-import { Phone, PhoneHeader, Stage, TabBar, type SceneProps } from '../ui';
+import { Phone, PhoneHeader, Stage, TabBar, useAppear, type SceneProps } from '../ui';
 
 const LEVELS = [['safe', C.safe], ['watch', C.watch], ['warning', C.warning]] as const;
 const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
@@ -30,14 +30,15 @@ export function LevelScene({ layout, lang }: SceneProps) {
 		state === 'safe' ? msg(lang, 'now_safe_title')
 		: state === 'watch' ? sentence(msg(lang, 'now_title_1', { a: msg(lang, 'haz_smoke') }))
 		: sentence(msg(lang, 'now_title_2', { a: msg(lang, 'haz_rain'), b: msg(lang, 'haz_smoke') }));
-	const pm = interpolate(f, [watchAt, watchAt + 20], [0, 41.2], clamp).toFixed(1);
-	const rain = Math.round(interpolate(f, [warnAt, warnAt + 20], [0, 112], clamp));
+	const pm = interpolate(f, [watchAt + 8, watchAt + 28], [0, 41.2], clamp).toFixed(1);
+	const rain = Math.round(interpolate(f, [warnAt + 8, warnAt + 28], [0, 112], clamp));
 	const lines: { text: string; dot: string }[] =
 		state === 'watch' ? [{ text: msg(lang, 'line_pm25', { value: pm }), dot: C.watch }]
 		: state === 'warning' ? [{ text: msg(lang, 'line_rain', { value: rain }), dot: C.warning }, { text: msg(lang, 'line_pm25', { value: '41.2' }), dot: C.watch }]
 		: [];
 
-	const s = wide ? 1.15 : 1.45;
+	const pills = useAppear(10);
+	const s = wide ? 1.12 : 1.45;
 	const beat = (60 * FPS) / BPM;
 	const rings = state === 'warning'
 		? Array.from({ length: Math.floor((f - warnAt) / beat) + 1 }, (_, k) => (f - warnAt - k * beat) / RING_LIFE).filter((p) => p < 1)
@@ -45,7 +46,7 @@ export function LevelScene({ layout, lang }: SceneProps) {
 	const glowA = interpolate(f, [0, 12], [0, 0.3], clamp);
 
 	const scale = (
-		<div style={{ display: 'flex', gap: 18, justifyContent: 'center', fontFamily: FONT }}>
+		<div style={{ display: 'flex', gap: 18, justifyContent: 'center', fontFamily: FONT, ...pills }}>
 			{LEVELS.map(([k, c], i) => {
 				const on = state === k;
 				const at = [0, watchAt, warnAt][i];
