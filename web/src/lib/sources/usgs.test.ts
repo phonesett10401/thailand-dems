@@ -4,10 +4,10 @@ import { parseQuakes, quakeLevel } from './usgs';
 
 describe('quakeLevel', () => {
 	it('grades by magnitude', () => {
-		expect(quakeLevel(6.2)).toBe('danger');
-		expect(quakeLevel(5.0)).toBe('warning');
-		expect(quakeLevel(4.4)).toBe('watch');
-		expect(quakeLevel(3.1)).toBe('info');
+		expect(quakeLevel(6.2)).toBe('warning');
+		expect(quakeLevel(5.0)).toBe('watch');
+		expect(quakeLevel(4.4)).toBe('safe');
+		expect(quakeLevel(3.1)).toBe('safe');
 	});
 });
 
@@ -19,12 +19,13 @@ describe('parseQuakes', () => {
 			source: 'USGS',
 			kind: 'earthquake',
 			title: 'M5.3 · 81 km SSW of Banda Aceh, Indonesia',
-			level: 'warning',
+			level: 'watch',
 			lat: 4.9,
 			lon: 95.1,
 			time: new Date(1791070654235).toISOString(),
 			current: false,
-			url: 'https://earthquake.usgs.gov/earthquakes/eventpage/us7000abcd'
+			url: 'https://earthquake.usgs.gov/earthquakes/eventpage/us7000abcd',
+			mag: 5.3
 		});
 	});
 	it('treats a missing magnitude as 0 and marks events from the last 3 days as current', () => {

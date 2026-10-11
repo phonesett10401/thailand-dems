@@ -11,7 +11,7 @@ describe('parseForecast', () => {
 		expect(f.hours).toHaveLength(24);
 		expect(f.hours[3]).toEqual({ time: new Date(1791529200 * 1000), temp: 33.0, rainChance: 60 });
 		expect(f.days).toHaveLength(7);
-		expect(f.days[4]).toEqual({ date: new Date(1791824400 * 1000), code: 95, max: 30.1, min: 24.2, rain: 22.8 });
+		expect(f.days[4]).toEqual({ date: new Date(1791824400 * 1000), code: 95, max: 30.1, min: 24.2, rain: 22.8, feels: 33.1 });
 	});
 });
 

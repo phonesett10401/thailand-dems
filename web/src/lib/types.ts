@@ -1,4 +1,5 @@
 import type { Component } from 'svelte';
+import type { Lvl } from './levels';
 
 export type Pt = { lat: number; lon: number };
 
@@ -73,7 +74,6 @@ export type ReportInput = {
 	UserPhone: string | null;
 };
 
-export type Level = 'info' | 'watch' | 'warning' | 'danger';
 export type HazardKind = 'flood' | 'cyclone' | 'earthquake' | 'drought' | 'wildfire' | 'volcano' | 'other';
 
 /** A hazard from a public source (GDACS or USGS). */
@@ -82,19 +82,20 @@ export type HazardEvent = {
 	source: 'GDACS' | 'USGS';
 	kind: HazardKind;
 	title: string;
-	level: Level;
+	level: Lvl;
 	lat: number;
 	lon: number;
 	time: string; // ISO 8601 UTC
 	current: boolean;
 	url: string;
+	mag?: number;
 };
 
 export type Sourced<T> = { data: T; source: string; updatedAt: Date } | { error: true; source: string };
 
 export type MapMarker = {
 	id: string;
-	kind: 'shelter' | 'quake' | 'hazard' | 'sample' | 'me';
+	kind: 'shelter' | 'sample' | 'me' | 'safe' | 'watch' | 'warning';
 	lat: number;
 	lon: number;
 	label: string;

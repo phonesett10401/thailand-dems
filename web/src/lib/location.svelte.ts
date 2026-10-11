@@ -16,7 +16,8 @@ export const PROVINCES = (provinces as { Province: string; Latitude: string; Lon
 function saved(): Place | null {
 	try {
 		const s = localStorage.getItem(KEY);
-		return s ? (JSON.parse(s) as Place) : null;
+		const p = s ? JSON.parse(s) : null;
+		return p && Number.isFinite(p.lat) && Number.isFinite(p.lon) && typeof p.name === 'string' ? (p as Place) : null;
 	} catch {
 		return null;
 	}

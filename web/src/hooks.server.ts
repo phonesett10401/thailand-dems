@@ -1,8 +1,23 @@
 import { createServerClient } from '@supabase/ssr';
-import type { Handle } from '@sveltejs/kit';
+import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import { env } from '$env/dynamic/public';
 import { paraglideMiddleware } from '$lib/paraglide/server.js';
+import { deLocalizeUrl, extractLocaleFromUrl, localizeUrl } from '$lib/paraglide/runtime.js';
+
+/** Old addresses from the first redesign keep working (spec §3.2). */
+const MOVED: Record<string, string> = {
+	'/disasters': '/map',
+	'/info': '/about',
+	'/weather': '/',
+	'/evacuation': '/shelters'
+};
+const moved: Handle = ({ event, resolve }) => {
+	const to = MOVED[deLocalizeUrl(event.url).pathname.replace(/\/$/, '') || '/'];
+	if (!to) return resolve(event);
+	const locale = extractLocaleFromUrl(event.url) ?? 'en';
+	redirect(308, localizeUrl(new URL(to, event.url), { locale }).pathname + event.url.search);
+};
 
 const i18n: Handle = ({ event, resolve }) =>
 	paraglideMiddleware(event.request, ({ request, locale }) =>
@@ -41,4 +56,4 @@ const auth: Handle = async ({ event, resolve }) => {
 	});
 };
 
-export const handle = sequence(i18n, auth);
+export const handle = sequence(moved, i18n, auth);

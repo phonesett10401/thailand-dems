@@ -62,12 +62,12 @@
 		if (step === 3) submit();
 		else next();
 	}
-	const field = 'w-full rounded-md border border-ink bg-white px-3 py-2';
+	const field = 'w-full rounded-lg border border-muted bg-raised px-3 py-2';
 </script>
 
 <div class="page">
-	<h1 class="text-2xl font-bold">{m.report_title()}</h1>
-	<p class="mt-3 flex items-start gap-2 rounded-xl bg-alarm p-3 text-sm font-semibold text-white">
+	<h1 class="headline text-3xl">{m.report_title()}</h1>
+	<p class="mt-3 flex items-start gap-2 rounded-xl bg-[#e5251b] p-3 text-sm font-semibold text-white">
 		<PhoneCall size={18} aria-hidden="true" class="mt-0.5 shrink-0" />{m.emergency_call_first()}
 	</p>
 
@@ -76,7 +76,7 @@
 			<CircleCheck size={48} aria-hidden="true" />
 			<h2 class="text-xl font-bold">{m.report_done_title()}</h2>
 			<p>{m.report_done_body()}</p>
-			<button type="button" onclick={again} class="rounded-md border border-ink px-4 py-2 font-semibold"
+			<button type="button" onclick={again} class="min-h-11 rounded-lg border border-line px-4 py-2 font-semibold"
 				>{m.report_again()}</button
 			>
 		</section>
@@ -89,37 +89,37 @@
 					<div class="mt-2 grid grid-cols-2 gap-2">
 						{#each REPORT_TYPES as t (t)}
 							<label
-								class="flex min-h-11 items-center gap-2 rounded-md border border-rule px-3 has-checked:border-ink has-checked:bg-ink has-checked:text-paper"
+								class="flex min-h-11 items-center gap-2 rounded-lg border border-muted px-3 has-checked:border-text has-checked:bg-text has-checked:text-bg"
 							>
-								<input type="radio" name="type" value={t} bind:group={form.type} class="accent-ink" />{reportTypeLabel(t)}
+								<input type="radio" name="type" value={t} bind:group={form.type} class="accent-white" />{reportTypeLabel(t)}
 							</label>
 						{/each}
 					</div>
-					{#if errors.type}<p class="mt-1 text-sm text-alarm" role="alert">{msg(errors.type)}</p>{/if}
+					{#if errors.type}<p class="mt-1 text-sm text-warning" role="alert">{msg(errors.type)}</p>{/if}
 				</fieldset>
 				<fieldset>
 					<legend class="font-semibold">{m.report_severity_label()}</legend>
 					<div class="mt-2 grid grid-cols-2 gap-2">
 						{#each REPORT_SEVERITIES as s (s)}
 							<label
-								class="flex min-h-11 items-center gap-2 rounded-md border border-rule px-3 has-checked:border-ink has-checked:bg-ink has-checked:text-paper"
+								class="flex min-h-11 items-center gap-2 rounded-lg border border-muted px-3 has-checked:border-text has-checked:bg-text has-checked:text-bg"
 							>
 								<input
 									type="radio"
 									name="severity"
 									value={s}
 									bind:group={form.severity}
-									class="accent-ink"
+									class="accent-white"
 								/>{reportSeverityLabel(s)}
 							</label>
 						{/each}
 					</div>
-					{#if errors.severity}<p class="mt-1 text-sm text-alarm" role="alert">{msg(errors.severity)}</p>{/if}
+					{#if errors.severity}<p class="mt-1 text-sm text-warning" role="alert">{msg(errors.severity)}</p>{/if}
 				</fieldset>
 				<label class="flex flex-col gap-1">
 					<span class="font-semibold">{m.report_description_label()}</span>
 					<textarea bind:value={form.description} rows="4" maxlength="2000" class={field}></textarea>
-					{#if errors.description}<span class="text-sm text-alarm" role="alert">{msg(errors.description)}</span>{/if}
+					{#if errors.description}<span class="text-sm text-warning" role="alert">{msg(errors.description)}</span>{/if}
 				</label>
 			{:else if step === 2}
 				<h2 class="font-semibold">{m.report_where()}</h2>
@@ -130,15 +130,15 @@
 				<button
 					type="button"
 					onclick={gps}
-					class="inline-flex min-h-11 items-center gap-2 self-start rounded-md border border-ink px-3 font-semibold"
+					class="inline-flex min-h-11 items-center gap-2 self-start rounded-lg border border-line px-3 font-semibold"
 				>
 					<LocateFixed size={16} aria-hidden="true" />{m.report_use_gps()}
 				</button>
 				{#if form.lat !== null && form.lon !== null}
 					<p class="font-mono text-sm">{m.report_gps_set({ lat: form.lat.toFixed(4), lon: form.lon.toFixed(4) })}</p>
 				{/if}
-				{#if gpsError}<p class="text-sm text-alarm" role="status">{m.location_denied()}</p>{/if}
-				{#if errors.place}<p class="text-sm text-alarm" role="alert">{msg(errors.place)}</p>{/if}
+				{#if gpsError}<p class="text-sm text-warning" role="status">{m.location_denied()}</p>{/if}
+				{#if errors.place}<p class="text-sm text-warning" role="alert">{msg(errors.place)}</p>{/if}
 			{:else}
 				<h2 class="font-semibold">{m.report_contact()}</h2>
 				<p class="text-sm text-muted">{m.report_contact_note()}</p>
@@ -169,7 +169,7 @@
 					/></label
 				>
 				{#if failure}
-					<p class="rounded-md border border-alarm p-3 text-sm text-alarm" role="alert">
+					<p class="rounded-lg border border-warning p-3 text-sm text-warning" role="alert">
 						{failure === 'offline'
 							? m.report_error_offline()
 							: failure === 'limited'
@@ -181,7 +181,7 @@
 
 			<div class="flex gap-2">
 				{#if step !== 1}
-					<button type="button" onclick={back} class="min-h-12 rounded-md border border-ink px-4 font-semibold"
+					<button type="button" onclick={back} class="min-h-12 rounded-lg border border-line px-4 font-semibold"
 						>{m.report_back()}</button
 					>
 				{/if}
@@ -189,12 +189,12 @@
 					<button
 						type="submit"
 						disabled={sending}
-						class="min-h-12 flex-1 rounded-md bg-ink px-4 font-semibold text-paper disabled:opacity-60"
+						class="min-h-12 flex-1 rounded-lg bg-text px-4 font-semibold text-bg disabled:opacity-60"
 					>
 						{sending ? m.report_sending() : m.report_submit()}
 					</button>
 				{:else}
-					<button type="submit" class="min-h-12 flex-1 rounded-md bg-ink px-4 font-semibold text-paper"
+					<button type="submit" class="min-h-12 flex-1 rounded-lg bg-text px-4 font-semibold text-bg"
 						>{m.report_next()}</button
 					>
 				{/if}

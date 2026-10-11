@@ -1,6 +1,8 @@
-import { levelOf } from '../severity';
+import type { Lvl } from '../levels';
 import type { HazardEvent, HazardKind } from '../types';
 import { fetchJson } from './http';
+
+const ALERT: Record<string, Lvl> = { Red: 'warning', Orange: 'watch' };
 
 const KIND: Record<string, HazardKind> = {
 	FL: 'flood',
@@ -50,7 +52,7 @@ export function parseGdacs(raw: RawGdacs | null): HazardEvent[] {
 			source: 'GDACS',
 			kind,
 			title: p.name,
-			level: levelOf(p.alertlevel),
+			level: ALERT[p.alertlevel] ?? 'safe',
 			lat,
 			lon,
 			time: time.toISOString(),

@@ -13,7 +13,7 @@
 	hreflang={other}
 	lang={other}
 	data-sveltekit-reload
-	class="rounded-md border border-ink px-2.5 py-1.5 font-mono text-xs font-medium"
+	class="inline-flex min-h-11 items-center rounded-lg border border-line px-2.5 font-mono text-xs font-medium text-muted hover:text-text"
 >
 	{m.lang_switch_label()}
 </a>
