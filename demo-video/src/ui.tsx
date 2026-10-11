@@ -27,17 +27,20 @@ export function CaptionBlock({ c, center = false, layout }: { c: Caption; center
 	);
 }
 
-/** Caption beside the visual (wide) or above it (tall). */
-export function Stage({ layout, caption, children }: { layout: Layout; caption: Caption; children: ReactNode }) {
+/** Caption beside the visual (wide, centred as a pair) or above it (tall). `below` sits under the caption text. */
+export function Stage({ layout, caption, below, children }: { layout: Layout; caption: Caption; below?: ReactNode; children: ReactNode }) {
 	const wide = layout === 'wide';
 	return (
 		<AbsoluteFill
 			style={{
 				background: C.bg, display: 'flex', flexDirection: wide ? 'row' : 'column', alignItems: 'center',
-				justifyContent: wide ? 'space-between' : 'flex-start', padding: wide ? '0 140px' : '150px 80px 80px', gap: wide ? 80 : 70
+				justifyContent: wide ? 'center' : 'flex-start', padding: wide ? '0 100px' : '150px 80px 80px', gap: wide ? 140 : 70
 			}}
 		>
-			<CaptionBlock c={caption} layout={layout} center={!wide} />
+			<div style={{ position: 'relative', zIndex: 1, width: wide ? 660 : undefined, flex: 'none', display: 'flex', flexDirection: 'column', alignItems: wide ? 'flex-start' : 'center' }}>
+				<CaptionBlock c={caption} layout={layout} center={!wide} />
+				{below && <div style={{ marginTop: 48 }}>{below}</div>}
+			</div>
 			<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: wide ? 'none' : 1 }}>{children}</div>
 		</AbsoluteFill>
 	);
@@ -57,11 +60,16 @@ export function LogoMark({ size, arc, draw = 1, person = 1, glow = 0 }: { size: 
 	);
 }
 
-/** A 390×844 phone, scaled for the layout. */
+/** A 390×844 phone, scaled for the layout. Tilts in from the side (wide) or the top (tall) and settles flat from the scene start. */
 export function Phone({ layout, children }: { layout: Layout; children: ReactNode }) {
-	const s = layout === 'wide' ? 1.05 : 1.45;
+	const f = useCurrentFrame();
+	const { fps } = useVideoConfig();
+	const wide = layout === 'wide';
+	const s = wide ? 1.15 : 1.45;
+	const k = 1 - spring({ frame: f, fps, config: { damping: 200 } });
+	const tilt = wide ? `perspective(1800px) rotateY(${18 * k}deg) translateX(${60 * k}px)` : `perspective(1800px) rotateX(${14 * k}deg) translateY(${60 * k}px)`;
 	return (
-		<div style={{ width: 390 * s + 20, height: 844 * s + 20, flex: 'none' }}>
+		<div style={{ width: 410 * s, height: 864 * s, flex: 'none', transform: tilt }}>
 			<div
 				style={{
 					width: 390, height: 844, transform: `scale(${s})`, transformOrigin: 'top left', borderRadius: 56, border: '10px solid #1c1c22',

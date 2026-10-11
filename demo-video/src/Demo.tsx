@@ -1,5 +1,6 @@
 import type { FC } from 'react';
-import { AbsoluteFill, Html5Audio, Sequence, interpolate, staticFile } from 'remotion';
+import type { ReactNode } from 'react';
+import { AbsoluteFill, Html5Audio, Sequence, interpolate, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
 import { C } from './brand';
 import './fonts';
 import { CtaScene } from './scenes/CtaScene';
@@ -19,6 +20,16 @@ const VIEWS: Record<SceneId, FC<SceneProps>> = {
 const volume = (f: number) =>
 	interpolate(f, [0, AUDIO.fadeInEnd, AUDIO.fadeOutStart, AUDIO.fadeOutEnd], [0, 1, 1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
 
+/** Slow push-in plus soft dip-to-black at the scene edges (logo has no fade-in; the CTA fades itself out). */
+function SceneFrame({ id, children }: { id: SceneId; children: ReactNode }) {
+	const f = useCurrentFrame();
+	const { durationInFrames: d } = useVideoConfig();
+	const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
+	const fadeIn = id === 'logo' ? 1 : interpolate(f, [0, 8], [0, 1], clamp);
+	const fadeOut = id === 'cta' ? 1 : interpolate(f, [d - 8, d - 1], [1, 0], clamp);
+	return <AbsoluteFill style={{ opacity: Math.min(fadeIn, fadeOut), transform: `scale(${interpolate(f, [0, d], [1, 1.04])})` }}>{children}</AbsoluteFill>;
+}
+
 export function Demo(props: SceneProps) {
 	return (
 		<AbsoluteFill style={{ background: C.bg }}>
@@ -26,7 +37,7 @@ export function Demo(props: SceneProps) {
 				const View = VIEWS[s.id];
 				return (
 					<Sequence key={s.id} from={s.from} durationInFrames={s.duration} name={s.id}>
-						<View {...props} />
+						<SceneFrame id={s.id}><View {...props} /></SceneFrame>
 					</Sequence>
 				);
 			})}
