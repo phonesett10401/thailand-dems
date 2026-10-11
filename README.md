@@ -1,264 +1,140 @@
-# 🚨 Thailand DEMS - Disaster and Emergency Management System
+# DEMS Thailand: Disaster and Emergency Management System
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/thailand-dems&project-name=thailand-dems&repository-name=thailand-dems&root-directory=frontend&env=NEXT_PUBLIC_API_URL)
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template)
+![DEMS Thailand](web/static/og.png)
 
-A comprehensive full-stack disaster management system for Thailand, built with Next.js and Node.js.
+A mobile-first web app that tells people in Thailand how safe their location is right now, where the nearest shelter is, and how to get there.
 
-![DEMS](https://img.shields.io/badge/Status-Student%20demo-blue)
-![Next.js](https://img.shields.io/badge/Next.js-14.0-black)
-![Node.js](https://img.shields.io/badge/Node.js-18+-green)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-blue)
-![License](https://img.shields.io/badge/License-MIT-blue)
+- Live app: https://thailand-dems.vercel.app
+- Demo tour: https://thailand-dems.vercel.app/demo
 
----
+> **This is a student project, not an official warning service.** Levels are estimates computed from public data. Shelters, sample disasters and evacuation routes are sample data. Always follow TMD and DDPM, and call 1784 in an emergency.
 
-## 🚀 Quick Deploy (5 Minutes)
+## What it does (citizens)
 
-**Option 1: One-Click Deploy**
-1. Click the "Deploy with Vercel" button above for frontend
-2. Click the "Deploy on Railway" button above for backend + database
-3. Configure environment variables
-4. Done! 🎉
+- **Your level:** Safe, Watch, Warning or Unknown for your location (or a place you pick).
+- **Hazard map:** live hazards near you on a MapLibre map (OpenFreeMap tiles).
+- **Shelters:** a list and map of shelters, with distance and capacity.
+- **Safe routes:** walking, driving or cycling directions to a shelter that steer around known danger zones (openrouteservice).
+- **Prepare:** a guide for each emergency type, plus a go-bag checklist and emergency numbers.
+- **Report an incident:** send a short report (type, severity, description, location). It goes to the demo database only; no authority sees it.
+- **English and ไทย:** the whole UI is translated. The Thai text is a draft awaiting native review, see [`web/messages/TH_REVIEW.md`](web/messages/TH_REVIEW.md).
 
-**Option 2: Manual Deploy**
-See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for step-by-step guide.
+Admin and volunteer consoles exist as **sign-in only** for now (Supabase Auth, invite-only accounts). After login you see your email and a "coming in Phase 2 / Phase 3" note. The real tools are not built yet.
 
----
+## How levels work
 
-## 🌟 Features
+Each hazard near you is rated Safe, Watch or Warning from public thresholds (values from [`web/src/lib/levels.ts`](web/src/lib/levels.ts)):
 
-### For Citizens
-- **Hazard map** - live GDACS disaster alerts and USGS earthquakes, plus sample disasters from the demo database
-- **Shelter finder** - sample shelters sorted by distance, with directions handed off to your phone's maps app
-- **Evacuation** - nearest open shelters and sample evacuation routes (no automatic route planning)
-- **Weather** - live forecast, PM2.5 air quality and river-flow model data from Open-Meteo
-- **Incident reporting** - three-step report with optional GPS location
-- **Volunteer portal** - register to help during emergencies
-- **English / Thai** - full language switch (Thai copy awaiting native review)
-- **Assistant** - placeholder; an offline, on-device assistant is planned
+| Hazard | Watch | Warning | Source |
+|---|---|---|---|
+| PM2.5 air | above 37.5 µg/m³ | above 75 µg/m³ | Open-Meteo (Thai PCD bands) |
+| Heat (feels-like, today) | 41 °C or more | 54 °C or more | Open-Meteo |
+| Rain (today) | 35 mm or more | 90 mm or more | Open-Meteo (TMD bands) |
+| Earthquake, within 300 km, last 24 h | M4.5 or more | M6 or more | USGS |
+| GDACS event, within 300 km (cyclones 500 km) | orange | red | GDACS |
+| River model rising | yes (Watch only, it is a forecast) | never | Open-Meteo |
 
-### For Administrators
-- 📊 **Comprehensive Dashboard** - Real-time statistics and analytics
-- 🔥 **Disaster Management** - Create, update, and monitor disasters
-- 🏠 **Shelter Coordination** - Manage emergency shelters and capacity
-- 📦 **Supply Tracking** - Monitor emergency supplies and resources
-- 👥 **Volunteer Management** - Organize and assign volunteers
-- 🏛️ **Agency Coordination** - Collaborate with partner organizations
-- ⚠️ **Alert System** - Send emergency notifications
-- 📈 **Capacity Planning** - Rule-based shelter and volunteer gap suggestions
+- **The worst live hazard sets your level.**
+- **Unknown, never Safe, when data is missing:** if every live feed fails, the level is Unknown.
+- **Stale after 3 hours:** an old result turns Unknown on its own.
+- Sample disasters from the database are shown with a Sample tag and never change your level.
 
-### What's real vs sample
+## Real vs sample data
 
-| Data | Where it comes from |
+| Real (live public sources) | Sample (this demo's own database) |
 |---|---|
-| Weather, air quality, river flow | Open-Meteo (live) |
-| Disaster alerts | GDACS (live) |
-| Earthquakes | USGS (live) |
-| Shelters, disasters, alerts, volunteers, supplies | Demo data in Supabase Postgres (marked **SAMPLE** in the UI) |
-| Evacuation routes | Hard-coded sample list (marked **SAMPLE**) |
-| Admin / volunteer login | Supabase Auth, invite-only; the old Next.js `frontend/` still has the legacy demo login |
+| Weather, air quality, river forecast: Open-Meteo | Shelters and their capacity |
+| Disaster alerts: GDACS | Disasters and alerts stored in the database |
+| Earthquakes: USGS | Evacuation routes |
+| Map tiles: OpenFreeMap / OpenStreetMap | |
+| Walking, driving, cycling routes: openrouteservice | |
 
-The new citizen UI lives in `web/` (SvelteKit). The old Next.js UI in `frontend/` is kept until the redesign is complete.
+## Tech stack
 
-## 🚀 Quick Start
+| Layer | What |
+|---|---|
+| Frontend | SvelteKit 2 / Svelte 5, TypeScript 6, Tailwind CSS 4, Paraglide (i18n), MapLibre GL 6 with OpenFreeMap tiles, bits-ui, Lucide icons |
+| Backend | SvelteKit server routes in `web/src/routes/api`, run on Vercel (Tokyo, `hnd1`) |
+| Data | Supabase Postgres (Tokyo) with row-level security, Supabase Auth, `postgres.js` |
+| Testing | Vitest, Playwright + axe (accessibility), GitHub Actions |
 
-### Prerequisites
-- Node.js 18+ 
-- MySQL 8.0+
-- Git
+## Project structure
 
-### Installation
+```
+web/                    the app (Vercel Root Directory)
+  src/routes/           pages and the /api endpoints
+  src/lib/              levels, sources (Open-Meteo, USGS, GDACS), components, sample data
+  src/lib/server/       database, auth, rate limiting, routing (server only)
+  supabase/migrations/  SQL schema, triggers and fixes
+  scripts/db/           database helper scripts
+  tests/e2e/            Playwright browser tests
+  messages/             English and Thai strings
+demo-video/             Remotion project that renders the demo video (arrives with PR #5)
+docs/superpowers/       design specs and implementation plans
+.github/workflows/      CI
+```
 
-1. **Clone the repository**
+## Run it locally
+
+You need Node 24.
+
 ```bash
-git clone https://github.com/YOUR_USERNAME/thailand-dems.git
-cd thailand-dems
+cd web
+cp .env.example .env     # then fill in your own values
+npm ci
+npm run dev              # http://localhost:3001
 ```
 
-**Replace `YOUR_USERNAME` with your actual GitHub username**
+Environment variables (names only):
 
-2. **Setup Backend**
+| Name | Used for |
+|---|---|
+| `PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `PUBLIC_SUPABASE_PUBLISHABLE_KEY` | browser-safe Supabase key |
+| `SUPABASE_SECRET_KEY` | server-only Supabase key (never expose it) |
+| `DATABASE_URL` | Postgres connection string (transaction pooler) |
+| `ORS_API_KEY` | openrouteservice key for safe routes |
+
+Without a database the app still opens: shelters, disasters, alerts and evacuation routes fall back to bundled sample data and an offline banner is shown. Live hazard levels use public feeds and do not need the database. Safe routes need `ORS_API_KEY`; saving reports and signing in need Supabase.
+
+Database scripts (run from `web/`, they read `web/.env`):
+
+| Command | Does |
+|---|---|
+| `npm run db:apply` | apply the SQL in `supabase/migrations` |
+| `npm run db:create-admin` | create an admin sign-in |
+| `npm run db:volunteers` | create volunteer sign-ins |
+| `npm run db:smoke` | check the live database against the expected tables |
+
+## Tests
+
+Run from `web/`:
+
 ```bash
-cd backend
-npm install
-cp .env.example .env
-# Edit .env with your database credentials
+npm run check          # i18n compile + svelte-check (types)
+npm test               # Vitest unit tests
+npx playwright test    # browser tests + accessibility checks
 ```
 
-3. **Setup Database**
-```bash
-# Create database
-mysql -u root -p -e "CREATE DATABASE disaster_management_db;"
+GitHub Actions runs `check` and `test` on every pull request and every push to `main`. The browser tests run locally.
 
-# Import schema
-mysql -u root -p disaster_management_db < db/schema-disaster.sql
-mysql -u root -p disaster_management_db < db/enhanced_system_schema.sql
+## Deploy
 
-# Import seed data
-mysql -u root -p disaster_management_db < db/seed-disaster.sql
-mysql -u root -p disaster_management_db < db/thailand_locations.sql
-```
+Vercel builds `web/` and deploys `main` to production. Every pull request gets a preview URL. Environment variables live in the Vercel project settings. Database changes are applied with `npm run db:apply`.
 
-4. **Setup Frontend**
-```bash
-cd ../frontend
-npm install
-cp .env.example .env.local
-# Edit .env.local with API URL
-```
+## History
 
-5. **Run Development Servers**
-```bash
-# Terminal 1 - Backend
-cd backend
-node server-disaster.js
+DEMS began as an Express + MySQL API with a separate Next.js frontend. It was rebuilt as one SvelteKit app on Supabase, and the old code is preserved at the tag [`legacy-express-mysql`](https://github.com/phonesett10401/thailand-dems/tree/legacy-express-mysql). After that the citizen UI was redesigned (dark, high contrast).
 
-# Terminal 2 - Frontend  
-cd frontend
-npm run dev
-```
+## Credits and licences
 
-6. **Access the Application**
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
+- Map data: OpenStreetMap contributors (ODbL); tiles from OpenFreeMap / OpenMapTiles
+- Data and services: Open-Meteo, USGS, GDACS, openrouteservice (HeiGIT)
+- Fonts: Geist, Anuphan
+- Demo music: "Background Technology Theme" by The_Mountain (Pixabay)
 
-## 📱 Tech Stack
+This repository has no LICENSE file yet.
 
-### Frontend
-- **Framework**: Next.js 14 (React 18)
-- **Styling**: Tailwind CSS
-- **Maps**: Leaflet.js
-- **Animations**: Framer Motion
-- **Icons**: React Icons
-- **HTTP Client**: Axios
+## How it was built
 
-### Backend
-- **Runtime**: Node.js
-- **Framework**: Express.js
-- **Database**: MySQL 8.0
-- **Authentication**: JWT (planned)
-- **Weather**: `/api/weather` returns mock data; the new UI uses Open-Meteo directly
-
-### Features
-- **Assistant**: placeholder only (the old keyword-matching chatbot is not AI)
-- **Live data**: public hazard sources fetched on page load
-- **Responsive Design**: Mobile, Tablet, Desktop
-- **Role-based Access**: Admin vs User permissions
-- **Interactive Maps**: Disaster and shelter locations
-- **Glassmorphism UI**: Modern, beautiful interface
-
-## 📂 Project Structure
-
-```
-DEMS/
-├── backend/
-│   ├── controllers/       # Business logic
-│   ├── routes/           # API endpoints  
-│   ├── db/               # Database files
-│   │   ├── schema-disaster.sql
-│   │   ├── seed-disaster.sql
-│   │   └── connection.js
-│   ├── middleware/       # Auth & validation
-│   └── server-disaster.js
-│
-├── frontend/
-│   ├── app/              # Next.js pages
-│   │   ├── admin/       # Admin pages
-│   │   ├── disasters/   # Public pages
-│   │   └── page.js      # Dashboard
-│   ├── components/       # React components
-│   │   ├── AIAssistant.js
-│   │   ├── ClientLayout.js
-│   │   └── ThailandDisasterMap.js
-│   └── lib/             # Utilities
-│
-└── docs/                # Documentation
-```
-
-## 🔐 Default Credentials
-
-**Admin Account:**
-- Email: admin@dems.go.th
-- Password: admin123
-
-**User Account:**
-- Email: citizen@example.com  
-- Password: user123
-
-⚠️ **Change these immediately in production!**
-
-## 🌐 Live Demo
-
-🔗 **Try it now**: [thailand-dems.vercel.app](https://thailand-dems.vercel.app)
-
-**Demo Credentials:**
-- Admin: `admin` / `admin123`
-- User: `user` / `user123`
-
-## 🚀 Deployment
-
-See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for complete deployment instructions.
-
-**New UI + API (`web/`)**: import the repo in Vercel with Root Directory `web` and set `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, `DATABASE_URL` (see `web/.env.example`).
-
-**Recommended Free Stack:**
-- **Frontend**: Vercel (Perfect for Next.js)
-- **Backend**: Railway.app (Free $5/month credit)
-- **Database**: Railway MySQL (Included)
-- **Cost**: 100% Free!
-
-## 📖 Documentation
-
-- [Deployment Guide](DEPLOYMENT_GUIDE.md) - How to deploy online
-- [UI redesign spec](docs/superpowers/specs/2026-10-09-ui-redesign-design.md) - Design of the new `web/` UI
-- [Agency System](docs/AGENCY_SYSTEM_DOCUMENTATION.md) - Partner coordination
-- [Shelter System](docs/SHELTER_SYSTEM_DOCUMENTATION.md) - Shelter management
-- [Volunteer System](docs/VOLUNTEER_SYSTEM_DOCUMENTATION.md) - Volunteer coordination
-- [Alert System](docs/ALERT_SYSTEM_INTEGRATION.md) - Notification system
-
-## 🤝 Contributing
-
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- OpenWeatherMap for weather data
-- Leaflet.js for mapping
-- Thailand government for disaster data
-- All contributors and volunteers
-
-## 📞 Support
-
-For support and questions:
-- 📧 Email: support@thailand-dems.com
-- 🐛 Issues: GitHub Issues
-- 📖 Docs: `/docs` folder
-
-## 🗺️ Roadmap
-
-- [ ] Mobile App (React Native)
-- [ ] Push Notifications
-- [ ] SMS Alerts Integration
-- [x] Multi-language Support (Thai/English)
-- [ ] Offline on-device emergency assistant (WebLLM + retrieval)
-- [ ] Phase 2: optional citizen accounts ("my reports" status, saved province alerts, notifications) as a `citizen` role; needs self sign-up with email confirmation + CAPTCHA, and everything must keep working without an account
-- [ ] Drone Integration
-- [ ] Blockchain for Aid Tracking
-- [ ] API for Third-party Integration
-
----
-
-**Built with ❤️ for Thailand's Safety**
-
-🚨 **In case of emergency, always call 1669**
+I built this with Claude Code, an AI coding agent. I directed the product and design decisions. Sonnet subagents implemented from written specs and plans, Opus reviewed each task, and every change went through tests and a pull request. The specs and plans are in [`docs/superpowers/`](docs/superpowers/).
