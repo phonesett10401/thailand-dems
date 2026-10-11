@@ -34,7 +34,10 @@ export function RouteScene({ layout, lang }: SceneProps) {
 	const arrive = spring({ frame: f - DRAW[1], fps, config: { damping: 12 } });
 	const chip = spring({ frame: f - TURN_FRAME, fps, config: { damping: 200 } });
 	const card = spring({ frame: f - 70, fps, config: { damping: 200 } });
-	const cam = 1.35 - 0.35 * draw; // zoomed in on the start, easing out to the full view as the route completes
+	// zoomed in on the start, easing out to a slightly wider view so the route keeps a margin
+	const cam = 1.35 - 0.49 * draw;
+	const fx = START[0] + (82 - START[0]) * draw; // 82 (not the map centre, 195) nudges the final view left so the route sits centred
+	const fy = START[1] + (350 - START[1]) * draw;
 	const [tx, ty] = tipAt(draw);
 	const min = Math.round(ROUTE_MIN + 6 - 6 * draw);
 	const right = TURN.text.includes('right');
@@ -44,7 +47,7 @@ export function RouteScene({ layout, lang }: SceneProps) {
 				<PhoneHeader arc={C.warning} place={LABELS.en.place} />
 				<div style={{ position: 'relative', height: 700 }}>
 					<svg width={390} height={700} style={{ display: 'block', background: '#0f0f12' }}>
-						<g transform={`translate(${START[0] * (1 - cam)} ${START[1] * (1 - cam)}) scale(${cam})`}>
+						<g transform={`translate(${fx * (1 - cam)} ${fy * (1 - cam)}) scale(${cam})`}>
 							<path d={WATER} stroke="rgba(10,132,255,0.25)" strokeWidth={5} {...rd} />
 							<path d={ROADS_MINOR} stroke="rgba(255,255,255,0.07)" strokeWidth={2} {...rd} />
 							<path d={ROADS_MAJOR} stroke="rgba(255,255,255,0.16)" strokeWidth={4} {...rd} />

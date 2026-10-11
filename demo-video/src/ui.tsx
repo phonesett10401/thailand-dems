@@ -15,9 +15,9 @@ export function useAppear(delay = 0): CSSProperties {
 	return { opacity: p, transform: `translateY(${(1 - p) * 24}px)` };
 }
 
-export function CaptionBlock({ c, center = false, layout }: { c: Caption; center?: boolean; layout: Layout }) {
-	const a = useAppear(0);
-	const b = useAppear(6);
+export function CaptionBlock({ c, center = false, layout, delay = 0 }: { c: Caption; center?: boolean; layout: Layout; delay?: number }) {
+	const a = useAppear(delay);
+	const b = useAppear(delay + 6);
 	const big = layout === 'tall' ? 84 : 76;
 	return (
 		<div style={{ maxWidth: layout === 'tall' ? 920 : 680, textAlign: center ? 'center' : 'left', fontFamily: FONT }}>

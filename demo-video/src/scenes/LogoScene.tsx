@@ -1,4 +1,4 @@
-import { AbsoluteFill, Easing, Sequence, interpolate, useCurrentFrame } from 'remotion';
+import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from 'remotion';
 import { C } from '../brand';
 import { CAPTIONS } from '../captions';
 import { CaptionBlock, LogoMark, type SceneProps } from '../ui';
@@ -10,9 +10,7 @@ export function LogoScene({ layout }: SceneProps) {
 	return (
 		<AbsoluteFill style={{ background: C.bg, alignItems: 'center', justifyContent: 'center', gap: 56, flexDirection: 'column' }}>
 			<LogoMark size={layout === 'wide' ? 300 : 380} arc={C.safe} draw={draw} person={person} glow={person} />
-			<Sequence from={30} layout="none">
-				<CaptionBlock c={CAPTIONS.en.logo} layout={layout} center />
-			</Sequence>
+			<CaptionBlock c={CAPTIONS.en.logo} layout={layout} center delay={30} />
 		</AbsoluteFill>
 	);
 }
