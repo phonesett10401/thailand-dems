@@ -1,0 +1,59 @@
+<!doctype html>
+<!-- Source for static/og.png (the link-preview image). Re-render: node scripts/og/render.mjs -->
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+	@font-face { font-family: Geist; src: url('../../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2'); font-weight: 100 900; }
+	@font-face { font-family: Anuphan; src: url('../../node_modules/@fontsource-variable/anuphan/files/anuphan-thai-wght-normal.woff2'); font-weight: 100 900; }
+	* { margin: 0; box-sizing: border-box; }
+	body { width: 1200px; height: 630px; overflow: hidden; background: #0a0a0c; color: #f2f2f4; font-family: Geist, Anuphan, sans-serif; position: relative; }
+	.glow { position: absolute; border-radius: 50%; filter: blur(90px); }
+	.grid { position: absolute; inset: 0; background-image: radial-gradient(rgb(255 255 255 / 0.07) 1px, transparent 1px); background-size: 28px 28px;
+		mask-image: radial-gradient(ellipse at 78% 50%, #000 0%, transparent 70%); }
+	.text { position: absolute; left: 80px; top: 0; bottom: 0; width: 620px; display: flex; flex-direction: column; justify-content: center; }
+	.kicker { font-size: 20px; letter-spacing: 0.22em; text-transform: uppercase; color: #9a9aa0; font-weight: 500; }
+	h1 { font-size: 104px; line-height: 1; letter-spacing: -0.04em; font-weight: 800; margin-top: 18px; }
+	h1 span { color: #9a9aa0; font-weight: 600; }
+	.th { font-family: Anuphan, sans-serif; font-size: 30px; color: #c8c8cc; margin-top: 22px; font-weight: 500; }
+	.en { font-size: 26px; color: #9a9aa0; margin-top: 10px; }
+	.levels { display: flex; gap: 12px; margin-top: 40px; }
+	.pill { display: flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 999px; border: 1px solid rgb(255 255 255 / 0.12);
+		background: rgb(255 255 255 / 0.05); font-size: 21px; font-weight: 500; }
+	.dot { width: 12px; height: 12px; border-radius: 50%; }
+	svg { position: absolute; right: 40px; top: 15px; }
+</style>
+</head>
+<body>
+	<div class="glow" style="width:520px;height:520px;right:60px;top:40px;background:#ff453a;opacity:.38"></div>
+	<div class="glow" style="width:300px;height:300px;right:380px;top:-80px;background:#ffb020;opacity:.16"></div>
+	<div class="glow" style="width:320px;height:320px;right:-60px;bottom:-140px;background:#30d158;opacity:.14"></div>
+	<div class="grid"></div>
+
+	<svg width="600" height="600" viewBox="0 0 64 64">
+		<!-- signal rings radiating from the arc: warning, watch, safe -->
+		<g fill="none" stroke-linecap="round">
+			<path d="M10 20 A26 26 0 0 1 54 20" stroke="#30d158" stroke-width="0.7" opacity=".35" />
+			<path d="M15 23 A20 20 0 0 1 49 23" stroke="#ffb020" stroke-width="0.8" opacity=".5" />
+		</g>
+		<g transform="translate(32 34) scale(0.62) translate(-32 -32)">
+			<path d="M32 4 L54 11 V30 C54 44 45 53 32 60 C19 53 10 44 10 30 V11 Z" fill="#0a0a0c" fill-opacity=".55" stroke="#fff" stroke-width="4" stroke-linejoin="round" />
+			<path d="M22 27 A11 11 0 0 1 42 27" fill="none" stroke="#ff453a" stroke-width="4" stroke-linecap="round" />
+			<circle cx="32" cy="31" r="4.6" fill="#fff" />
+			<path d="M24 47 C24 41.5 27.5 38.5 32 38.5 C36.5 38.5 40 41.5 40 47 Z" fill="#fff" />
+		</g>
+	</svg>
+
+	<div class="text">
+		<div class="kicker">Disaster alerts · Thailand</div>
+		<h1>DEMS <span>Thailand</span></h1>
+		<div class="th">รู้ระดับภัย หาที่พักพิง ไปถึงอย่างปลอดภัย</div>
+		<div class="en">Know your level. Find a shelter. Get there safely.</div>
+		<div class="levels">
+			<div class="pill"><span class="dot" style="background:#30d158"></span>Safe</div>
+			<div class="pill"><span class="dot" style="background:#ffb020"></span>Watch</div>
+			<div class="pill"><span class="dot" style="background:#ff453a"></span>Warning</div>
+		</div>
+	</div>
+</body>
+</html>
