@@ -91,3 +91,8 @@ Desktop.ini
 
 # Brainstorm companion mockups
 .superpowers/
+
+# demo-video commits its lockfile; the music track is licensed and must not be redistributed
+!demo-video/package-lock.json
+demo-video/public/music.mp3
+demo-video/out/
