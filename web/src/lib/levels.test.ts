@@ -141,6 +141,14 @@ describe('collect (map view)', () => {
 	});
 });
 
+describe('feed links', () => {
+	it('keeps https urls and drops anything else', () => {
+		const f = { ...calm(), quakes: [{ ...quake(5, 13.8, 100.5, 1), url: 'javascript:alert(1)' }], gdacs: [{ ...gd('flood', 'warning', 13.8, 100.5), url: 'https://gdacs.org/x' }] };
+		const urls = Object.fromEntries(collect(f, BKK, NOW, true).map((h) => [h.source, h.url]));
+		expect(urls).toEqual({ USGS: null, GDACS: 'https://gdacs.org/x' });
+	});
+});
+
 describe('worst', () => {
 	it('ranks warning > watch > safe', () => {
 		expect(worst([])).toBe('safe');

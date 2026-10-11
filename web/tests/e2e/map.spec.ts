@@ -31,6 +31,15 @@ test('layer chips toggle hazard types and shelters', async ({ page }) => {
 	await expect(page.getByRole('button', { name: 'Shelters', exact: true })).toHaveAttribute('aria-pressed', 'true');
 });
 
+test('a type with only sample hazards gets a grey chip dot, not red or amber', async ({ page }) => {
+	await page.route('https://www.gdacs.org/**', (r) => r.fulfill({ contentType: 'application/json', body: '{"features":[]}' }));
+	await page.route('https://flood-api.open-meteo.com/**', (r) => r.abort());
+	await page.goto('/map');
+	const dot = page.getByRole('button', { name: 'Flooding', exact: true }).locator('i');
+	await expect(dot).toBeVisible();
+	await expect(dot).toHaveCSS('background-color', 'rgb(107, 107, 114)');
+});
+
 test('floating Report button goes to the report form', async ({ page }) => {
 	await page.goto('/map');
 	await expect(page.getByRole('link', { name: 'Report' })).toHaveAttribute('href', '/report');

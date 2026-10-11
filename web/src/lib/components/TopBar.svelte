@@ -49,8 +49,8 @@
 <div class="mx-auto flex h-14 max-w-[1600px] items-center gap-2 px-3 md:gap-3 md:px-4">
 	<a href={localizeHref('/')} class="flex min-h-11 items-center gap-2 font-bold tracking-tight">
 		<Logo {level} size={26} /><span class="sr-only sm:not-sr-only">DEMS</span>
-		<span class="flex items-center gap-1 font-mono text-[10px] font-semibold tracking-[0.1em] text-warning uppercase">
-			<span class="size-1.5 rounded-full bg-warning shadow-[0_0_0_3px_rgb(255_69_58/0.2)]" aria-hidden="true"></span><span class="hidden sm:inline">{m.live_label()}</span>
+		<span class="flex items-center gap-1 font-mono text-[10px] font-semibold tracking-[0.1em] uppercase {level === 'unknown' ? 'text-muted' : 'text-warning'}">
+			<span class="size-1.5 rounded-full {level === 'unknown' ? 'bg-unknown' : 'bg-warning shadow-[0_0_0_3px_rgb(255_69_58/0.2)]'}" aria-hidden="true"></span><span class="hidden sm:inline">{m.live_label()}</span>
 		</span>
 	</a>
 	<PlacePicker />

@@ -346,5 +346,7 @@
 	"about_limits_title": "Limits",
 	"about_limits_body": "This is a student project, not an official warning service. Data can be late or wrong. Routes avoid only hazard zones we know about and cannot see road closures. Always follow TMD and DDPM, and call 1784 in an emergency.",
 	"about_real_routes": "Walking, driving and cycling routes: openrouteservice by HeiGIT, on OpenStreetMap data",
-	"route_attribution": "Routes: © openrouteservice.org by HeiGIT · Map data © OpenStreetMap contributors"
+	"route_attribution": "Routes: © openrouteservice.org by HeiGIT · Map data © OpenStreetMap contributors",
+	"error_title": "Page not found",
+	"error_home": "Go to Now"
 }

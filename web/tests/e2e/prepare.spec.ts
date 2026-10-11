@@ -25,7 +25,7 @@ test('a guide shows Before, During and After', async ({ page }) => {
 
 test('an unknown guide is a 404', async ({ page }) => {
 	await page.goto('/prepare/meteor');
-	await expect(page.getByText('404')).toBeVisible();
+	await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
 });
 
 test('Thai guide text', async ({ page }) => {

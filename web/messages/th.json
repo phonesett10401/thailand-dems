@@ -346,5 +346,7 @@
 	"about_limits_title": "ข้อจำกัด",
 	"about_limits_body": "นี่เป็นโครงงานนักศึกษา ไม่ใช่บริการเตือนภัยทางการ ข้อมูลอาจล่าช้าหรือผิดพลาด เส้นทางหลีกเลี่ยงได้เฉพาะพื้นที่อันตรายที่เราทราบ และมองไม่เห็นถนนที่ถูกปิด โปรดปฏิบัติตามกรมอุตุนิยมวิทยาและ ปภ. และโทร 1784 ในกรณีฉุกเฉิน",
 	"about_real_routes": "เส้นทางเดิน ขับรถ และจักรยาน: openrouteservice โดย HeiGIT จากข้อมูล OpenStreetMap",
-	"route_attribution": "เส้นทาง: © openrouteservice.org โดย HeiGIT · ข้อมูลแผนที่ © ผู้ร่วมพัฒนา OpenStreetMap"
+	"route_attribution": "เส้นทาง: © openrouteservice.org โดย HeiGIT · ข้อมูลแผนที่ © ผู้ร่วมพัฒนา OpenStreetMap",
+	"error_title": "ไม่พบหน้านี้",
+	"error_home": "ไปหน้าตอนนี้"
 }

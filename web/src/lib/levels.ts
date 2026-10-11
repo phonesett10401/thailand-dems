@@ -2,6 +2,8 @@ import { distanceKm, toNum } from './geo';
 import type { Air, Forecast, River } from './sources/openmeteo';
 import type { DbAlert, Disaster, HazardEvent, HazardKind, Pt } from './types';
 
+const safeUrl = (u: string | null | undefined) => (u?.startsWith('https://') ? u : null);
+
 export type Lvl = 'safe' | 'watch' | 'warning';
 export type Overall = Lvl | 'unknown';
 export type HazardType =
@@ -124,13 +126,13 @@ export function collect(f: Feeds, at: Pt, now: number, near: boolean): Hazard[] 
 		const fresh = now - Date.parse(q.time) <= T.quakeHours * 3600_000;
 		const level = over(q.mag ?? 0, T.quake, true);
 		if (near && (km > T.quakeKm || !fresh || level === 'safe')) continue;
-		out.push(live({ id: q.id, type: 'earthquake', level, name: q.title, value: q.mag ?? null, km, lat: q.lat, lon: q.lon, time: q.time, source: 'USGS', url: q.url }));
+		out.push(live({ id: q.id, type: 'earthquake', level, name: q.title, value: q.mag ?? null, km, lat: q.lat, lon: q.lon, time: q.time, source: 'USGS', url: safeUrl(q.url) }));
 	}
 	for (const g of f.gdacs ?? []) {
 		if (!g.current) continue;
 		const km = distanceKm(at, g);
 		if (near && km > (g.kind === 'cyclone' ? T.cycloneKm : T.gdacsKm)) continue;
-		out.push(live({ id: g.id, type: GDACS_TYPE[g.kind], level: g.level, name: g.title, value: null, km, lat: g.lat, lon: g.lon, time: g.time, source: 'GDACS', url: g.url }));
+		out.push(live({ id: g.id, type: GDACS_TYPE[g.kind], level: g.level, name: g.title, value: null, km, lat: g.lat, lon: g.lon, time: g.time, source: 'GDACS', url: safeUrl(g.url) }));
 	}
 
 	for (const d of f.disasters) {

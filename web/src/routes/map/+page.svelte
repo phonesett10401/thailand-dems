@@ -31,6 +31,10 @@
 	// Map = "what is happening anywhere": every current hazard, not only those near you.
 	const all = $derived(live.feeds ? collect(live.feeds, here.place, Date.now(), false) : []);
 	const types = $derived([...new Set(all.map((h) => h.type))] as HazardType[]);
+	const chipColor = (t: string) => {
+		const lv = all.filter((h) => h.type === t && !h.sample).map((h) => h.level);
+		return lv.length ? LEVEL_HEX[worst(lv)] : LEVEL_HEX.unknown;
+	};
 	const shown = $derived(all.filter((h) => !hidden.has(h.type)));
 	const toggle = (k: string) => {
 		const n = new Set(hidden);
@@ -53,7 +57,7 @@
 	]);
 	const areas = $derived(
 		shown
-			.filter((h) => h.lat !== null && h.lon !== null && h.level !== 'safe')
+			.filter((h) => h.lat !== null && h.lon !== null && h.level !== 'safe' && !h.sample)
 			.map((h) => ({ id: h.id, lat: h.lat!, lon: h.lon!, km: ZONE_KM[h.type] ?? 10, color: LEVEL_HEX[h.level] }))
 	);
 	function select(id: string) {
@@ -75,7 +79,7 @@
 		<div role="group" aria-label={m.map_layers()} class="absolute inset-x-3 top-3 flex gap-1.5 overflow-x-auto pb-1">
 			{#if !failed}<span class="contents lg:hidden"><Chip on={showList} onclick={() => (listOn = !listOn)}>{m.map_list()}</Chip></span>{/if}
 			{#each types as t (t)}
-				<Chip on={!hidden.has(t)} color={LEVEL_HEX[worst(all.filter((h) => h.type === t).map((h) => h.level))]} onclick={() => toggle(t)}>{hazName(t)}</Chip>
+				<Chip on={!hidden.has(t)} color={chipColor(t)} onclick={() => toggle(t)}>{hazName(t)}</Chip>
 			{/each}
 			<Chip on={!hidden.has('shelters')} color="#f2f2f4" onclick={() => toggle('shelters')}>{m.map_shelters()}</Chip>
 		</div>

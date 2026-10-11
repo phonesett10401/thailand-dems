@@ -69,7 +69,9 @@
 		}
 		watchId = navigator.geolocation.watchPosition(
 			(p) => (me = { lat: p.coords.latitude, lon: p.coords.longitude }),
-			() => {
+			(e) => {
+				// Only a refusal ends navigation; a dropped fix keeps the last position.
+				if (e.code !== 1) return;
 				stop();
 				gpsError = true;
 			},
