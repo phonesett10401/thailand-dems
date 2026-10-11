@@ -323,5 +323,5 @@
 	"prep_during": "ระหว่างเกิดเหตุ",
 	"prep_after": "หลังเกิดเหตุ",
 	"prep_back": "คู่มือทั้งหมด",
-	"prep_call": "โทร {tel}"
+	"prep_call": "โทร {tel} {name}"
 }

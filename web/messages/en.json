@@ -323,5 +323,5 @@
 	"prep_during": "During",
 	"prep_after": "After",
 	"prep_back": "All guides",
-	"prep_call": "Call {tel}"
+	"prep_call": "Call {tel}, {name}"
 }

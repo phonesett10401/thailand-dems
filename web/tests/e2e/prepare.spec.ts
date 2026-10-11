@@ -4,7 +4,7 @@ test('prepare lists the ten guides, the go-bag and tap-to-call numbers', async (
 	await page.goto('/prepare');
 	await expect(page.getByRole('heading', { name: 'Prepare', level: 1 })).toBeVisible();
 	await expect(page.getByRole('link', { name: /Smoke and haze/ })).toHaveAttribute('href', '/prepare/smoke');
-	await expect(page.getByRole('link', { name: 'Call 1784', exact: true })).toHaveAttribute('href', 'tel:1784');
+	await expect(page.getByRole('link', { name: /^Call 1784, Disaster hotline/ })).toHaveAttribute('href', 'tel:1784');
 	await expect(page.getByText('0 of 15 ready')).toBeVisible();
 });
 

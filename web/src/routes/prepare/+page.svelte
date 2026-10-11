@@ -45,7 +45,7 @@
 					<li>
 						<label class="flex min-h-12 cursor-pointer items-center gap-3 px-4 py-2.5 text-sm">
 							<input type="checkbox" class="peer sr-only" checked={done.has(item.id)} onchange={() => flip(item.id)} />
-							<span class="grid size-5 shrink-0 place-items-center rounded-md border border-line peer-checked:border-safe peer-checked:bg-safe peer-focus-visible:outline-2 peer-focus-visible:outline-info" aria-hidden="true">
+							<span class="grid size-5 shrink-0 place-items-center rounded-md border border-muted peer-checked:border-safe peer-checked:bg-safe peer-focus-visible:outline-2 peer-focus-visible:outline-info" aria-hidden="true">
 								{#if done.has(item.id)}<Check size={14} class="text-bg" />{/if}
 							</span>
 							<span class={done.has(item.id) ? 'text-muted line-through' : ''}>{tx(item.text)}</span>
@@ -55,7 +55,7 @@
 			</ul>
 			<div class="mt-2 flex items-center justify-between text-xs text-muted">
 				<span>{m.prep_bag_note()}</span>
-				<button type="button" onclick={reset} class="min-h-11 px-2 underline">{m.prep_bag_reset()}</button>
+				<button type="button" onclick={reset} class="min-h-11 min-w-11 px-2 underline">{m.prep_bag_reset()}</button>
 			</div>
 		</section>
 		<section>
@@ -63,7 +63,7 @@
 			<ul class="flex flex-col gap-2">
 				{#each NUMBERS as n (n.tel)}
 					<li>
-						<a href="tel:{n.tel}" aria-label={m.prep_call({ tel: n.tel })} class="glass flex min-h-14 items-center gap-3 rounded-2xl px-4">
+						<a href="tel:{n.tel}" aria-label={m.prep_call({ tel: n.tel, name: tx(n.name) })} class="glass flex min-h-14 items-center gap-3 rounded-2xl px-4">
 							<Phone size={16} class="text-warning" aria-hidden="true" />
 							<span class="font-mono text-xl font-semibold">{n.tel}</span>
 							<span class="text-sm text-muted">{tx(n.name)}</span>

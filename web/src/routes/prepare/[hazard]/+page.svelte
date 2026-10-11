@@ -17,7 +17,7 @@
 	<nav class="hidden lg:block" aria-label={m.prep_guides()}>
 		<ul class="sticky top-[calc(var(--header-h)+1.25rem)] flex flex-col gap-0.5">
 			{#each GUIDES as id (id)}
-				<li><a href={localizeHref(`/prepare/${id}`)} aria-current={id === data.id ? 'page' : undefined} class="block rounded-lg px-3 py-2 text-sm {id === data.id ? 'bg-white/10 text-text' : 'text-muted hover:text-text'}">{tx(GUIDE[id].title)}</a></li>
+				<li><a href={localizeHref(`/prepare/${id}`)} aria-current={id === data.id ? 'page' : undefined} class="flex min-h-11 items-center rounded-lg px-3 text-sm {id === data.id ? 'bg-white/10 text-text' : 'text-muted hover:text-text'}">{tx(GUIDE[id].title)}</a></li>
 			{/each}
 		</ul>
 	</nav>
@@ -30,7 +30,7 @@
 				<h2 class="label mb-3 {key === 'during' ? 'text-warning' : ''}">{label()}</h2>
 				<ol class="flex flex-col gap-2.5">
 					{#each g[key] as item, i (i)}
-						<li class="flex gap-3"><span class="font-mono text-xs text-muted">0{i + 1}</span>{tx(item)}</li>
+						<li class="flex gap-3"><span class="font-mono text-xs text-muted">{String(i + 1).padStart(2, "0")}</span>{tx(item)}</li>
 					{/each}
 				</ol>
 			</section>
