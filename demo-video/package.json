@@ -1,0 +1,29 @@
+{
+	"name": "dems-demo-video",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"studio": "remotion studio",
+		"render": "node scripts/render.mjs",
+		"make-thailand": "node scripts/make-thailand.mjs",
+		"make-bangkok": "node scripts/make-bangkok.mjs",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@fontsource-variable/anuphan": "^5.3.0",
+		"@fontsource-variable/geist": "^5.3.0",
+		"@remotion/cli": "4.0.534",
+		"@remotion/fonts": "4.0.534",
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0",
+		"remotion": "4.0.534"
+	},
+	"devDependencies": {
+		"@types/react": "^19.2.0",
+		"d3-geo": "^3.1.1",
+		"topojson-client": "^3.1.0",
+		"typescript": "^5.9.0",
+		"vitest": "^4.1.11",
+		"world-atlas": "^2.0.2"
+	}
+}
