@@ -16,7 +16,7 @@
 		error?: string | null;
 	} = $props();
 	let busy = $state(false);
-	const field = 'w-full rounded-md border border-ink bg-white px-3 py-2';
+	const field = 'w-full rounded-md border border-muted bg-white/5 px-3 py-2';
 </script>
 
 <div class="page max-w-md">
@@ -40,11 +40,11 @@
 			<span>{m.login_password()}</span>
 			<input name="password" type="password" autocomplete="current-password" class={field} />
 		</label>
-		{#if error}<p role="alert" class="text-sm text-alarm">{error}</p>{/if}
+		{#if error}<p role="alert" class="text-sm text-warning">{error}</p>{/if}
 		<button
 			type="submit"
 			disabled={busy}
-			class="min-h-12 rounded-md bg-ink px-4 font-semibold text-paper disabled:opacity-60"
+			class="min-h-12 rounded-md bg-text px-4 font-semibold text-bg disabled:opacity-60"
 		>
 			{m.login_submit()}
 		</button>

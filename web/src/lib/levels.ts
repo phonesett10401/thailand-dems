@@ -76,8 +76,6 @@ const GDACS_TYPE: Record<HazardKind, HazardType> = {
 	volcano: 'volcano',
 	other: 'other'
 };
-// GDACS Red/Orange/Green arrive as danger/warning/watch through severity.levelOf.
-const GDACS_LEVEL: Record<string, Lvl> = { danger: 'warning', warning: 'watch' };
 
 const DISASTER_TYPE: Record<string, HazardType> = {
 	Flood: 'flood',
@@ -132,7 +130,7 @@ export function collect(f: Feeds, at: Pt, now: number, near: boolean): Hazard[] 
 		if (!g.current) continue;
 		const km = distanceKm(at, g);
 		if (near && km > (g.kind === 'cyclone' ? T.cycloneKm : T.gdacsKm)) continue;
-		out.push(live({ id: g.id, type: GDACS_TYPE[g.kind], level: GDACS_LEVEL[g.level] ?? 'safe', name: g.title, value: null, km, lat: g.lat, lon: g.lon, time: g.time, source: 'GDACS', url: g.url }));
+		out.push(live({ id: g.id, type: GDACS_TYPE[g.kind], level: g.level, name: g.title, value: null, km, lat: g.lat, lon: g.lon, time: g.time, source: 'GDACS', url: g.url }));
 	}
 
 	for (const d of f.disasters) {

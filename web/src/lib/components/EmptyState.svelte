@@ -10,12 +10,12 @@
 </script>
 
 <div
-	class="flex flex-col items-center gap-2 rounded-xl border border-dashed border-rule px-4 py-6 text-center text-sm text-muted"
+	class="flex flex-col items-center gap-2 rounded-xl border border-dashed border-line px-4 py-6 text-center text-sm text-muted"
 >
 	<Icon size={28} aria-hidden="true" />
 	<p>{text}</p>
 	{#if actionLabel && onaction}
-		<button type="button" onclick={onaction} class="rounded-md border border-ink px-3 py-1.5 font-semibold text-ink">
+		<button type="button" onclick={onaction} class="rounded-md border border-text px-3 py-1.5 font-semibold text-text">
 			{actionLabel}
 		</button>
 	{/if}

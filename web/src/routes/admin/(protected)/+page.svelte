@@ -9,6 +9,6 @@
 	<p class="mt-3">{m.signed_in_as({ who: data.email ?? '' })}</p>
 	<p class="mt-2 text-muted">{m.admin_coming()}</p>
 	<form method="POST" action="/auth/logout" class="mt-6">
-		<button class="min-h-11 rounded-md border border-ink px-4 font-semibold">{m.sign_out()}</button>
+		<button class="min-h-11 rounded-md border border-muted px-4 font-semibold">{m.sign_out()}</button>
 	</form>
 </div>

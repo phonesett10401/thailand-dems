@@ -21,12 +21,6 @@
 	--color-warning: #ff453a;
 	--color-unknown: #6b6b72;
 	--color-info: #0a84ff;
-	/* Legacy names so old pages still compile; removed in Task 14. */
-	--color-paper: #0a0a0c;
-	--color-ink: #f2f2f4;
-	--color-alarm: #ff453a;
-	--color-caution: #ffb020;
-	--color-rule: rgb(255 255 255 / 0.09);
 	--font-sans: 'Geist Variable', 'Anuphan Variable', system-ui, sans-serif;
 	--font-mono: 'Geist Mono Variable', ui-monospace, monospace;
 }
@@ -186,12 +180,5 @@
 	.map-dot-sample {
 		background: #0a0a0c;
 		border: 3px solid var(--color-watch);
-	}
-	/* Legacy kinds, removed in Task 14. */
-	.map-dot-quake {
-		background: var(--color-watch);
-	}
-	.map-dot-hazard {
-		background: var(--color-warning);
 	}
 }

@@ -66,15 +66,15 @@ describe('thresholds', () => {
 		expect(levelOfType({ ...calm(), quakes: [quake(6, 20.5, 100.5, 1)] }, 'earthquake')).toBe('safe'); // ~750 km
 	});
 	it('GDACS: red warning, orange watch, green listed as safe; only current events in range', () => {
-		const a = assess({ ...calm(), gdacs: [gd('flood', 'danger', 14, 100.6), gd('wildfire', 'warning', 14.2, 100.6), gd('drought', 'watch', 14.1, 100.6)] }, BKK, NOW);
+		const a = assess({ ...calm(), gdacs: [gd('flood', 'warning', 14, 100.6), gd('wildfire', 'watch', 14.2, 100.6), gd('drought', 'safe', 14.1, 100.6)] }, BKK, NOW);
 		expect(a.hazards.map((h) => [h.type, h.level])).toEqual([
 			['flood', 'warning'],
 			['wildfire', 'watch'],
 			['drought', 'safe']
 		]);
-		expect(assess({ ...calm(), gdacs: [gd('flood', 'danger', 14, 100.6, false)] }, BKK, NOW).hazards).toEqual([]);
-		expect(assess({ ...calm(), gdacs: [gd('flood', 'danger', 18.8, 99)] }, BKK, NOW).hazards).toEqual([]); // ~580 km
-		expect(assess({ ...calm(), gdacs: [gd('cyclone', 'danger', 16.5, 104)] }, BKK, NOW).hazards[0].type).toBe('storm'); // ~480 km, inside 500
+		expect(assess({ ...calm(), gdacs: [gd('flood', 'warning', 14, 100.6, false)] }, BKK, NOW).hazards).toEqual([]);
+		expect(assess({ ...calm(), gdacs: [gd('flood', 'warning', 18.8, 99)] }, BKK, NOW).hazards).toEqual([]); // ~580 km
+		expect(assess({ ...calm(), gdacs: [gd('cyclone', 'warning', 16.5, 104)] }, BKK, NOW).hazards[0].type).toBe('storm'); // ~480 km, inside 500
 	});
 	it('river model: rising is watch, never warning', () => {
 		expect(levelOfType({ ...calm(), river: { today: 1, peak: 50, peakDate: '2026-10-12', rising: true } }, 'flood')).toBe('watch');
@@ -134,7 +134,7 @@ describe('staleness and keep-last', () => {
 
 describe('collect (map view)', () => {
 	it('near=false keeps far live events and sample disasters with distances', () => {
-		const far = { ...calm(), gdacs: [gd('flood', 'danger', 18.8, 99)] };
+		const far = { ...calm(), gdacs: [gd('flood', 'warning', 18.8, 99)] };
 		const all = collect(far, BKK, NOW, false);
 		expect(all).toHaveLength(1);
 		expect(all[0].km).toBeGreaterThan(500);

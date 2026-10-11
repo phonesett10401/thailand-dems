@@ -11,7 +11,7 @@ describe('parseGdacs', () => {
 			source: 'GDACS',
 			kind: 'flood',
 			title: 'Flood in Thailand',
-			level: 'warning',
+			level: 'watch',
 			lat: 6.3345,
 			lon: 101.141,
 			time: '2025-11-17T01:00:00.000Z',
