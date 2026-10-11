@@ -16,13 +16,13 @@ export function HowScene({ layout }: SceneProps) {
 	const col = (i: number, n: number, along: number): Box =>
 		wide ? { x: along, y: (H / (n + 1)) * (i + 1) } : { x: (W / (n + 1)) * (i + 1), y: along };
 	const src = L.sources.map((_, i) => col(i, 3, wide ? 150 : 140));
-	const hub: Box = wide ? { x: W / 2, y: H / 2 } : { x: W / 2, y: H / 2 };
+	const hub: Box = { x: W / 2, y: H / 2 };
 	const out = L.outputs.map((_, i) => col(i, 3, wide ? W - 150 : H - 140));
 	const appear = (d: number) => spring({ frame: f - d, fps, config: { damping: 200 } });
 	const flow = (f % 30) / 30;
 	const lines = [...src.map((s) => [s, hub] as const), ...out.map((o, i) => [hub, o, L.outputs[i].phase2] as const)];
 	const node = (b: Box, d: number, children: ReactNode, dim = false) => (
-		<div style={{ position: 'absolute', left: b.x, top: b.y, transform: `translate(-50%,-50%) scale(${0.9 + 0.1 * appear(d)})`, opacity: appear(d) * (dim ? 0.45 : 1), padding: wide ? '16px 22px' : '14px 10px', color: C.text, boxSizing: 'border-box', borderRadius: 20, background: C.raised, border: `1px solid ${C.line}`, fontFamily: FONT, textAlign: 'center', width: wide ? 220 : 205 }}>{children}</div>
+		<div style={{ position: 'absolute', left: b.x, top: b.y, transform: `translate(-50%,-50%) scale(${0.9 + 0.1 * appear(d)})`, opacity: appear(d), padding: wide ? '16px 22px' : '14px 10px', color: C.text, boxSizing: 'border-box', borderRadius: 20, background: C.raised, border: `1px solid ${C.line}`, fontFamily: FONT, textAlign: 'center', width: wide ? 220 : 205 }}><div style={{ opacity: dim ? 0.45 : 1 }}>{children}</div></div>
 	);
 	return (
 		<Stage layout={layout} caption={CAPTIONS.en.how}>
