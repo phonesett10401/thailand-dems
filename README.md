@@ -11,7 +11,7 @@ A mobile-first web app that tells people in Thailand how safe their location is 
 
 ## What it does (citizens)
 
-- **Your level:** Safe, Watch, Warning or Unknown for your location (or a place you pick).
+- **Your level:** Safe, Watch, Warning or Unknown for your location (or a province you pick).
 - **Hazard map:** live hazards near you on a MapLibre map (OpenFreeMap tiles).
 - **Shelters:** a list and map of shelters, with distance and capacity.
 - **Safe routes:** walking, driving or cycling directions to a shelter that steer around known danger zones (openrouteservice).
@@ -95,7 +95,7 @@ Environment variables (names only):
 | `DATABASE_URL` | Postgres connection string (transaction pooler) |
 | `ORS_API_KEY` | openrouteservice key for safe routes |
 
-Without a database the app still opens: shelters, disasters, alerts and evacuation routes fall back to bundled sample data and an offline banner is shown. Live hazard levels use public feeds and do not need the database. Safe routes need `ORS_API_KEY`; saving reports and signing in need Supabase.
+Without a database the app still opens: shelters, disasters, alerts and evacuation routes fall back to bundled sample data and an offline banner is shown. Live hazard levels use public feeds and do not need the database. Safe routes need `ORS_API_KEY` plus the database (used for rate limiting); saving reports and signing in need Supabase.
 
 Database scripts (run from `web/`, they read `web/.env`):
 
