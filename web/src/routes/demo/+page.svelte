@@ -69,7 +69,7 @@
 			{#if muted}<VolumeX size={18} aria-hidden="true" />{:else}<Volume2 size={18} aria-hidden="true" />{/if}
 		</button>
 	</div>
-	<div role="group" aria-label={m.demo_chapters()} class="chip-row mx-auto mt-3">
+	<div role="group" aria-label={m.demo_chapters()} class="chip-row mx-auto mt-3 w-fit max-w-full">
 		{#each chapters as c (c.at)}
 			<Chip on={c.at === activeAt} onclick={() => jump(c.at)}>{c.name()}</Chip>
 		{/each}
@@ -77,7 +77,7 @@
 
 	<h1 class="headline mt-8 text-4xl">{m.demo_title()}</h1>
 	<ul class="mt-4 flex flex-col gap-2 text-[#c9c9cf]">
-		{#each [m.demo_lead_1(), m.demo_lead_2(), m.demo_lead_3()] as t (t)}<li>{t}</li>{/each}
+		{#each [m.demo_lead_1(), m.demo_lead_2(), m.demo_lead_3()] as line (line)}<li>{line}</li>{/each}
 	</ul>
 	<p class="glass mt-4 rounded-2xl px-4 py-3 text-sm text-muted">{m.demo_honest()}</p>
 	<a href={localizeHref('/')} class="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full bg-text px-6 font-semibold text-bg">
