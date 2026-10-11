@@ -5,9 +5,9 @@ import { msg } from '../i18n';
 import { Phone, PhoneHeader, Stage, TabBar, type SceneProps } from '../ui';
 
 // Phone-map coordinates (390 wide). The route bends around the danger zone (centre 195,360, r 95).
-const START: [number, number] = [90, 600];
+const START: [number, number] = [90, 470];
 const SHELTER: [number, number] = [300, 140];
-const ROUTE = 'M90 600 C 60 480, 70 330, 150 240 S 260 150, 300 140';
+const ROUTE = 'M90 470 C 60 400, 70 330, 150 240 S 260 150, 300 140';
 const ROADS = ['M0 520 L390 470', 'M40 0 L120 760', 'M0 250 L390 210', 'M260 0 L330 760', 'M0 650 L390 690'];
 
 export function RouteScene({ layout, lang }: SceneProps) {
