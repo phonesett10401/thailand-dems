@@ -5,10 +5,12 @@ import './fonts';
 import { LogoScene } from './scenes/LogoScene';
 import { MapScene } from './scenes/MapScene';
 import { LevelScene } from './scenes/LevelScene';
+import { RouteScene } from './scenes/RouteScene';
+import { PrepareScene } from './scenes/PrepareScene';
 import { SCENES, type SceneId } from './timeline';
 import type { SceneProps } from './ui';
 
-const VIEWS: Partial<Record<SceneId, FC<SceneProps>>> = { logo: LogoScene, map: MapScene, level: LevelScene };
+const VIEWS: Partial<Record<SceneId, FC<SceneProps>>> = { logo: LogoScene, map: MapScene, level: LevelScene, route: RouteScene, prepare: PrepareScene };
 
 export function Demo(props: SceneProps) {
 	return (
