@@ -310,5 +310,18 @@
 	"dir_sw": "south-west",
 	"dir_w": "west",
 	"dir_nw": "north-west",
-	"route_gps_error": "Couldn't get your location. Check location permission."
+	"route_gps_error": "Couldn't get your location. Check location permission.",
+	"prep_title": "Prepare",
+	"prep_intro": "Get ready before it happens. Guides for each hazard, a go-bag list and the numbers to call.",
+	"prep_guides": "Hazard guides",
+	"prep_bag": "Go-bag checklist",
+	"prep_bag_count": "{done} of {total} ready",
+	"prep_bag_reset": "Reset",
+	"prep_bag_note": "Saved on this device only.",
+	"prep_numbers": "Emergency numbers",
+	"prep_before": "Before",
+	"prep_during": "During",
+	"prep_after": "After",
+	"prep_back": "All guides",
+	"prep_call": "Call {tel}"
 }
