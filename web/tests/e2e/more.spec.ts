@@ -12,6 +12,7 @@ test('More links to report, about and staff sign-in; coming-soon items are inert
 
 test('About explains sources, sample data, thresholds and limits', async ({ page }) => {
 	await page.goto('/about');
+	await expect(page.getByRole('link', { name: 'Watch the demo tour' })).toHaveAttribute('href', '/demo');
 	await expect(page.getByText('PM2.5: Watch above 37.5 µg/m³, Warning above 75 (Thai PCD)')).toBeVisible();
 	await expect(page.getByText(/never Safe/)).toBeVisible();
 	await expect(page.getByRole('heading', { name: 'Limits' })).toBeVisible();
