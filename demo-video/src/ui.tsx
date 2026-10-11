@@ -47,7 +47,7 @@ export function Stage({ layout, caption, children }: { layout: Layout; caption: 
 export function LogoMark({ size, arc, draw = 1, person = 1, glow = 0 }: { size: number; arc: string; draw?: number; person?: number; glow?: number }) {
 	return (
 		<svg width={size} height={size} viewBox="0 0 64 64" style={{ overflow: 'visible' }}>
-			<path d={SHIELD} fill="none" stroke={C.text} strokeWidth={4.5} strokeLinejoin="round" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - draw} />
+			<path d={SHIELD} fill="none" stroke={C.text} strokeWidth={4.5} strokeLinejoin="round" pathLength={1} strokeDasharray={draw < 1 ? 1 : undefined} strokeDashoffset={draw < 1 ? 1 - draw : undefined} />
 			<path d={ARC} fill="none" stroke={arc} strokeWidth={4} strokeLinecap="round" opacity={person} style={glow ? { filter: `drop-shadow(0 0 ${glow * 5}px ${arc})` } : undefined} />
 			<g opacity={person}>
 				<circle cx={32} cy={31} r={4.6} fill={C.text} />

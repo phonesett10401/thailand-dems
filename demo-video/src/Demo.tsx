@@ -4,10 +4,11 @@ import { C } from './brand';
 import './fonts';
 import { LogoScene } from './scenes/LogoScene';
 import { MapScene } from './scenes/MapScene';
+import { LevelScene } from './scenes/LevelScene';
 import { SCENES, type SceneId } from './timeline';
 import type { SceneProps } from './ui';
 
-const VIEWS: Partial<Record<SceneId, FC<SceneProps>>> = { logo: LogoScene, map: MapScene };
+const VIEWS: Partial<Record<SceneId, FC<SceneProps>>> = { logo: LogoScene, map: MapScene, level: LevelScene };
 
 export function Demo(props: SceneProps) {
 	return (
