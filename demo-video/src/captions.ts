@@ -29,6 +29,7 @@ export const LABELS = {
 		phase2: 'Phase 2',
 		url: 'thailand-dems.vercel.app',
 		place: 'Bangkok',
+		zone: 'Danger zone',
 		shelter: 'Bangkok Stadium Evacuation Center'
 	}
 };

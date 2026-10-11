@@ -6,6 +6,7 @@
 		"studio": "remotion studio",
 		"render": "node scripts/render.mjs",
 		"make-thailand": "node scripts/make-thailand.mjs",
+		"make-bangkok": "node scripts/make-bangkok.mjs",
 		"test": "vitest run"
 	},
 	"dependencies": {

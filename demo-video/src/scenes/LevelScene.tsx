@@ -1,5 +1,6 @@
 import { AbsoluteFill, interpolate, interpolateColors, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import { C, FONT } from '../brand';
+import { STRAIGHT_KM } from '../bangkok';
 import { CAPTIONS, LABELS } from '../captions';
 import { msg } from '../i18n';
 import { BPM, FPS, LEVEL_CUES, scene } from '../timeline';
@@ -100,7 +101,7 @@ export function LevelScene({ layout, lang }: SceneProps) {
 								<div style={{ flex: 1 }}>
 									<div style={{ fontSize: 13, color: C.muted }}>{msg(lang, 'now_shelter')}</div>
 									<div style={{ fontSize: 18, fontWeight: 600, marginTop: 5, lineHeight: 1.2 }}>{LABELS.en.shelter}</div>
-									<div style={{ fontSize: 15, color: C.muted, marginTop: 4 }}>3.7 km</div>
+									<div style={{ fontSize: 15, color: C.muted, marginTop: 4 }}>{STRAIGHT_KM} km</div>
 								</div>
 								<div style={{ flex: 'none', padding: '9px 16px', borderRadius: 999, background: C.text, color: C.bg, fontWeight: 700, fontSize: 15 }}>{msg(lang, 'shelter_route')} →</div>
 							</div>
