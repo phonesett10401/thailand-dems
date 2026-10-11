@@ -6,6 +6,7 @@ test.beforeEach(async ({ page }) => {
 		(window as unknown as { __plays: number }).__plays = 0;
 		HTMLMediaElement.prototype.play = function () {
 			(window as unknown as { __plays: number }).__plays++;
+			(window as unknown as { __mutedAtPlay: boolean }).__mutedAtPlay = this.muted;
 			return Promise.resolve();
 		};
 	});
@@ -46,6 +47,7 @@ test('landscape phone: the whole video frame fits on screen (controls reachable)
 test('autoplays muted, and the sound button unmutes', async ({ page }) => {
 	await page.goto('/demo');
 	await expect.poll(() => page.evaluate(() => (window as unknown as { __plays: number }).__plays)).toBeGreaterThan(0);
+	expect(await page.evaluate(() => (window as unknown as { __mutedAtPlay: boolean }).__mutedAtPlay)).toBe(true);
 	const video = page.locator('video');
 	expect(await video.evaluate((v: HTMLVideoElement) => v.muted)).toBe(true);
 	await page.getByRole('button', { name: 'Sound' }).click();

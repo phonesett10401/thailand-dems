@@ -13,7 +13,10 @@
 
 	onMount(() => {
 		poster = matchMedia(TALL).matches ? '/demo/poster-9x16.jpg' : '/demo/poster-16x9.jpg';
-		if (!matchMedia('(prefers-reduced-motion: reduce)').matches) video.play().catch(() => {});
+		if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			video.muted = true;
+			video.play().catch(() => {});
+		}
 	});
 
 	function toggleSound() {
