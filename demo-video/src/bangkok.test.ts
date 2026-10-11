@@ -19,3 +19,16 @@ it('has a turn instruction part-way along the route', () => {
 	expect(TURN.at).toBeGreaterThan(0);
 	expect(TURN.at).toBeLessThan(1);
 });
+
+const pairs = () => {
+	const n = ROUTE.match(/-?\d+(\.\d+)?/g)!.map(Number);
+	return Array.from({ length: n.length / 2 }, (_, i) => [n[2 * i], n[2 * i + 1]] as [number, number]);
+};
+it('route begins at START and ends exactly at SHELTER, without overshooting', () => {
+	const p = pairs();
+	const d = (a: number[], b: number[]) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+	expect(d(p[0], START)).toBeLessThanOrEqual(1);
+	expect(d(p[p.length - 1], SHELTER)).toBeLessThanOrEqual(1);
+	const last = p.slice(-Math.ceil(p.length * 0.15)).map((q) => d(q, SHELTER));
+	for (let i = 1; i < last.length; i++) expect(last[i]).toBeLessThanOrEqual(last[i - 1] + 3);
+});

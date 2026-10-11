@@ -3,7 +3,7 @@
 import { writeFileSync, statSync } from 'node:fs';
 import { geoMercator } from 'd3-geo';
 
-const BBOX = [13.733, 100.512, 13.755, 100.540]; // S, W, N, E
+const BBOX = [13.727, 100.508, 13.757, 100.544]; // S, W, N, E (padded so streets fill the whole map)
 const HOSTS = ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter'];
 const START_LL = [13.7383, 100.5170]; // Hua Lamphong station
 const SHELTER_LL = [13.7466, 100.5290]; // National Stadium
@@ -120,9 +120,20 @@ for (let i = 0; i <= 200; i++) {
 if (!straightHits) throw new Error('straight line misses the zone');
 
 // turn: first street-name change with a >30° bearing change, measured over ~30 m either side
+// trim hooks: start at the last vertex within 45 m of the start, end at the first within 45 m of the shelter
+{
+	const near = (v, ll) => hav(pts[v], ll) < 45;
+	const a = route.path.findLastIndex((v, i) => i < route.path.length / 2 && near(v, START_LL));
+	let path = route.path.slice(Math.max(a, 0));
+	const b = path.findIndex((v) => hav(pts[v], pts[path.at(-1)]) < 45); // first approach within 45 m of the snapped shelter node
+	if (b > 0) path = path.slice(0, b + 1);
+	route.path = path;
+}
 const rp = route.path.map((v) => pts[v]);
 const cum = [0];
 for (let i = 1; i < rp.length; i++) cum.push(cum[i - 1] + hav(rp[i - 1], rp[i]));
+route.len = cum.at(-1);
+console.log(`trimmed:      ${(route.len / 1000).toFixed(2)} km`);
 const edgeName = (a, b) => adj[route.path[a]].find((e) => e.to === route.path[b])?.name ?? '';
 const along = (d) => { // point on the route at distance d
 	let i = 1; while (i < cum.length - 1 && cum[i] < d) i++;
@@ -175,7 +186,18 @@ function pathOf(ways, eps) {
 const ROADS_MAJOR = pathOf(hw.filter((w) => MAJOR.has(w.tags.highway)), EPS);
 const ROADS_MINOR = pathOf(hw.filter((w) => !MAJOR.has(w.tags.highway)), EPS);
 const WATER = pathOf(ww, EPS);
-const ROUTE = 'M' + rp.map((ll) => px(ll)).map(([x, y]) => `${f1(x)} ${f1(y)}`).join('L');
+// Douglas-Peucker, 6 px: removes sawtooth along residential sois
+function dp(p, tol) {
+	if (p.length < 3) return p;
+	const [a, b] = [p[0], p.at(-1)], L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
+	let m = 0, k = 0;
+	for (let i = 1; i < p.length - 1; i++) {
+		const d = Math.abs((b[0] - a[0]) * (a[1] - p[i][1]) - (a[0] - p[i][0]) * (b[1] - a[1])) / L;
+		if (d > m) { m = d; k = i; }
+	}
+	return m > tol ? [...dp(p.slice(0, k + 1), tol).slice(0, -1), ...dp(p.slice(k), tol)] : [a, b];
+}
+const ROUTE = 'M' + dp(rp.map((ll) => px(ll)), 6).map(([x, y]) => `${f1(x)} ${f1(y)}`).join('L');
 const [zx, zy] = px(ZONE_LL);
 const zr = f1(Math.abs(px([ZONE_LL[0], ZONE_LL[1] + ZONE_R / (111320 * Math.cos(rad(ZONE_LL[0])))])[0] - zx));
 const START = px(rp[0]).map(f1), SHELTER = px(rp.at(-1)).map(f1);
