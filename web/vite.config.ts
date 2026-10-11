@@ -13,7 +13,7 @@ export default defineConfig({
 			strategy: ['url', 'cookie', 'baseLocale']
 		})
 	],
-	// Backend CORS allows localhost:3001 but not Vite's default 5173.
+	// Fixed dev port so Playwright and the local URL are predictable.
 	server: { port: 3001, strictPort: true },
 	preview: { port: 3001, strictPort: true },
 	test: { include: ['src/**/*.test.ts', 'scripts/**/*.test.js'] }

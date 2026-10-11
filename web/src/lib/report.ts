@@ -40,7 +40,7 @@ export function validateStep(step: 1 | 2, f: ReportForm): StepErrors {
 	return e;
 }
 
-/** Column limits from backend/db/create-user-reports.sql. */
+/** Column limits; must match public.user_reports in supabase/migrations/0001_init.sql. */
 const cut = (s: string, n: number): string | null => {
 	const t = s.trim().slice(0, n);
 	return t === '' ? null : t;
