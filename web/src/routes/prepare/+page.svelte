@@ -25,6 +25,7 @@
 	});
 	onMount(() => (done = loadChecks()));
 	const items = $derived(bagFor(kit));
+	const note = $derived(kit ? KIT_NOTE[kit] : undefined);
 	function flip(id: string) {
 		done = toggled(done, id);
 		saveChecks(done);
@@ -64,7 +65,7 @@
 				{/each}
 			</div>
 			{#if auto}<p class="mb-2 text-xs text-muted">{m.prep_kit_auto({ hazard: hazName(auto) })}</p>{/if}
-			{#if kit && KIT_NOTE[kit]}<p class="mb-2 rounded-xl border border-warning/40 px-3 py-2 text-sm text-warning">{tx(KIT_NOTE[kit])}</p>{/if}
+			{#if note}<p class="mb-2 rounded-xl border border-warning/40 px-3 py-2 text-sm text-warning">{tx(note)}</p>{/if}
 			<ul class="glass divide-y divide-line rounded-2xl">
 				{#each items as item (item.id)}
 					<li>
