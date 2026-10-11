@@ -78,3 +78,18 @@ test('Thai demo page is in Thai and plays the English video', async ({ page }) =
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('ระบบเตือนภัยพิบัติ อธิบายแบบเข้าใจง่าย');
 	await expect(page.locator('video source').nth(1)).toHaveAttribute('src', '/demo/demo-16x9.mp4');
 });
+
+test('chapter chips jump the video and follow its time', async ({ page }) => {
+	await page.goto('/demo');
+	const group = page.getByRole('group', { name: 'Chapters' });
+	await expect(group.getByRole('button')).toHaveCount(5);
+	await group.getByRole('button', { name: 'Safe route' }).click();
+	const t = await page.locator('video').evaluate((v: HTMLVideoElement) => v.currentTime);
+	expect(Math.abs(t - 17.9)).toBeLessThan(0.2);
+	await page.locator('video').evaluate((v: HTMLVideoElement) => {
+		v.currentTime = 23;
+		v.dispatchEvent(new Event('timeupdate'));
+	});
+	await expect(group.getByRole('button', { name: 'Go-bag' })).toHaveAttribute('aria-pressed', 'true');
+	await expect(group.getByRole('button', { name: 'Safe route' })).toHaveAttribute('aria-pressed', 'false');
+});

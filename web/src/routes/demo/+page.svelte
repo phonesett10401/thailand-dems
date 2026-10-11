@@ -4,12 +4,29 @@
 	import { m } from '$lib/paraglide/messages.js';
 	import { localizeHref } from '$lib/paraglide/runtime.js';
 	import { thresholdRows } from '$lib/thresholds';
+	import Chip from '$lib/components/Chip.svelte';
 
 	// Keep in sync with the .demo-frame media query below.
 	const TALL = '(max-width: 767px) and (orientation: portrait)';
 	let video: HTMLVideoElement;
 	let muted = $state(true);
 	let poster = $state<string>();
+	let t = $state(0);
+
+	// Scene start times (s): demo-video/src/timeline.ts SCENES, frame / 30. Re-check after any retime.
+	const chapters = [
+		{ name: m.demo_ch_map, at: 107 / 30 },
+		{ name: m.demo_ch_level, at: 214 / 30 },
+		{ name: m.demo_ch_route, at: 536 / 30 },
+		{ name: m.demo_ch_bag, at: 664 / 30 },
+		{ name: m.demo_ch_how, at: 793 / 30 }
+	];
+	const activeAt = $derived(chapters.findLast((c) => c.at <= t)?.at);
+
+	function jump(at: number) {
+		video.currentTime = t = at + 0.05;
+		video.play().catch(() => {});
+	}
 
 	onMount(() => {
 		poster = matchMedia(TALL).matches ? '/demo/poster-9x16.jpg' : '/demo/poster-16x9.jpg';
@@ -44,13 +61,18 @@
 <div class="page max-w-4xl">
 	<div class="demo-frame relative mx-auto overflow-hidden rounded-3xl border border-line bg-black">
 		<!-- svelte-ignore a11y_media_has_caption (captions are burned into the video; it has no speech) -->
-		<video bind:this={video} bind:muted class="h-full w-full object-contain" loop playsinline controls preload="metadata" {poster} aria-label={m.demo_video_label()}>
+		<video bind:this={video} bind:muted class="h-full w-full object-contain" loop playsinline controls preload="metadata" {poster} ontimeupdate={() => (t = video.currentTime)} aria-label={m.demo_video_label()}>
 			<source media={TALL} src="/demo/demo-9x16.mp4" type="video/mp4" />
 			<source src="/demo/demo-16x9.mp4" type="video/mp4" />
 		</video>
 		<button type="button" onclick={toggleSound} aria-pressed={!muted} aria-label={m.demo_sound()} class="glass absolute top-3 right-3 flex min-h-11 min-w-11 items-center justify-center rounded-full bg-bg/70">
 			{#if muted}<VolumeX size={18} aria-hidden="true" />{:else}<Volume2 size={18} aria-hidden="true" />{/if}
 		</button>
+	</div>
+	<div role="group" aria-label={m.demo_chapters()} class="chip-row mx-auto mt-3">
+		{#each chapters as c (c.at)}
+			<Chip on={c.at === activeAt} onclick={() => jump(c.at)}>{c.name()}</Chip>
+		{/each}
 	</div>
 
 	<h1 class="headline mt-8 text-4xl">{m.demo_title()}</h1>

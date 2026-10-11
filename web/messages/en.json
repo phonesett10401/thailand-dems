@@ -391,5 +391,11 @@
 	"demo_hood_data_body": "Real: weather, air quality and river forecasts (Open-Meteo), earthquakes (USGS), global disaster alerts (GDACS), the map (OpenStreetMap) and routes (openrouteservice). Sample: shelters, past disasters and evacuation routes in our own database. Sample records are labelled and never change your level.",
 	"demo_hood_history": "History",
 	"demo_hood_history_body": "DEMS started as an Express server with a MySQL database and a separate front end. It was rebuilt as one SvelteKit app on Supabase, so the screens and the API share one codebase, the database enforces its own access rules, and hosting is free and close to Thailand. The citizen screens were then redesigned for clarity, with a dark, high-contrast look.",
-	"demo_thresholds": "Thresholds"
+	"demo_thresholds": "Thresholds",
+	"demo_chapters": "Chapters",
+	"demo_ch_map": "Map",
+	"demo_ch_level": "Your level",
+	"demo_ch_route": "Safe route",
+	"demo_ch_bag": "Go-bag",
+	"demo_ch_how": "How it works"
 }
