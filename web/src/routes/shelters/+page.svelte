@@ -54,7 +54,7 @@
 	<div class="page lg:m-0 lg:max-w-none lg:overflow-y-auto lg:border-r lg:border-line lg:p-5">
 		<h1 class="headline text-3xl">{m.shelters_title()}</h1>
 		<p class="mt-1 text-xs text-muted">{m.shelters_sample_note()}</p>
-		<div role="group" aria-label={m.shelters_filters()} class="mt-3 flex gap-1.5 overflow-x-auto pb-1">
+		<div role="group" aria-label={m.shelters_filters()} class="chip-row mt-2 -mx-4 px-4 lg:-mx-5 lg:px-5">
 			{#each FILTERS as [f, label] (f)}<Chip on={on.has(f)} onclick={() => toggle(f)}>{label()}</Chip>{/each}
 		</div>
 		{#if shelters === null}
