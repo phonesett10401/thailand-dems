@@ -11,7 +11,7 @@ test('shelters sorted by distance, labelled as sample', async ({ page }) => {
 
 test('filters narrow the list', async ({ page }) => {
 	await page.goto('/shelters');
-	await page.getByRole('button', { name: 'Clean air' }).click();
+	await page.getByRole('button', { name: 'Clean-air room' }).click();
 	await expect(page.getByRole('button', { name: /Chiang Mai University Shelter/ })).toBeVisible();
 	await expect(page.getByRole('button', { name: /Bangkok Stadium/ })).toHaveCount(0);
 	await page.getByRole('button', { name: 'Pets' }).click();

@@ -34,7 +34,7 @@ test('too many reports shows a wait message and keeps the form', async ({ page }
 	);
 	await fill(page);
 	await page.getByRole('button', { name: 'Send report' }).click();
-	await expect(page.getByText(/Too many reports from this connection/)).toBeVisible();
+	await expect(page.getByText(/Too many reports in a short time/)).toBeVisible();
 	await expect(page.getByRole('button', { name: 'Send report' })).toBeEnabled();
 });
 

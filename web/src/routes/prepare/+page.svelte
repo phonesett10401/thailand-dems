@@ -1,13 +1,30 @@
 <script lang="ts">
 	import { Check, Phone } from '@lucide/svelte';
 	import { onMount } from 'svelte';
+	import { live } from '$lib/hazards.svelte';
+	import { hazName } from '$lib/labels';
 	import { m } from '$lib/paraglide/messages.js';
 	import { localizeHref } from '$lib/paraglide/runtime.js';
 	import { loadChecks, saveChecks, toggled } from '$lib/prepare/checklist';
-	import { GO_BAG, GUIDE, GUIDES, NUMBERS, tx } from '$lib/prepare/guides';
+	import Chip from '$lib/components/Chip.svelte';
+	import { bagFor, defaultKit, GUIDE, GUIDES, KIT_NOTE, KITS, NUMBERS, tx, type KitId } from '$lib/prepare/guides';
 
 	let done = $state(new Set<string>());
+	let kit = $state<KitId | null>(null);
+	let auto = $state<KitId | null>(null); // the kit picked from a live hazard, until the user picks a chip
+	let settled = false; // the default is set once, then the user's choice wins
+	function pick(k: KitId | null) {
+		settled = true;
+		kit = k;
+		auto = null;
+	}
+	$effect(() => {
+		if (settled || !live.a) return;
+		settled = true;
+		auto = kit = defaultKit(live.a.hazards);
+	});
 	onMount(() => (done = loadChecks()));
+	const items = $derived(bagFor(kit));
 	function flip(id: string) {
 		done = toggled(done, id);
 		saveChecks(done);
@@ -38,10 +55,18 @@
 		<section>
 			<div class="mb-3 flex items-baseline justify-between">
 				<h2 class="label">{m.prep_bag()}</h2>
-				<span class="font-mono text-xs text-muted" role="status">{m.prep_bag_count({ done: done.size, total: GO_BAG.length })}</span>
+				<span class="font-mono text-xs text-muted" role="status">{m.prep_bag_count({ done: items.filter((i) => done.has(i.id)).length, total: items.length })}</span>
 			</div>
+			<div role="group" aria-label={m.prep_kit_label()} class="mb-2 flex flex-wrap gap-2">
+				<Chip on={kit === null} onclick={() => pick(null)}>{m.prep_kit_basics()}</Chip>
+				{#each KITS as k (k)}
+					<Chip on={kit === k} onclick={() => pick(k)}>{hazName(k)}</Chip>
+				{/each}
+			</div>
+			{#if auto}<p class="mb-2 text-xs text-muted">{m.prep_kit_auto({ hazard: hazName(auto) })}</p>{/if}
+			{#if kit && KIT_NOTE[kit]}<p class="mb-2 rounded-xl border border-warning/40 px-3 py-2 text-sm text-warning">{tx(KIT_NOTE[kit])}</p>{/if}
 			<ul class="glass divide-y divide-line rounded-2xl">
-				{#each GO_BAG as item (item.id)}
+				{#each items as item (item.id)}
 					<li>
 						<label class="flex min-h-12 cursor-pointer items-center gap-3 px-4 py-2.5 text-sm">
 							<input type="checkbox" class="peer sr-only" checked={done.has(item.id)} onchange={() => flip(item.id)} />

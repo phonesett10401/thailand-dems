@@ -1,4 +1,4 @@
-import type { HazardType, Lvl } from '../levels';
+import type { Hazard, HazardType, Lvl } from '../levels';
 import { getLocale } from '../paraglide/runtime.js';
 
 export type Text = { en: string; th: string };
@@ -255,7 +255,11 @@ export function stepsFor(type: HazardType, level: Lvl): Text[] {
 	return (level === 'warning' ? GUIDE[id].during : GUIDE[id].before).slice(0, 3);
 }
 
-export const GO_BAG: { id: string; text: Text }[] = [
+export type BagItem = { id: string; text: Text };
+export const KITS = ['flood', 'storm', 'smoke', 'heat', 'earthquake', 'tsunami', 'chemical'] as const;
+export type KitId = (typeof KITS)[number];
+
+export const BASICS: BagItem[] = [
 	{ id: 'water', text: t('Water: 2 litres per person in the bag, more stored at home', 'น้ำดื่ม 2 ลิตรต่อคนในกระเป๋า และสำรองเพิ่มไว้ที่บ้าน') },
 	{ id: 'food', text: t('Ready-to-eat food for 3 days', 'อาหารพร้อมกินสำหรับ 3 วัน') },
 	{ id: 'meds', text: t('Medicine for 7 days and copies of prescriptions', 'ยาประจำตัวสำหรับ 7 วัน และสำเนาใบสั่งยา') },
@@ -264,17 +268,79 @@ export const GO_BAG: { id: string; text: Text }[] = [
 	{ id: 'torch', text: t('Torch and spare batteries', 'ไฟฉายและถ่านสำรอง') },
 	{ id: 'radio', text: t('Battery or wind-up radio', 'วิทยุแบบใส่ถ่านหรือแบบมือหมุน') },
 	{ id: 'firstaid', text: t('First-aid kit', 'ชุดปฐมพยาบาล') },
-	{ id: 'masks', text: t('N95 masks', 'หน้ากาก N95') },
 	{ id: 'cash', text: t('Cash in small notes', 'เงินสดเป็นธนบัตรย่อย') },
 	{ id: 'clothes', text: t('Change of clothes and a rain jacket', 'เสื้อผ้าสำรองและเสื้อกันฝน') },
 	{ id: 'hygiene', text: t('Soap, toothbrush and sanitary items', 'สบู่ แปรงสีฟัน และของใช้สุขอนามัย') },
-	{ id: 'whistle', text: t('Whistle to call for help', 'นกหวีดสำหรับขอความช่วยเหลือ') },
 	{ id: 'blanket', text: t('Blanket or sleeping mat', 'ผ้าห่มหรือเสื่อนอน') },
 	{ id: 'contacts', text: t('Paper list of family phone numbers', 'รายชื่อเบอร์โทรครอบครัวที่เขียนบนกระดาษ') }
 ];
 
+const I = {
+	whistle: { id: 'whistle', text: t('Whistle to call for help', 'นกหวีดสำหรับขอความช่วยเหลือ') },
+	masks: { id: 'masks', text: t('N95 masks', 'หน้ากาก N95') },
+	drybags: { id: 'drybags', text: t('Waterproof bags for documents and phone', 'ถุงกันน้ำสำหรับเอกสารและโทรศัพท์') },
+	sheet: { id: 'sheet', text: t('Plastic sheet and strong tape', 'แผ่นพลาสติกและเทปกาวแบบเหนียว') },
+	shoes: { id: 'shoes', text: t('Sturdy closed shoes', 'รองเท้าหุ้มส้นที่แข็งแรง') }
+};
+
+export const EXTRAS: Record<KitId, BagItem[]> = {
+	flood: [I.drybags, { id: 'boots', text: t('Rubber boots', 'รองเท้าบู๊ตยาง') }, { id: 'rope', text: t('Rope (10 m)', 'เชือก (10 ม.)') }, I.whistle],
+	storm: [I.whistle, I.sheet, { id: 'batteries', text: t('Spare batteries', 'ถ่านสำรอง') }],
+	smoke: [I.masks, { id: 'eyedrops', text: t('Eye drops', 'ยาหยอดตา') }, { id: 'filter', text: t('Spare air-purifier filter', 'แผ่นกรองเครื่องฟอกอากาศสำรอง') }],
+	heat: [
+		{ id: 'ors', text: t('Oral rehydration salts', 'ผงเกลือแร่') },
+		{ id: 'hat', text: t('Wide-brimmed hat', 'หมวกปีกกว้าง') },
+		{ id: 'towel', text: t('Cooling towel', 'ผ้าเย็น') },
+		{ id: 'sunscreen', text: t('Sunscreen', 'ครีมกันแดด') }
+	],
+	earthquake: [I.shoes, { id: 'gloves', text: t('Work gloves', 'ถุงมือทำงาน') }, I.whistle, { id: 'dustmask', text: t('Dust masks', 'หน้ากากกันฝุ่น') }],
+	tsunami: [I.shoes, I.whistle, I.drybags],
+	chemical: [
+		I.masks,
+		I.sheet,
+		{ id: 'wipes', text: t('Wet wipes', 'ทิชชู่เปียก') },
+		{ id: 'sealedclothes', text: t('Spare clothes in a sealed bag', 'เสื้อผ้าสำรองในถุงปิดสนิท') }
+	]
+};
+
+export const KIT_NOTE: Partial<Record<KitId, Text>> = {
+	tsunami: t(
+		"Keep this bag by the door. If the warning comes, go on foot right away. Don't stop to pack.",
+		'วางกระเป๋านี้ไว้ใกล้ประตู เมื่อมีประกาศเตือน ให้เดินเท้าออกทันที อย่าเสียเวลาเก็บของ'
+	)
+};
+
+/** Basics first, then the kit's extras; an id already in the basics is not repeated. */
+export function bagFor(kit: KitId | null): BagItem[] {
+	const seen = new Set<string>();
+	return [...BASICS, ...(kit ? EXTRAS[kit] : [])].filter((i) => !seen.has(i.id) && seen.add(i.id));
+}
+
+export const KIT_FOR: Partial<Record<HazardType, KitId>> = {
+	flood: 'flood',
+	rain: 'flood',
+	landslide: 'flood',
+	storm: 'storm',
+	smoke: 'smoke',
+	wildfire: 'smoke',
+	heat: 'heat',
+	earthquake: 'earthquake',
+	tsunami: 'tsunami',
+	chemical: 'chemical'
+};
+
+/** The kit of the worst live, non-safe hazard that has one; ties go to list order. */
+export function defaultKit(hazards: Hazard[]): KitId | null {
+	let best: Hazard | null = null;
+	for (const h of hazards) {
+		if (h.sample || h.level === 'safe' || !KIT_FOR[h.type]) continue;
+		if (!best || (h.level === 'warning' && best.level !== 'warning')) best = h;
+	}
+	return best ? KIT_FOR[best.type]! : null;
+}
+
 export const NUMBERS: { tel: string; name: Text }[] = [
-	{ tel: '1784', name: t('Disaster hotline (DDPM)', 'สายด่วนภัยพิบัติ (ปภ.)') },
+	{ tel: '1784', name: t('Disaster hotline (DDPM)', 'สายด่วนป้องกันและบรรเทาสาธารณภัย (ปภ.)') },
 	{ tel: '1669', name: t('Medical emergency', 'การแพทย์ฉุกเฉิน') },
 	{ tel: '191', name: t('Police', 'ตำรวจ') },
 	{ tel: '199', name: t('Fire', 'ดับเพลิง') },
