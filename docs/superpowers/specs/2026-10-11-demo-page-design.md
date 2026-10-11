@@ -25,7 +25,7 @@ Scene cuts snap to the nearest beat of the track (offset 7 s). The times below a
 |---|---|---|---|
 | 0–3 s | Logo | Shield outline draws itself; the person fades in; the arc lights up green | **DEMS Thailand** · Disaster alerts for everyone in Thailand |
 | 3–8 s | Map | Dark Thailand outline; hazard dots pop in on beats: haze (north), flood (central), quake (west), storm (south) | Live hazards from public data, across the country |
-| 8–17 s | Level (phone) | Now screen, Bangkok. Safe (green) → 11 s Watch (amber, PM2.5 rising) → 15 s Warning (red, flood). The logo arc changes colour; it pulses at Warning. Music lift at 15 s | Know your level → Safe · Watch · Warning |
+| 8–17 s | Level (phone) | Now screen, Bangkok. Safe (green) → 11 s Watch (amber, PM2.5 rising) → 15 s Warning (red, heavy rain 112 mm; haze stays). Levels follow the real rules: the river model is Watch-only, so Warning comes from rain ≥ 90 mm. The logo arc changes colour; it pulses at Warning. Music lift at 15 s | Know your level → Safe · Watch · Warning |
 | 17–22 s | Route (phone) | Map; the route line draws *around* a red flood zone to a shelter pin; distance and time chip | Find a shelter. Get there safely. · Routes steer around danger zones |
 | 22–26 s | Prepare (phone) | Go-bag list; Flood chip on; items tick; the EN → ไทย toggle flips the screen to Thai | A go-bag for each emergency, in English and Thai |
 | 26–31 s | How it works | Sources (Open-Meteo weather/air/river · USGS quakes · GDACS global alerts) flow into the DEMS shield, then out to **Citizens**, with **Volunteers** and **Admins** dimmed and tagged "Phase 2" | Open data in. Clear advice out. |
@@ -65,7 +65,6 @@ Honesty: the scripted levels are an illustration (the page says so). Volunteer a
    6. History: Express + MySQL → SvelteKit + Supabase, and why.
 5. **Wiring**
    - More page: the "Demo tour (coming soon)" row becomes a link to `/demo` (drop "coming soon").
-   - `/demo` sets its own `og:image` to the 16:9 poster.
 
 All copy goes through Paraglide, EN and TH. New TH keys are appended to `messages/TH_REVIEW.md`. Rules carried from Spec 1: tap targets ≥ 44 px, WCAG AA contrast, dark-glass style, CSS layout switching (no `MediaQuery` `{#if}`).
 
@@ -109,3 +108,4 @@ All copy goes through Paraglide, EN and TH. New TH keys are appended to `message
 - Social-media posting
 - Remotion Player / cloud rendering
 - Phase 2 volunteer and admin features themselves
+- A separate share image for `/demo` (the site-wide card from PR #4 is used; a second `og:image` tag would conflict with it)
