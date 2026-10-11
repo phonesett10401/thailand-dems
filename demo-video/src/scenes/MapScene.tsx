@@ -7,10 +7,10 @@ import { Stage, type SceneProps } from '../ui';
 
 // One hazard dot per beat after the cut: haze north, flood centre, quake west, storm south.
 const DOTS = [
-	{ at: PLACES.chiangmai, color: C.watch, beat: 5 },
-	{ at: PLACES.ayutthaya, color: C.warning, beat: 6 },
-	{ at: PLACES.maesot, color: C.watch, beat: 7 },
-	{ at: PLACES.nakhonsi, color: C.watch, beat: 8 }
+	{ at: PLACES.chiangmai, color: C.watch, beat: 6 },
+	{ at: PLACES.ayutthaya, color: C.warning, beat: 7 },
+	{ at: PLACES.maesot, color: C.watch, beat: 8 },
+	{ at: PLACES.nakhonsi, color: C.watch, beat: 9 }
 ];
 
 export function MapScene({ layout }: SceneProps) {

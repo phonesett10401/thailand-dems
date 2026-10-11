@@ -4,7 +4,7 @@ import { existsSync, mkdirSync, statSync } from 'node:fs';
 
 const OUT = '../web/static/demo';
 if (!existsSync('public/music.mp3')) {
-	console.error('Missing public/music.mp3. Copy "Cinematic Corporate" by alex-morgan (Pixabay) there first.');
+	console.error('Missing public/music.mp3. Copy "Background Technology Theme" by The_Mountain (Pixabay) there first.');
 	process.exit(1);
 }
 mkdirSync(OUT, { recursive: true });
