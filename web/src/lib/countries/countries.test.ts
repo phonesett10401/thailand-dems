@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { distanceKm } from '$lib/geo';
+import { smhiAreaFor } from './se';
 import { COUNTRIES, detectCountry, type CountryCode } from './index';
 
 const codes = Object.keys(COUNTRIES) as CountryCode[];
@@ -51,4 +52,11 @@ describe('detectCountry', () => {
 		for (const c of codes) for (const p of COUNTRIES[c].places) expect(detectCountry(p)).toBe(c);
 	});
 	it('distance helper sanity', () => expect(distanceKm({ lat: 0, lon: 0 }, { lat: 0, lon: 1 })).toBeGreaterThan(100));
+});
+
+describe('smhiAreaFor', () => {
+	it('picks the county of the nearest SE place', () => {
+		expect(smhiAreaFor({ lat: 57.7089, lon: 11.9746 })).toBe(14); // Gothenburg
+		expect(smhiAreaFor({ lat: 59.33, lon: 18.07 })).toBe(1);
+	});
 });

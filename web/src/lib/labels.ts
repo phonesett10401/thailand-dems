@@ -49,6 +49,7 @@ const HAZ_NAME: Record<HazardType, () => string> = {
 	wildfire: m.haz_wildfire,
 	volcano: m.haz_volcano,
 	chemical: m.haz_chemical,
+	official: m.haz_official,
 	other: m.haz_other
 };
 export const hazName = (t: HazardType): string => HAZ_NAME[t]();
@@ -66,6 +67,7 @@ export const HAZ_CODE: Record<HazardType, string> = {
 	wildfire: 'WF',
 	volcano: 'VO',
 	chemical: 'CH',
+	official: 'OF',
 	other: '!'
 };
 
@@ -85,7 +87,7 @@ export const levelWord = (l: Overall): string =>
 	({ safe: m.lvl_safe, watch: m.lvl_watch, warning: m.lvl_warning, unknown: m.lvl_unknown })[l]();
 
 export const feedName = (k: FeedKey): string =>
-	({ air: m.feed_air, forecast: m.feed_forecast, river: m.feed_river, gdacs: m.feed_gdacs, quakes: m.feed_quakes })[k]();
+	({ air: m.feed_air, forecast: m.feed_forecast, river: m.feed_river, gdacs: m.feed_gdacs, quakes: m.feed_quakes, smhi: m.feed_smhi })[k]();
 
 /** "Haze and flooding": distinct hazard names, worst first, at most three. */
 export function nowTitle(types: HazardType[]): string {

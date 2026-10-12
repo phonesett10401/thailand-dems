@@ -1,4 +1,6 @@
+import type { Country } from './countries';
 import { distanceKm, toNum } from './geo';
+import type { SmhiWarning } from './sources/smhi';
 import type { Air, Forecast, River } from './sources/openmeteo';
 import type { DbAlert, Disaster, HazardEvent, HazardKind, Pt } from './types';
 
@@ -19,6 +21,7 @@ export type HazardType =
 	| 'wildfire'
 	| 'volcano'
 	| 'chemical'
+	| 'official'
 	| 'other';
 export type Hazard = {
 	id: string;
@@ -34,7 +37,7 @@ export type Hazard = {
 	sample: boolean;
 	url: string | null;
 };
-export type FeedKey = 'air' | 'forecast' | 'river' | 'gdacs' | 'quakes';
+export type FeedKey = 'air' | 'forecast' | 'river' | 'gdacs' | 'quakes' | 'smhi';
 /** A live feed that is `undefined` failed to load. `river: null` means no river at this point. */
 export type Feeds = {
 	air?: Air;
@@ -42,6 +45,7 @@ export type Feeds = {
 	river?: River | null;
 	gdacs?: HazardEvent[];
 	quakes?: HazardEvent[];
+	smhi?: SmhiWarning[];
 	disasters: Disaster[];
 	alerts: DbAlert[];
 };
@@ -101,15 +105,16 @@ const SEVERITY: Record<string, Lvl> = {
 
 const live = (h: Omit<Hazard, 'sample'>): Hazard => ({ ...h, sample: false });
 
-export function collect(f: Feeds, at: Pt, now: number, near: boolean): Hazard[] {
+export function collect(f: Feeds, at: Pt, now: number, near: boolean, c: Country, smhiArea?: number): Hazard[] {
 	const out: Hazard[] = [];
 	const here = { km: null, lat: null, lon: null, name: null, url: null };
 	const today = new Date(now).toISOString();
 
 	if (f.air) {
 		const level = over(f.air.pm25, T.pm25, false);
-		if (level !== 'safe') out.push(live({ ...here, id: 'air', type: 'smoke', level, value: f.air.pm25, time: f.air.time.toISOString(), source: 'Open-Meteo' }));
+		if (level !== 'safe') out.push(live({ ...here, id: 'air', type: 'smoke', level, value: f.air.pm25, time: f.air.time.toISOString(), source: c.air === 'thai-pcd' ? 'Open-Meteo' : 'Open-Meteo (WHO interim target)' }));
 	}
+	if (c.weather === 'dems') {
 	const day = f.forecast?.days[0];
 	if (day) {
 		const heat = day.feels === null ? 'safe' : over(day.feels, T.heat, true);
@@ -119,6 +124,17 @@ export function collect(f: Feeds, at: Pt, now: number, near: boolean): Hazard[] 
 	}
 	if (f.river?.rising) {
 		out.push(live({ ...here, id: 'river', type: 'flood', level: 'watch', value: f.river.peak, time: today, source: 'Open-Meteo river model' }));
+	}
+	}
+	if (c.weather === 'smhi' && smhiArea !== undefined) {
+		const seen = new Map<string, number>();
+		for (const w of f.smhi ?? []) {
+			if (w.areaId !== smhiArea) continue;
+			const base = `smhi-${w.code}-${w.areaId}`;
+			const n = seen.get(base) ?? 0;
+			seen.set(base, n + 1);
+			out.push(live({ ...here, id: n ? `${base}-${n}` : base, type: 'official', level: w.level, name: w.event, value: null, time: w.start, source: 'SMHI', url: 'https://www.smhi.se/vader/varningar-och-brandrisk' }));
+		}
 	}
 
 	for (const q of f.quakes ?? []) {
@@ -153,12 +169,13 @@ export function collect(f: Feeds, at: Pt, now: number, near: boolean): Hazard[] 
 		.map((x) => x.h);
 }
 
-const FEEDS: FeedKey[] = ['air', 'forecast', 'river', 'gdacs', 'quakes'];
+const feedsFor = (c: Country): FeedKey[] => (c.weather === 'smhi' ? ['air', 'gdacs', 'quakes', 'smhi'] : ['air', 'forecast', 'river', 'gdacs', 'quakes']);
 
-export function assess(f: Feeds, at: Pt, now: number): Assessment {
-	const failed = FEEDS.filter((k) => f[k] === undefined);
-	const hazards = collect(f, at, now, true);
-	const level: Overall = failed.length === FEEDS.length ? 'unknown' : worst(hazards.filter((h) => !h.sample).map((h) => h.level));
+export function assess(f: Feeds, at: Pt, now: number, c: Country, smhiArea?: number): Assessment {
+	const feeds = feedsFor(c);
+	const failed = feeds.filter((k) => f[k] === undefined);
+	const hazards = collect(f, at, now, true, c, smhiArea);
+	const level: Overall = failed.length === feeds.length ? 'unknown' : worst(hazards.filter((h) => !h.sample).map((h) => h.level));
 	return { level, hazards, failed, checkedAt: now };
 }
 

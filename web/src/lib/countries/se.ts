@@ -1,3 +1,5 @@
+import { distanceKm } from '$lib/geo';
+import type { Pt } from '$lib/types';
 import type { Country } from './index';
 
 export const MSB_SHELTERS = 'https://www.msb.se/sv/amnesomraden/skydd-mot-olyckor-och-farliga-amnen/befolkningsskydd/skyddsrum/';
@@ -42,3 +44,10 @@ export const se: Country = {
 	shelters: 'link',
 	shelterLink: MSB_SHELTERS
 };
+
+/** SMHI county id of the nearest SE place (a GPS fix has no county of its own). */
+export function smhiAreaFor(pt: Pt): number {
+	let best = se.defaultPlace;
+	for (const p of se.places) if (distanceKm(pt, p) < distanceKm(pt, best)) best = p;
+	return best.smhiId!;
+}

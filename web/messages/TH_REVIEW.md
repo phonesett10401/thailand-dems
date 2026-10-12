@@ -38,3 +38,7 @@ New keys (Thai drafts, need native review): `demo_title`, `demo_video_label`, `d
 Also new (About page link): `about_demo_link`.
 
 Also new (Map note): `map_scope`.
+
+## Countries (2026-10)
+
+Keys added for SMHI official warnings (Thai drafts, need native review): `haz_official`, `feed_smhi`, `official_badge`.

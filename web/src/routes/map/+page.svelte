@@ -10,6 +10,8 @@
 	import { toNum } from '$lib/geo';
 	import { live } from '$lib/hazards.svelte';
 	import { hazName, markerLabel } from '$lib/labels';
+	import { country, currentCountry } from '$lib/country.svelte';
+	import { smhiAreaFor } from '$lib/countries/se';
 	import { collect, type Hazard, type HazardType, worst } from '$lib/levels';
 	import { here } from '$lib/location.svelte';
 	import { LEVEL_HEX } from '$lib/logo';
@@ -30,7 +32,7 @@
 
 	// Map = "what is happening anywhere": every current hazard, not only those near you.
 	// Readings for your own spot (haze, heat, rain, river) have no place of their own: they live on Now, not here.
-	const all = $derived(live.feeds ? collect(live.feeds, here.place, Date.now(), false).filter((h) => h.lat !== null) : []);
+	const all = $derived(live.feeds ? collect(live.feeds, here.place, Date.now(), false, currentCountry(), country.code === 'SE' ? smhiAreaFor(here.place) : undefined).filter((h) => h.lat !== null) : []);
 	const types = $derived([...new Set(all.map((h) => h.type))] as HazardType[]);
 	const chipColor = (t: string) => {
 		const lv = all.filter((h) => h.type === t && !h.sample).map((h) => h.level);

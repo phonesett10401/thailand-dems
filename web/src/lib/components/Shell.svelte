@@ -2,6 +2,7 @@
 	import type { Snippet } from 'svelte';
 	import { onMount } from 'svelte';
 	import { clock, currentLevel, refresh } from '$lib/hazards.svelte';
+	import { country } from '$lib/country.svelte';
 	import { here } from '$lib/location.svelte';
 	import { faviconHref } from '$lib/logo';
 	import FirstVisitNote from './FirstVisitNote.svelte';
@@ -23,6 +24,7 @@
 	// Reload whenever the chosen place changes (refresh reads here.place before its first await).
 	$effect(() => {
 		void here.place;
+		void country.code;
 		refresh();
 	});
 	$effect(() => {
