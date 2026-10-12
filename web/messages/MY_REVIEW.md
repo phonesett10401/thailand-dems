@@ -686,4 +686,4 @@ These are the "During" steps. The first three of each are shown on the Now scree
 
 ---
 
-Reviewed by: ____  Date: ____
+Reviewed by: Phone Sett Paing Kyaw (owner, native speaker) — approved  Date: 2026-10-13
