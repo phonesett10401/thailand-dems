@@ -1,4 +1,5 @@
 import { COUNTRIES, type Country, type CountryCode } from './countries';
+import { getLocale } from './paraglide/runtime.js';
 
 const KEY = 'dems.country';
 const read = (): CountryCode => {
@@ -12,6 +13,11 @@ const read = (): CountryCode => {
 
 export const country = $state<{ code: CountryCode }>({ code: typeof localStorage === 'undefined' ? 'TH' : read() });
 export const currentCountry = (): Country => COUNTRIES[country.code];
+/** The country's numbers and agencies, for messages that name them. */
+export const callParams = () => {
+	const c = currentCountry();
+	return { sos: c.sos, medical: c.guide.medical, police: c.guide.police, num: c.guide.medical, officials: c.guide.officials[getLocale()] };
+};
 
 /** Callers (location.svelte.ts) reset the place; this only records the choice. */
 export function setCountry(code: CountryCode): void {

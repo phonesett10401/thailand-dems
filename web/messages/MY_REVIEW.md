@@ -25,9 +25,10 @@ Mark a change by editing the Myanmar column (or the source file: `web/messages/m
 | shelter | ခိုလှုံရာနေရာ | |
 | evacuate | ဘေးလွတ်ရာသို့ ရွှေ့ပြောင်း | |
 | level names Safe / Watch / Warning / Unknown | ဘေးကင်း / စောင့်ကြည့် / သတိပေး / မသိရ | Short enough for badges; clear? |
-| Myanmar agencies ({officials} in Myanmar) | ကယ်ဆယ်ရေးနှင့် ပြန်လည်နေရာချထားရေးဦးစီးဌာန၊ မိုးလေဝသနှင့် ဇလဗေဒညွှန်ကြားမှုဦးစီးဌာန | The English says "Department of Disaster Management"; the draft uses the Relief and Resettlement Department name as instructed. Which name should we show? |
-| Thai agencies ({officials} in Thailand) | ထိုင်း ဘေးအန္တရာယ်ကာကွယ်ရေးဌာန (DDPM) နှင့် ထိုင်းမိုးလေဝသဌာန (TMD) | |
+| Myanmar agencies ({officials} in Myanmar) | ဘေးအန္တရာယ်စီမံခန့်ခွဲမှုဦးစီးဌာနနှင့် မိုးလေဝသနှင့် ဇလဗေဒညွှန်ကြားမှုဦးစီးဌာန | Department of Disaster Management and Department of Meteorology and Hydrology, matching the English. Are these the names people know (the older name was ကယ်ဆယ်ရေးနှင့် ပြန်လည်နေရာချထားရေးဦးစီးဌာန)? Three နှင့် in a row: readable? |
+| Thai agencies ({officials} in Thailand) | ထိုင်းမိုးလေဝသဌာန (TMD) နှင့် ထိုင်း ဘေးအန္တရာယ်ကာကွယ်ရေးဌာန (DDPM) | |
 | Swedish agencies ({officials} in Sweden) | SMHI နှင့် သင်နေထိုင်ရာ မြို့နယ်အုပ်ချုပ်ရေး | "municipality" (kommun) |
+| Texts that name numbers and agencies | first_visit_body, now_guidance, about_limits_body, report_done_body(_one), emergency_call_first(_one) | These now take the chosen country's numbers ({sos}, {medical}, {police}, {num}) and agency names ({officials}). Check they read well with each country's values. |
 | Earthquake summary | "…north and west, or from Myanmar" | Written for Thailand; reads oddly to a reader in Myanmar. Keep, or reword in all languages? |
 
 ## 1. Life-critical steps (check first)
@@ -379,14 +380,16 @@ These are the "During" steps. The first three of each are shown on the Now scree
 | `report_submit` | Send report | သတင်းပို့ချက် ပေးပို့ရန် |
 | `report_sending` | Sending… | ပေးပို့နေသည်… |
 | `report_done_title` | Report sent | သတင်းပို့ချက် ပေးပို့ပြီး |
-| `report_done_body` | Thank you. If anyone is in danger right now, call 1669 or 191. | ကျေးဇူးတင်ပါသည်။ ယခု အန္တရာယ်ရှိနေသူ ရှိလျှင် 1669 သို့မဟုတ် 191 ကို ဖုန်းခေါ်ပါ။ |
+| `report_done_body` | Thank you. If anyone is in danger right now, call {medical} or {police}. | ကျေးဇူးတင်ပါသည်။ ယခု အန္တရာယ်ရှိနေသူ ရှိလျှင် {medical} သို့မဟုတ် {police} ကို ဖုန်းခေါ်ပါ။ |
+| `report_done_body_one` | Thank you. If anyone is in danger right now, call {num}. | ကျေးဇူးတင်ပါသည်။ ယခု အန္တရာယ်ရှိနေသူ ရှိလျှင် {num} ကို ဖုန်းခေါ်ပါ။ |
 | `report_again` | Send another report | နောက်ထပ် သတင်းပို့ရန် |
 | `report_error_offline` | Couldn't reach the server. Your report is still here; try again when you have signal. | ဆာဗာသို့ ဆက်သွယ်၍ မရပါ။ သင့်သတင်းပို့ချက် ဤနေရာတွင် ရှိနေဆဲ ဖြစ်သည်။ လိုင်းမိသောအခါ ထပ်ကြိုးစားပါ။ |
 | `report_error_limited` | Too many reports in a short time. Please wait a few minutes and try again. | အချိန်တိုအတွင်း သတင်းပို့ချက် အများကြီး ဖြစ်နေသည်။ မိနစ်အနည်းငယ် စောင့်ပြီး ထပ်ကြိုးစားပါ။ |
 | `report_error_rejected` | The server rejected the report. Please check the details and try again. | ဆာဗာက သတင်းပို့ချက်ကို လက်မခံပါ။ အသေးစိတ်ကို စစ်ဆေးပြီး ထပ်ကြိုးစားပါ။ |
 | `report_required` | Please fill this in. | ဤအကွက်ကို ဖြည့်ပါ။ |
 | `report_description_short` | Please write at least 10 characters. | အနည်းဆုံး စာလုံး 10 လုံး ရေးပါ။ |
-| `emergency_call_first` | In danger now? Call 1669 (ambulance) or 191 (police) first. | ယခု အန္တရာယ်ရှိနေပါသလား။ 1669 (လူနာတင်ယာဉ်) သို့မဟုတ် 191 (ရဲ) ကို အရင်ဖုန်းခေါ်ပါ။ |
+| `emergency_call_first` | In danger now? Call {medical} (ambulance) or {police} (police) first. | ယခု အန္တရာယ်ရှိနေပါသလား။ {medical} (လူနာတင်ယာဉ်) သို့မဟုတ် {police} (ရဲ) ကို အရင်ဖုန်းခေါ်ပါ။ |
+| `emergency_call_first_one` | In danger now? Call {num} first. | ယခု အန္တရာယ်ရှိနေပါသလား။ {num} ကို အရင်ဖုန်းခေါ်ပါ။ |
 | `info_title` | Emergency info | အရေးပေါ် အချက်အလက် |
 | `info_numbers` | Emergency numbers | အရေးပေါ် ဖုန်းနံပါတ်များ |
 | `num_1784` | Disaster hotline (DDPM) | ဘေးအန္တရာယ် အရေးပေါ်ဖုန်း (DDPM) |
@@ -429,7 +432,7 @@ These are the "During" steps. The first three of each are shown on the Now scree
 | `demo_chip_aria` | About this demo and its data | ဤ demo နှင့် ၎င်း၏ ဒေတာအကြောင်း |
 | `place_change` | Change location | တည်နေရာ ပြောင်းရန် |
 | `search_label` | Search a province or shelter | ပြည်နယ်/တိုင်း သို့မဟုတ် ခိုလှုံရာနေရာ ရှာရန် |
-| `first_visit_body` | DEMS is a student project. Levels are estimates from public data, not official warnings. Follow TMD and DDPM instructions. In an emergency call 1784. | DEMS သည် ကျောင်းသား ပရောဂျက်တစ်ခု ဖြစ်သည်။ အဆင့်များသည် အများပြည်သူ ဒေတာမှ ခန့်မှန်းချက်များသာ ဖြစ်ပြီး တရားဝင် သတိပေးချက်များ မဟုတ်ပါ။ TMD နှင့် DDPM ၏ ညွှန်ကြားချက်များကို လိုက်နာပါ။ အရေးပေါ်အခြေအနေတွင် 1784 ကို ဖုန်းခေါ်ပါ။ |
+| `first_visit_body` | DEMS is a student project. Levels are estimates from public data, not official warnings. Follow {officials} instructions. In an emergency call {sos}. | DEMS သည် ကျောင်းသား ပရောဂျက်တစ်ခု ဖြစ်သည်။ အဆင့်များသည် အများပြည်သူ ဒေတာမှ ခန့်မှန်းချက်များသာ ဖြစ်ပြီး တရားဝင် သတိပေးချက်များ မဟုတ်ပါ။ {officials} ၏ ညွှန်ကြားချက်များကို လိုက်နာပါ။ အရေးပေါ်အခြေအနေတွင် {sos} ကို ဖုန်းခေါ်ပါ။ |
 | `first_visit_ok` | Got it | နားလည်ပါပြီ |
 | `lvl_safe` | Safe | ဘေးကင်း |
 | `lvl_watch` | Watch | စောင့်ကြည့် |
@@ -474,7 +477,7 @@ These are the "During" steps. The first three of each are shown on the Now scree
 | `now_reason_1` | 1 active hazard near you. | သင့်အနီးတွင် ဖြစ်ပွားနေသော အန္တရာယ် 1 ခု။ |
 | `now_reason_n` | {count} active hazards near you. The worst one sets the level. | သင့်အနီးတွင် ဖြစ်ပွားနေသော အန္တရာယ် {count} ခု။ အဆိုးဆုံးတစ်ခုက အဆင့်ကို သတ်မှတ်သည်။ |
 | `now_partial` | Unavailable right now: {feeds}. | ယခု မရရှိနိုင်သည်- {feeds}။ |
-| `now_guidance` | DEMS estimate from public data. Official warnings: TMD / DDPM. | အများပြည်သူ ဒေတာမှ DEMS ၏ ခန့်မှန်းချက်။ တရားဝင် သတိပေးချက်များ- TMD / DDPM။ |
+| `now_guidance` | DEMS estimate from public data. Official warnings: {officials}. | အများပြည်သူ ဒေတာမှ DEMS ၏ ခန့်မှန်းချက်။ တရားဝင် သတိပေးချက်များ- {officials}။ |
 | `now_quiet` | no risk here right now | ယခု ဤနေရာတွင် အန္တရာယ် မရှိ |
 | `now_steps` | What to do now | ယခု ဘာလုပ်ရမလဲ |
 | `now_shelter` | Nearest shelter | အနီးဆုံး ခိုလှုံရာနေရာ |
@@ -597,7 +600,7 @@ These are the "During" steps. The first three of each are shown on the Now scree
 | `about_row_river` | River model rising: Watch only (it is a forecast, not a measurement) | မြစ်မော်ဒယ် မြင့်တက်ခြင်း- စောင့်ကြည့်သာ (ခန့်မှန်းချက် ဖြစ်ပြီး တိုင်းတာချက် မဟုတ်ပါ) |
 | `about_row_sample` | Sample disasters: listed with a Sample tag, never counted | နမူနာ ဘေးအန္တရာယ်များ- နမူနာ တံဆိပ်ဖြင့် ပြသပြီး ဘယ်တော့မှ ထည့်မတွက်ပါ |
 | `about_limits_title` | Limits | ကန့်သတ်ချက်များ |
-| `about_limits_body` | This is a student project, not an official warning service. Data can be late or wrong. Routes avoid only hazard zones we know about and cannot see road closures. Always follow TMD and DDPM, and call 1784 in an emergency. | ဤသည်မှာ ကျောင်းသား ပရောဂျက်တစ်ခု ဖြစ်ပြီး တရားဝင် သတိပေးဝန်ဆောင်မှု မဟုတ်ပါ။ ဒေတာ နောက်ကျနိုင် သို့မဟုတ် မှားနိုင်သည်။ လမ်းကြောင်းများသည် ကျွန်ုပ်တို့ သိသော အန္တရာယ်ဇုန်များကိုသာ ရှောင်ပြီး လမ်းပိတ်ခြင်းများကို မမြင်နိုင်ပါ။ TMD နှင့် DDPM ကို အမြဲ လိုက်နာပြီး အရေးပေါ်အခြေအနေတွင် 1784 ကို ဖုန်းခေါ်ပါ။ |
+| `about_limits_body` | This is a student project, not an official warning service. Data can be late or wrong. Routes avoid only hazard zones we know about and cannot see road closures. Always follow {officials}, and call {sos} in an emergency. | ဤသည်မှာ ကျောင်းသား ပရောဂျက်တစ်ခု ဖြစ်ပြီး တရားဝင် သတိပေးဝန်ဆောင်မှု မဟုတ်ပါ။ ဒေတာ နောက်ကျနိုင် သို့မဟုတ် မှားနိုင်သည်။ လမ်းကြောင်းများသည် ကျွန်ုပ်တို့ သိသော အန္တရာယ်ဇုန်များကိုသာ ရှောင်ပြီး လမ်းပိတ်ခြင်းများကို မမြင်နိုင်ပါ။ {officials} ကို အမြဲ လိုက်နာပြီး အရေးပေါ်အခြေအနေတွင် {sos} ကို ဖုန်းခေါ်ပါ။ |
 | `about_real_routes` | Walking, driving and cycling routes: openrouteservice by HeiGIT, on OpenStreetMap data | လမ်းလျှောက်၊ ကားမောင်းနှင့် စက်ဘီးစီး လမ်းကြောင်းများ- HeiGIT ၏ openrouteservice၊ OpenStreetMap ဒေတာပေါ်တွင် |
 | `route_attribution` | Routes: © openrouteservice.org by HeiGIT · Map data © OpenStreetMap contributors | လမ်းကြောင်းများ- © openrouteservice.org by HeiGIT · မြေပုံဒေတာ © OpenStreetMap ပါဝင်ကူညီသူများ |
 | `error_title` | Page not found | စာမျက်နှာ ရှာမတွေ့ပါ |

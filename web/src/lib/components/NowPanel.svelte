@@ -3,7 +3,7 @@
 	import { fmtTime } from '$lib/format';
 	import { feedName, hazName, nowTitle } from '$lib/labels';
 	import { quietTypes, type Assessment, type Feeds, type Hazard, type HazardType, type Overall } from '$lib/levels';
-	import { currentCountry } from '$lib/country.svelte';
+	import { callParams, currentCountry } from '$lib/country.svelte';
 	import { here } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
 	import { localizeHref } from '$lib/paraglide/runtime.js';
@@ -64,7 +64,7 @@
 	{#if a && a.failed.length && level !== 'unknown'}
 		<p class="text-xs text-watch">{m.now_partial({ feeds: a.failed.map(feedName).join(', ') })}</p>
 	{/if}
-	<p class="text-xs text-muted">{m.now_guidance()}</p>
+	<p class="text-xs text-muted">{m.now_guidance(callParams())}</p>
 	{#if !checking}<LevelScale {level} />{/if}
 	{#if steps.length}
 		<section class="lv-warning">

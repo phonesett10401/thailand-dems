@@ -28,7 +28,7 @@ export const mm: Country = {
 		{ tel: '192', key: 'mm_192' },
 		{ tel: '191', key: 'mm_191' }
 	],
-	guide: { medical: '192', fire: '191', police: '199', disaster: '199', officials: { en: 'the Department of Disaster Management and the Department of Meteorology and Hydrology', th: 'กรมการจัดการภัยพิบัติและกรมอุตุนิยมวิทยาและอุทกวิทยา', my: 'ကယ်ဆယ်ရေးနှင့် ပြန်လည်နေရာချထားရေးဦးစီးဌာန၊ မိုးလေဝသနှင့် ဇလဗေဒညွှန်ကြားမှုဦးစီးဌာန' } },
+	guide: { medical: '192', fire: '191', police: '199', disaster: '199', officials: { en: 'the Department of Disaster Management and the Department of Meteorology and Hydrology', th: 'กรมการจัดการภัยพิบัติและกรมอุตุนิยมวิทยาและอุทกวิทยา', my: 'ဘေးအန္တရာယ်စီမံခန့်ခွဲမှုဦးစီးဌာနနှင့် မိုးလေဝသနှင့် ဇလဗေဒညွှန်ကြားမှုဦးစီးဌာန' } },
 	air: 'who-it',
 	weather: 'dems',
 	shelters: 'in-development'

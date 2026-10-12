@@ -4,7 +4,7 @@ import { COUNTRIES } from '../countries';
 import { bagFor, BASICS, defaultKit, EXTRAS, GUIDE, GUIDE_FOR, GUIDES, gx, guideForSmhi, KIT_NOTE, KITS, smhiCode, stepsFor } from './guides';
 
 const holes = (s: string) => [...s.matchAll(/\{\w+\}/g)].map((x) => x[0]).sort();
-const hz =(type: Hazard['type'], level: Hazard['level'], sample = false): Hazard => ({
+const hz = (type: Hazard['type'], level: Hazard['level'], sample = false): Hazard => ({
 	id: type, type, level, name: null, value: null, km: null, lat: null, lon: null, time: null, source: 't', sample, url: null
 });
 

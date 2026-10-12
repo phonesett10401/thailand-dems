@@ -114,3 +114,27 @@ test('the language links go between all three languages', async ({ page }) => {
 	await page.getByRole('group', { name: 'ဘာသာစကား' }).getByRole('link', { name: 'ไทย' }).click();
 	await expect(page).toHaveURL(/\/th\/more$/);
 });
+
+test('Burmese headlines get room for stacked marks', async ({ page }) => {
+	for (const path of ['/my/prepare', '/my/prepare/earthquake', '/my/shelters']) {
+		await page.goto(path);
+		const ratio = await page.locator('h1.headline').first().evaluate((h) => {
+			const s = getComputedStyle(h);
+			return parseFloat(s.lineHeight) / parseFloat(s.fontSize);
+		});
+		expect(ratio, path).toBeGreaterThanOrEqual(1.3);
+	}
+});
+
+test('safety texts name the chosen country numbers and agencies', async ({ page }) => {
+	await page.goto('/report');
+	await expect(page.getByText('In danger now? Call 1669 (ambulance) or 191 (police) first.')).toBeVisible();
+	await pickCountry(page, 'Myanmar');
+	await page.goto('/report');
+	await expect(page.getByText('In danger now? Call 192 (ambulance) or 199 (police) first.')).toBeVisible();
+	await page.goto('/about');
+	await expect(page.getByText(/Always follow the Department of Disaster Management and the Department of Meteorology and Hydrology, and call 199 in an emergency\./)).toBeVisible();
+	await pickCountry(page, 'Sweden');
+	await page.goto('/report');
+	await expect(page.getByText('In danger now? Call 112 first.')).toBeVisible();
+});

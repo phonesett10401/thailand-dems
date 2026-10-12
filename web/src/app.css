@@ -114,6 +114,8 @@
 		line-height: 1.03;
 	}
 	.headline:lang(my) {
+		/* text-2xl/3xl/4xl set line-height from --tw-leading; plain line-height alone loses to them. */
+		--tw-leading: 1.35;
 		letter-spacing: 0;
 		line-height: 1.35;
 	}

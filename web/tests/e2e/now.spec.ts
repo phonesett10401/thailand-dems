@@ -7,7 +7,7 @@ test('fixtures (PM2.5 41.2, river rising) → Watch: haze and flooding', async (
 	await expect(page.getByText('Watch', { exact: true }).first()).toBeVisible();
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Haze and flooding');
 	await expect(page.getByText('PM2.5 41.2 µg/m³')).toBeVisible();
-	await expect(page.getByText('DEMS estimate from public data. Official warnings: TMD / DDPM.')).toBeVisible();
+	await expect(page.getByText('DEMS estimate from public data. Official warnings: TMD and DDPM.')).toBeVisible();
 	await expect(page.getByRole('link', { name: /Nearest shelter/ })).toContainText('km');
 });
 
