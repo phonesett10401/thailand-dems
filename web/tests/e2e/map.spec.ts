@@ -97,12 +97,11 @@ test.describe('desktop', () => {
 	});
 });
 
-test('readings for your own spot (haze) are drawn at your location and follow their chip', async ({ page }) => {
+test('readings for your own spot (haze) stay off the map: no chip, no marker', async ({ page }) => {
 	await page.goto('/map');
-	const haze = page.getByRole('button', { name: 'Haze · Watch' });
-	await expect(haze).toBeVisible();
-	await page.getByRole('button', { name: 'Haze', exact: true }).click();
-	await expect(haze).toHaveCount(0);
+	await expect(page.getByRole('button', { name: 'Shelters', exact: true })).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Haze', exact: true })).toHaveCount(0);
+	await expect(page.getByRole('button', { name: /^Haze ·/ })).toHaveCount(0);
 });
 
 test('the map says it shows the whole region, not just what is near you', async ({ page }) => {

@@ -99,8 +99,6 @@ export type MapMarker = {
 	lat: number;
 	lon: number;
 	label: string;
-	/** Pixel nudge so a marker doesn't sit on top of another at the same point. */
-	offset?: [number, number];
 };
 
 /** Any @lucide/svelte icon. */
