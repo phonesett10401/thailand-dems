@@ -3,6 +3,7 @@ import type { Country } from './index';
 export const mm: Country = {
 	code: 'MM',
 	flag: '🇲🇲',
+	timeZone: 'Asia/Yangon',
 	view: { lat: 19.75, lon: 96.1, zoom: 5 },
 	defaultPlace: { name: 'Yangon', lat: 16.8409, lon: 96.1735 },
 	places: [

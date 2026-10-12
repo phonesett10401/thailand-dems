@@ -9,6 +9,8 @@ export type CountryPlace = Pt & { name: string; smhiId?: number };
 export type Country = {
 	code: CountryCode;
 	flag: string;
+	/** IANA zone used to show clock times in this country. */
+	timeZone: string;
 	view: Pt & { zoom: number };
 	defaultPlace: CountryPlace;
 	places: CountryPlace[];

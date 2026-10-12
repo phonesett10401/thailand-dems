@@ -7,6 +7,7 @@ export const MCF_SHELTERS = 'https://www.mcf.se/sv/amnesomraden/beredskap-for-kr
 export const se: Country = {
 	code: 'SE',
 	flag: '🇸🇪',
+	timeZone: 'Europe/Stockholm',
 	view: { lat: 62.0, lon: 16.0, zoom: 4 },
 	defaultPlace: { name: 'Stockholm', lat: 59.3293, lon: 18.0686, smhiId: 1 },
 	places: [
