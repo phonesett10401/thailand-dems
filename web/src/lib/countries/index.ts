@@ -15,7 +15,7 @@ export type Country = {
 	sos: string;
 	numbers: { tel: string; key: string }[]; // key → m.num_<key>() label
 	/** Numbers and agencies that guide text names ({medical} etc. in prepare/guides.ts). */
-	guide: { medical: string; fire: string; police: string; disaster: string; officials: { en: string; th: string } };
+	guide: { medical: string; fire: string; police: string; disaster: string; officials: { en: string; th: string; my: string } };
 	air: 'thai-pcd' | 'who-it';
 	weather: 'dems' | 'smhi';
 	shelters: 'sample' | 'in-development' | 'link';

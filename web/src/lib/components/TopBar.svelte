@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Phone, Search } from '@lucide/svelte';
+	import { Languages, Phone, Search } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
@@ -11,7 +11,6 @@
 	import { deLocalizeHref, localizeHref } from '$lib/paraglide/runtime.js';
 	import { activeTab, TABS } from '$lib/tabs';
 	import type { Shelter } from '$lib/types';
-	import LangToggle from './LangToggle.svelte';
 	import Logo from './Logo.svelte';
 	import PlacePicker from './PlacePicker.svelte';
 
@@ -55,7 +54,7 @@
 		</span>
 	</a>
 	<PlacePicker />
-	<label class="ml-2 hidden min-h-11 w-72 items-center gap-2 rounded-lg border border-line bg-raised px-3 text-sm text-muted lg:flex">
+	<label class="ml-2 hidden min-h-11 w-48 items-center xl:w-72 gap-2 rounded-lg border border-line bg-raised px-3 text-sm text-muted lg:flex">
 		<Search size={14} aria-hidden="true" />
 		<span class="sr-only">{m.search_label()}</span>
 		<input id="top-search" list="top-search-list" placeholder={m.search_label()} onchange={search} class="min-w-0 flex-1 bg-transparent text-text outline-none placeholder:text-muted" />
@@ -70,14 +69,15 @@
 			<a
 				href={localizeHref(t.path)}
 				aria-current={activeTab(current, t.path) ? 'page' : undefined}
-				class="inline-flex min-h-11 items-center rounded-lg px-3 text-sm font-medium {activeTab(current, t.path) ? 'bg-white/10 text-text' : 'text-muted hover:text-text'}"
+				class="inline-flex min-h-11 items-center whitespace-nowrap rounded-lg px-3 text-sm font-medium {activeTab(current, t.path) ? 'bg-white/10 text-text' : 'text-muted hover:text-text'}"
 				>{t.label()}</a
 			>
 		{/each}
 	</nav>
 	<div class="ml-auto flex items-center gap-2">
 		<a href={localizeHref('/about')} aria-label={m.demo_chip_aria()} class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-line px-2.5 font-mono text-[10px] tracking-[0.1em] text-muted uppercase">{m.demo_chip()}</a>
-		<span class="hidden md:inline-block"><LangToggle /></span>
+		<!-- Three language links don't fit beside the tabs; the full switch is on More. -->
+		<a href={localizeHref('/more')} aria-label={m.more_language()} class="hidden size-11 shrink-0 items-center justify-center rounded-lg border border-line text-muted hover:text-text md:inline-flex"><Languages size={16} aria-hidden="true" /></a>
 		<a
 			href="tel:{currentCountry().sos}"
 			aria-label={m.sos_aria({ num: currentCountry().sos })}

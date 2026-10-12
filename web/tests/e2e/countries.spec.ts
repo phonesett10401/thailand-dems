@@ -93,3 +93,24 @@ test('the chosen country survives a reload', async ({ page }) => {
 	await page.reload();
 	await expect(sos(page)).toHaveAttribute('href', 'tel:112');
 });
+
+for (const path of ['/my', '/my/map', '/my/shelters', '/my/prepare', '/my/more']) {
+	test(`Burmese: ${path} is in Myanmar script with no raw message keys`, async ({ page }) => {
+		await page.goto(path);
+		await expect(page.locator('html')).toHaveAttribute('lang', 'my');
+		await expect(page.locator('h1').first()).toHaveText(/[က-႟]/);
+		const text = await page.locator('main').innerText();
+		expect(text).not.toMatch(/now_|prep_/);
+	});
+}
+
+test('the language links go between all three languages', async ({ page }) => {
+	await page.goto('/more');
+	const langs = page.getByRole('group', { name: 'Language' });
+	await expect(langs.getByRole('link', { name: 'EN' })).toHaveAttribute('aria-current', 'true');
+	await langs.getByRole('link', { name: 'မြန်မာ' }).click();
+	await expect(page).toHaveURL(/\/my\/more$/);
+	await expect(page.locator('html')).toHaveAttribute('lang', 'my');
+	await page.getByRole('group', { name: 'ဘာသာစကား' }).getByRole('link', { name: 'ไทย' }).click();
+	await expect(page).toHaveURL(/\/th\/more$/);
+});

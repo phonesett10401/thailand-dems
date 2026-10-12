@@ -39,7 +39,7 @@ export const se: Country = {
 		{ tel: '11414', key: 'se_11414' },
 		{ tel: '11313', key: 'se_11313' }
 	],
-	guide: { medical: '112', fire: '112', police: '112', disaster: '112', officials: { en: 'SMHI and your municipality', th: 'SMHI และเทศบาลของคุณ' } },
+	guide: { medical: '112', fire: '112', police: '112', disaster: '112', officials: { en: 'SMHI and your municipality', th: 'SMHI และเทศบาลของคุณ', my: 'SMHI နှင့် သင်နေထိုင်ရာ မြို့နယ်အုပ်ချုပ်ရေး' } },
 	air: 'who-it',
 	weather: 'smhi',
 	shelters: 'link',

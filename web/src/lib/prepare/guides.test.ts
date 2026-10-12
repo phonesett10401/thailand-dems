@@ -1,19 +1,22 @@
 import { describe, expect, it } from 'vitest';
 import type { Hazard } from '../levels';
 import { COUNTRIES } from '../countries';
-import { bagFor, BASICS, defaultKit, EXTRAS, GUIDE, GUIDE_FOR, GUIDES, gx, guideForSmhi, KITS, smhiCode, stepsFor } from './guides';
+import { bagFor, BASICS, defaultKit, EXTRAS, GUIDE, GUIDE_FOR, GUIDES, gx, guideForSmhi, KIT_NOTE, KITS, smhiCode, stepsFor } from './guides';
 
-const hz = (type: Hazard['type'], level: Hazard['level'], sample = false): Hazard => ({
+const holes = (s: string) => [...s.matchAll(/\{\w+\}/g)].map((x) => x[0]).sort();
+const hz =(type: Hazard['type'], level: Hazard['level'], sample = false): Hazard => ({
 	id: type, type, level, name: null, value: null, km: null, lat: null, lon: null, time: null, source: 't', sample, url: null
 });
 
 describe('guides', () => {
-	it('every guide has a title, a summary and at least 3 items per phase, in both languages', () => {
+	it('every guide has a title, a summary and at least 3 items per phase, in all three languages', () => {
 		for (const id of GUIDES) {
 			const g = GUIDE[id];
 			for (const t of [g.title, g.summary, ...g.before, ...g.during, ...g.after]) {
 				expect(t.en.trim(), id).not.toBe('');
 				expect(t.th.trim(), id).not.toBe('');
+				expect(t.my.trim(), id).not.toBe('');
+				expect(holes(t.my), id).toEqual(holes(t.en));
 			}
 			expect(g.before.length, id).toBeGreaterThanOrEqual(3);
 			expect(g.during.length, id).toBeGreaterThanOrEqual(3);
@@ -44,7 +47,7 @@ describe('guides', () => {
 	it('no guide text hardcodes a number or agency', () => {
 		for (const id of GUIDES) {
 			const g = GUIDE[id];
-			for (const x of [g.title, g.summary, ...g.before, ...g.during, ...g.after]) expect(`${x.en} ${x.th}`, id).not.toMatch(/\d{3,4}|DDPM|TMD|SMHI|ปภ\.|กรมอุตุ/);
+			for (const x of [g.title, g.summary, ...g.before, ...g.during, ...g.after]) expect(`${x.en} ${x.th} ${x.my}`, id).not.toMatch(/\d{3,4}|DDPM|TMD|SMHI|ปภ\.|กรมอุตุ/);
 		}
 	});
 	it('maps real SMHI event codes to guides', () => {
@@ -92,10 +95,13 @@ describe('go-bag by emergency', () => {
 		expect(bagFor('flood').map((i) => i.id)).not.toContain('masks');
 		expect(bagFor('chemical').map((i) => i.id)).not.toContain('masks');
 	});
-	it('every item has en and th text', () => {
+	it('every item and kit note has en, th and my text', () => {
+		for (const n of Object.values(KIT_NOTE)) expect(n!.my.trim()).not.toBe('');
 		for (const i of [...BASICS, ...Object.values(EXTRAS).flat()]) {
 			expect(i.text.en.trim(), i.id).not.toBe('');
 			expect(i.text.th.trim(), i.id).not.toBe('');
+			expect(i.text.my.trim(), i.id).not.toBe('');
+			expect(holes(i.text.my), i.id).toEqual(holes(i.text.en));
 		}
 	});
 	it('defaultKit picks the worst live hazard that has a kit', () => {

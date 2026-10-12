@@ -1,8 +1,8 @@
 import { getLocale } from '$lib/paraglide/runtime.js';
 
-type Loc = 'en' | 'th';
+type Loc = 'en' | 'th' | 'my';
 const TZ = 'Asia/Bangkok';
-const tag = (l: Loc) => (l === 'th' ? 'th-TH-u-ca-buddhist' : 'en-GB');
+const tag = (l: Loc) => ({ en: 'en-GB', th: 'th-TH-u-ca-buddhist', my: 'my-MM-u-nu-latn' })[l];
 const fmt =
 	(opts: Intl.DateTimeFormatOptions) =>
 	(d: Date | string, l: Loc = getLocale()) =>

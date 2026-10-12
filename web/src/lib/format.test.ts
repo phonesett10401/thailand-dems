@@ -12,3 +12,10 @@ describe('format', () => {
 		expect(fmtDate(d, 'en')).toContain('2026');
 	});
 });
+
+describe('format in Burmese', () => {
+	it('formats a date without throwing', () => {
+		expect(typeof fmtDate(d, 'my')).toBe('string');
+		expect(fmtTime(d, 'my')).toBe('11:05');
+	});
+});

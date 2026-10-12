@@ -20,7 +20,7 @@ export const th: Country = {
 		{ tel: '1155', key: '1155' },
 		{ tel: '1182', key: '1182' }
 	],
-	guide: { medical: '1669', fire: '199', police: '191', disaster: '1784', officials: { en: 'DDPM and TMD', th: 'ปภ. และกรมอุตุนิยมวิทยา' } },
+	guide: { medical: '1669', fire: '199', police: '191', disaster: '1784', officials: { en: 'DDPM and TMD', th: 'ปภ. และกรมอุตุนิยมวิทยา', my: 'ထိုင်း ဘေးအန္တရာယ်ကာကွယ်ရေးဌာန (DDPM) နှင့် ထိုင်းမိုးလေဝသဌာန (TMD)' } },
 	air: 'thai-pcd',
 	weather: 'dems',
 	shelters: 'sample'
