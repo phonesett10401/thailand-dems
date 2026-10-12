@@ -28,8 +28,8 @@ export async function refresh(): Promise<void> {
 		settle(getAir(at)),
 		settle(getForecast(at)),
 		settle(getRiver(at)),
-		settle(getGdacs()),
-		settle(getQuakes()),
+		settle(getGdacs(c)),
+		settle(getQuakes(c)),
 		settle(sweden ? getSmhi() : Promise.resolve(undefined)),
 		api.disasters(),
 		api.alerts()

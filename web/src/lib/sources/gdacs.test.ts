@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import gdacs from './fixtures/gdacs.json';
-import { parseGdacs } from './gdacs';
+import { COUNTRIES } from '../countries';
+import { gdacsUrl, parseGdacs } from './gdacs';
 
 describe('parseGdacs', () => {
 	it('maps events, newest first, with UTC times', () => {
@@ -46,5 +47,13 @@ describe('parseGdacs', () => {
 			]
 		};
 		expect(parseGdacs(raw as never).map((e) => e.id)).toEqual(['GDACS-FL-1103621']);
+	});
+});
+
+describe('gdacsUrl', () => {
+	it('asks GDACS for the country', () => {
+		const now = new Date('2026-10-13T00:00:00Z');
+		for (const [c, name] of [['TH', 'Thailand'], ['MM', 'Myanmar'], ['SE', 'Sweden']] as const)
+			expect(gdacsUrl(COUNTRIES[c], now)).toContain(`&country=${name}&`);
 	});
 });

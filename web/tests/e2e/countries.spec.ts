@@ -167,3 +167,37 @@ test('safety texts name the chosen country numbers and agencies', async ({ page 
 	await page.goto('/report');
 	await expect(page.getByText('In danger now? Call 112 first.')).toBeVisible();
 });
+
+test.describe('Sweden with no earthquakes', () => {
+	test.beforeEach(async ({ page }) => {
+		await page.addInitScript(() => localStorage.setItem('dems.country', 'SE'));
+		await page.route('https://earthquake.usgs.gov/**', (r) =>
+			r.fulfill({ contentType: 'application/json', body: JSON.stringify({ type: 'FeatureCollection', features: [] }) })
+		);
+	});
+
+	test('Now does not call an empty quake list unavailable, and asks USGS about Sweden', async ({ page }) => {
+		const quakeReq = page.waitForRequest((r) => r.url().includes('earthquake.usgs.gov'));
+		await page.goto('/');
+		expect((await quakeReq).url()).toContain('minlatitude=53');
+		await expect(page.getByRole('heading', { level: 1 })).not.toHaveText('Checking hazards near you…');
+		await expect(page.getByText(/Unavailable right now/)).toHaveCount(0);
+	});
+
+	test('desktop Now shows the MCF card instead of an empty shelter card', async ({ page }) => {
+		await page.setViewportSize({ width: 1280, height: 800 });
+		await page.goto('/');
+		await expect(page.getByRole('link', { name: /MCF/ })).toBeVisible();
+	});
+
+	test('desktop Shelters has no empty map column', async ({ page }) => {
+		await page.setViewportSize({ width: 1280, height: 800 });
+		await page.goto('/shelters');
+		await expect(page.getByRole('link', { name: /MCF/ })).toBeVisible();
+		const col = await page.getByRole('heading', { level: 1 }).evaluate((h) => {
+			const wrap = h.closest('.page')!.parentElement!;
+			return getComputedStyle(wrap).gridTemplateColumns.split(' ').length;
+		});
+		expect(col).toBe(1);
+	});
+});

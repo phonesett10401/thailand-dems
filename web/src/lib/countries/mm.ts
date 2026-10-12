@@ -32,5 +32,7 @@ export const mm: Country = {
 	guide: { medical: '192', fire: '191', police: '199', disaster: '199', officials: { en: 'the Department of Disaster Management and the Department of Meteorology and Hydrology', th: 'กรมการจัดการภัยพิบัติและกรมอุตุนิยมวิทยาและอุทกวิทยา', my: 'ဘေးအန္တရာယ်စီမံခန့်ခွဲမှုဦးစီးဌာနနှင့် မိုးလေဝသနှင့် ဇလဗေဒညွှန်ကြားမှုဦးစီးဌာန' } },
 	air: 'who-it',
 	weather: 'dems',
+	quakeBox: [8, 30, 90, 103],
+	gdacsCountry: 'Myanmar',
 	shelters: 'in-development'
 };

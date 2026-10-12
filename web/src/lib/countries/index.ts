@@ -22,6 +22,10 @@ export type Country = {
 	guide: { medical: string; fire: string; police: string; disaster: string; officials: { en: string; th: string; my: string } };
 	air: 'thai-pcd' | 'who-it';
 	weather: 'dems' | 'smhi';
+	/** [minLat, maxLat, minLon, maxLon] of the earthquake map; the 300 km "near you" rule is separate. */
+	quakeBox: [number, number, number, number];
+	/** Country name as GDACS spells it. */
+	gdacsCountry: string;
 	shelters: 'sample' | 'in-development' | 'link';
 	shelterLink?: string;
 };

@@ -24,5 +24,7 @@ export const th: Country = {
 	guide: { medical: '1669', fire: '199', police: '191', disaster: '1784', officials: { en: 'TMD and DDPM', th: 'กรมอุตุนิยมวิทยาและ ปภ.', my: 'ထိုင်းမိုးလေဝသဌာန (TMD) နှင့် ထိုင်း ဘေးအန္တရာယ်ကာကွယ်ရေးဌာန (DDPM)' } },
 	air: 'thai-pcd',
 	weather: 'dems',
+	quakeBox: [4, 22, 95, 107],
+	gdacsCountry: 'Thailand',
 	shelters: 'sample'
 };

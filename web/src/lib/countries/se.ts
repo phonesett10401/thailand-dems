@@ -43,6 +43,8 @@ export const se: Country = {
 	guide: { medical: '112', fire: '112', police: '112', disaster: '112', officials: { en: 'SMHI and your municipality', th: 'SMHI และเทศบาลของคุณ', my: 'SMHI နှင့် သင်နေထိုင်ရာ မြို့နယ်အုပ်ချုပ်ရေး' } },
 	air: 'who-it',
 	weather: 'smhi',
+	quakeBox: [53, 71, 8, 26],
+	gdacsCountry: 'Sweden',
 	shelters: 'link',
 	shelterLink: MCF_SHELTERS
 };

@@ -1,5 +1,7 @@
 import type { Lvl } from '../levels';
 import type { HazardEvent, HazardKind } from '../types';
+import type { Country } from '../countries';
+import { currentCountry } from '../country.svelte';
 import { fetchJson } from './http';
 
 const ALERT: Record<string, Lvl> = { Red: 'warning', Orange: 'watch' };
@@ -30,10 +32,10 @@ type RawGdacs = {
 
 const DAY = 86_400_000;
 
-/** Events GDACS tagged with Thailand over the last 12 months. CORS: allowed (*). */
-export function gdacsUrl(now = new Date()): string {
+/** Events GDACS tagged with the country over the last 12 months. CORS: allowed (*). */
+export function gdacsUrl(c: Country, now = new Date()): string {
 	const d = (x: Date) => x.toISOString().slice(0, 10);
-	return `https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?eventlist=EQ;TC;FL;VO;DR;WF&country=Thailand&fromdate=${d(new Date(now.getTime() - 365 * DAY))}&todate=${d(now)}`;
+	return `https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?eventlist=EQ;TC;FL;VO;DR;WF&country=${c.gdacsCountry}&fromdate=${d(new Date(now.getTime() - 365 * DAY))}&todate=${d(now)}`;
 }
 
 /** raw is null when GDACS answers 204 No Content (no events). */
@@ -63,4 +65,4 @@ export function parseGdacs(raw: RawGdacs | null): HazardEvent[] {
 	return [...byId.values()].sort((a, b) => b.time.localeCompare(a.time));
 }
 
-export const getGdacs = async () => parseGdacs(await fetchJson<RawGdacs>(gdacsUrl()));
+export const getGdacs = async (c: Country = currentCountry()) => parseGdacs(await fetchJson<RawGdacs>(gdacsUrl(c)));

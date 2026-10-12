@@ -4,7 +4,7 @@
 	import MapView from '$lib/components/MapView.svelte';
 	import NowPanel from '$lib/components/NowPanel.svelte';
 	import { api } from '$lib/config';
-	import { country } from '$lib/country.svelte';
+	import { country, currentCountry } from '$lib/country.svelte';
 	import { fmtHour, fmtTime } from '$lib/format';
 	import { occupancyPct, sortByDistance, toNum } from '$lib/geo';
 	import { currentLevel, live } from '$lib/hazards.svelte';
@@ -54,6 +54,14 @@
 			<MapView class="relative" {markers} center={here.place} zoom={8} focus={here.place} onselect={select} />
 			<div class="grid grid-cols-[1.35fr_1fr_1fr] gap-3 border-t border-line p-3">
 				<div class="glass flex flex-col gap-2 rounded-2xl p-3.5">
+					{#if currentCountry().shelters === 'link'}
+						<h2 class="label">{m.shelters_se_title()}</h2>
+						<p class="text-xs text-muted">{m.shelters_se_body()}</p>
+						<a href={currentCountry().shelterLink} target="_blank" rel="noopener" class="mt-auto inline-flex min-h-11 items-center self-start rounded-lg bg-white/10 px-4 text-sm font-semibold">{m.shelters_se_cta()}</a>
+					{:else if currentCountry().shelters === 'in-development'}
+						<h2 class="label">{m.shelters_dev_title()}</h2>
+						<p class="text-xs text-muted">{m.shelters_dev_body()}</p>
+					{:else}
 					<div class="flex justify-between"><h2 class="label">{m.now_shelters()}</h2><a class="grid min-h-11 min-w-11 place-items-center text-xs text-muted" href={localizeHref('/shelters')} aria-label={m.now_all_shelters()}>→</a></div>
 					{#each closest as { item: s, km } (s.ShelterID)}
 						{@const pct = occupancyPct(s.CurrentOccupancy, s.Capacity)}
@@ -63,6 +71,7 @@
 							<span class="text-right font-mono text-xs text-muted">{km!.toFixed(1)} km</span>
 						</div>
 					{/each}
+					{/if}
 				</div>
 				<div class="glass flex flex-col gap-2 rounded-2xl p-3.5">
 					<h2 class="label">{m.now_rain24()}</h2>
