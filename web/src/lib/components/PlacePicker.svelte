@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ChevronDown, LocateFixed } from '@lucide/svelte';
-	import { here, PROVINCES, setPlace, useGps } from '$lib/location.svelte';
+	import { here, places, setPlace, useGps } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
 
 	let box: HTMLDetailsElement;
@@ -16,7 +16,7 @@
 		if (!here.error) box.open = false;
 	}
 	function pick(e: Event) {
-		const p = PROVINCES.find((x) => x.name === (e.currentTarget as HTMLSelectElement).value);
+		const p = places().find((x) => x.name === (e.currentTarget as HTMLSelectElement).value);
 		if (p) {
 			setPlace({ ...p, via: 'province' });
 			box.open = false;
@@ -44,7 +44,7 @@
 			{m.location_pick()}
 			<select onchange={pick} class="min-h-11 rounded-lg border border-line bg-raised px-2 text-sm text-text">
 				<option value="">{m.location_pick()}</option>
-				{#each PROVINCES as p (p.name)}
+				{#each places() as p (p.name)}
 					<option value={p.name} selected={here.place.via === 'province' && here.place.name === p.name}>{p.name}</option>
 				{/each}
 			</select>
