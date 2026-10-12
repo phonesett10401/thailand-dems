@@ -42,5 +42,6 @@ describe('places per country', () => {
 		expect(places()).toHaveLength(21);
 		switchCountry('TH');
 		expect(here.place.name).toBe('Chiang Mai');
+		expect(here.place.via).toBe('province');
 	});
 });

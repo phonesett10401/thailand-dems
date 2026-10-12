@@ -35,6 +35,11 @@ describe('detectCountry', () => {
 	});
 	it('border towns go to their own side', () => {
 		expect(detectCountry({ lat: 16.713, lon: 98.575 })).toBe('TH'); // Mae Sot
+		expect(detectCountry({ lat: 16.688, lon: 98.508 })).toBe('MM'); // Myawaddy
+		expect(detectCountry({ lat: 20.428, lon: 99.884 })).toBe('TH'); // Mae Sai
+		expect(detectCountry({ lat: 20.447, lon: 99.88 })).toBe('MM'); // Tachileik
+		expect(detectCountry({ lat: 9.962, lon: 98.638 })).toBe('TH'); // Ranong
+		expect(detectCountry({ lat: 9.983, lon: 98.55 })).toBe('MM'); // Kawthaung
 	});
 	it('a point far from every supported country is null', () => {
 		expect(detectCountry({ lat: 48.86, lon: 2.35 })).toBeNull(); // Paris

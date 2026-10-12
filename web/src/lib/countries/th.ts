@@ -6,15 +6,11 @@ export const th: Country = {
 	flag: '🇹🇭',
 	view: { lat: 13.7563, lon: 100.5018, zoom: 6 },
 	defaultPlace: { name: 'Bangkok', lat: 13.7563, lon: 100.5018 },
-	places: [
-		...(provinces as { Province: string; Latitude: string; Longitude: string }[]).map((p) => ({
-			name: p.Province,
-			lat: Number(p.Latitude),
-			lon: Number(p.Longitude)
-		})),
-		// provinces.json has only 27 provinces and none on the Myanmar border; Tak keeps Mae Sot on the Thai side
-		{ name: 'Tak', lat: 16.884, lon: 99.1258 }
-	],
+	places: (provinces as { Province: string; Latitude: string; Longitude: string }[]).map((p) => ({
+		name: p.Province,
+		lat: Number(p.Latitude),
+		lon: Number(p.Longitude)
+	})),
 	sos: '1784',
 	numbers: [
 		{ tel: '1784', key: '1784' },
