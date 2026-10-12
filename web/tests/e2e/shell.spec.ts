@@ -3,7 +3,7 @@ import { expect, test } from './fixtures';
 test('top bar: logo, live, SOS calls 1784, Demo chip opens About', async ({ page }) => {
 	await page.goto('/');
 	await expect(page.getByRole('link', { name: /DEMS/ }).first()).toBeVisible();
-	await expect(page.getByRole('link', { name: "Call 1784, Thailand's disaster hotline" })).toHaveAttribute('href', 'tel:1784');
+	await expect(page.getByRole('link', { name: "Call 1784, emergency number" })).toHaveAttribute('href', 'tel:1784');
 	await expect(page.getByRole('link', { name: 'About this demo and its data' })).toHaveAttribute('href', '/about');
 });
 
@@ -61,8 +61,8 @@ test.describe('geolocation denied', () => {
 test.describe('375 px width', () => {
 	test.use({ viewport: { width: 375, height: 812 } });
 	for (const [path, sos, demo] of [
-		['/', "Call 1784, Thailand's disaster hotline", 'About this demo and its data'],
-		['/th', 'โทร 1784 สายด่วนภัยพิบัติ', 'เกี่ยวกับเดโมนี้และข้อมูล']
+		['/', "Call 1784, emergency number", 'About this demo and its data'],
+		['/th', 'โทร 1784 หมายเลขฉุกเฉิน', 'เกี่ยวกับเดโมนี้และข้อมูล']
 	]) {
 		test(`SOS and Demo chip fit inside the viewport on ${path}`, async ({ page }) => {
 			await page.goto(path);

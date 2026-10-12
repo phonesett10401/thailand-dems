@@ -5,6 +5,7 @@
 	import { country } from '$lib/country.svelte';
 	import { here } from '$lib/location.svelte';
 	import { faviconHref } from '$lib/logo';
+	import CountryBanner from './CountryBanner.svelte';
 	import FirstVisitNote from './FirstVisitNote.svelte';
 	import TabBar from './TabBar.svelte';
 	import TopBar from './TopBar.svelte';
@@ -38,6 +39,7 @@
 
 <header bind:clientHeight={headerH} class="glass fixed inset-x-0 top-0 z-30 border-x-0 border-t-0 bg-bg/70">
 	<TopBar {level} />
+	<CountryBanner />
 </header>
 
 <main>{@render children()}</main>

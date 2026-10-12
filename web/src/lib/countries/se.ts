@@ -2,7 +2,7 @@ import { distanceKm } from '$lib/geo';
 import type { Pt } from '$lib/types';
 import type { Country } from './index';
 
-export const MSB_SHELTERS = 'https://www.msb.se/sv/amnesomraden/skydd-mot-olyckor-och-farliga-amnen/befolkningsskydd/skyddsrum/';
+export const MSB_SHELTERS = 'https://www.msb.se/skyddsrum';
 
 export const se: Country = {
 	code: 'SE',

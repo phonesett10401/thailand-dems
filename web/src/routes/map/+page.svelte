@@ -33,6 +33,9 @@
 	// Map = "what is happening anywhere": every current hazard, not only those near you.
 	// Readings for your own spot (haze, heat, rain, river) have no place of their own: they live on Now, not here.
 	const all = $derived(live.feeds ? collect(live.feeds, here.place, Date.now(), false, currentCountry(), country.code === 'SE' ? smhiAreaFor(here.place) : undefined).filter((h) => h.lat !== null) : []);
+	const view = $derived(
+		here.place.via === 'default' ? { center: currentCountry().view, zoom: currentCountry().view.zoom } : { center: here.place, zoom: 6 }
+	);
 	const types = $derived([...new Set(all.map((h) => h.type))] as HazardType[]);
 	const chipColor = (t: string) => {
 		const lv = all.filter((h) => h.type === t && !h.sample).map((h) => h.level);
@@ -78,7 +81,7 @@
 		{#if shown.length}<HazardList hazards={shown} onselect={(h) => (picked = h)} />{:else}<p class="text-sm text-muted">{m.map_none()}</p>{/if}
 	</aside>
 	<div class="relative h-full">
-		<MapView class="relative h-full" bind:failed {markers} {areas} center={here.place} zoom={6} onselect={select} />
+		<MapView class="relative h-full" bind:failed {markers} {areas} center={view.center} zoom={view.zoom} onselect={select} />
 		<div role="group" aria-label={m.map_layers()} class="chip-row absolute inset-x-0 top-2 px-3">
 			{#if !failed}<span class="contents lg:hidden"><Chip on={showList} onclick={() => (listOn = !listOn)}>{m.map_list()}</Chip></span>{/if}
 			{#each types as t (t)}

@@ -48,7 +48,11 @@ export const test = base.extend<{ backend: 'up' | 'down'; seenNote: boolean; moc
 					if (r.request().method() === 'POST') {
 						return r.fulfill({ ...json, status: 201, body: '{"reportId":99}' });
 					}
-					const file = API[new URL(r.request().url()).pathname.replace(/^\/api/, '')];
+					const u = new URL(r.request().url());
+					if (u.pathname === '/api/warnings/se') return r.fulfill({ ...json, body: '[]' });
+					const file = API[u.pathname.replace(/^\/api/, '')];
+					// sample data is Thailand's; Myanmar and Sweden have none
+					if (file && ['MM', 'SE'].includes(u.searchParams.get('country') ?? '')) return r.fulfill({ ...json, body: '[]' });
 					return file ? r.fulfill({ ...json, body: sample(file) }) : r.fulfill({ status: 404, body: '' });
 				}
 			);

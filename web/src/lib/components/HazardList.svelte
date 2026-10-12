@@ -19,7 +19,7 @@
 				>
 				<span class="min-w-0 flex-1">
 					<span class="block font-semibold"
-						>{hazName(h.type)}{#if h.sample}<span class="label ml-2 rounded border border-line px-1 py-px">{m.sample_tag()}</span>{/if}</span
+						>{h.type === 'official' ? h.name : hazName(h.type)}{#if h.type === 'official'}<span class="label lv-text ml-2 rounded border border-current px-1 py-px">{m.official_badge()}</span>{/if}{#if h.sample}<span class="label ml-2 rounded border border-line px-1 py-px">{m.sample_tag()}</span>{/if}</span
 					>
 					<span class="block truncate text-xs text-muted">{hazLine(h)}</span>
 				</span>

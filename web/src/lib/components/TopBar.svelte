@@ -4,6 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { api } from '$lib/config';
+	import { currentCountry } from '$lib/country.svelte';
 	import type { Overall } from '$lib/levels';
 	import { places, setPlace } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
@@ -78,11 +79,11 @@
 		<a href={localizeHref('/about')} aria-label={m.demo_chip_aria()} class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-line px-2.5 font-mono text-[10px] tracking-[0.1em] text-muted uppercase">{m.demo_chip()}</a>
 		<span class="hidden md:inline-block"><LangToggle /></span>
 		<a
-			href="tel:1784"
-			aria-label={m.sos_aria()}
+			href="tel:{currentCountry().sos}"
+			aria-label={m.sos_aria({ num: currentCountry().sos })}
 			class="flex min-h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-[#e5251b] px-3 text-xs font-bold text-white shadow-[0_4px_18px_rgb(229_37_27/0.35)]"
 		>
-			<Phone size={13} aria-hidden="true" />SOS · 1784
+			<Phone size={13} aria-hidden="true" />SOS · {currentCountry().sos}
 		</a>
 	</div>
 </div>

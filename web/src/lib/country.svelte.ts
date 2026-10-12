@@ -22,3 +22,27 @@ export function setCountry(code: CountryCode): void {
 		// private mode: not remembered
 	}
 }
+
+/** A country GPS says we are in but the user has not chosen; the banner offers it. Never applied by itself. */
+export const suggestion = $state<{ code: CountryCode | null }>({ code: null });
+const dismissKey = (c: CountryCode) => `dems.banner.dismissed.${c}`;
+
+export function suggestCountry(code: CountryCode | null): void {
+	if (code === null || code === country.code) return void (suggestion.code = null);
+	try {
+		if (sessionStorage.getItem(dismissKey(code))) return void (suggestion.code = null);
+	} catch {
+		// no sessionStorage: can't remember "Not now"
+	}
+	suggestion.code = code;
+}
+
+export function dismissSuggestion(): void {
+	if (!suggestion.code) return;
+	try {
+		sessionStorage.setItem(dismissKey(suggestion.code), '1');
+	} catch {
+		// fine: shown again next time
+	}
+	suggestion.code = null;
+}

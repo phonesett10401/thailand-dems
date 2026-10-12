@@ -1,19 +1,24 @@
 <script lang="ts">
 	import { ChevronDown, LocateFixed } from '@lucide/svelte';
+	import { currentCountry, suggestCountry } from '$lib/country.svelte';
+	import { detectCountry } from '$lib/countries';
 	import { here, places, setPlace, useGps } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
 
 	let box: HTMLDetailsElement;
 	let busy = $state(false);
 	const name = $derived(
-		here.place.via === 'gps' ? m.location_gps() : here.place.via === 'default' ? m.location_default() : here.place.name
+		here.place.via === 'gps' ? m.location_gps() : here.place.via === 'default' ? m.location_default({ city: currentCountry().defaultPlace.name }) : here.place.name
 	);
 
 	async function gps() {
 		busy = true;
 		await useGps();
 		busy = false;
-		if (!here.error) box.open = false;
+		if (!here.error) {
+			box.open = false;
+			suggestCountry(detectCountry(here.place)); // a banner, never an automatic switch
+		}
 	}
 	function pick(e: Event) {
 		const p = places().find((x) => x.name === (e.currentTarget as HTMLSelectElement).value);
@@ -29,7 +34,7 @@
 		class="flex min-h-11 cursor-pointer list-none items-center gap-1 rounded-lg px-2 text-sm text-muted hover:text-text [&::-webkit-details-marker]:hidden"
 		aria-label={m.place_change()}
 	>
-		<span class="max-w-24 sm:max-w-36 truncate">{name}</span><ChevronDown size={14} aria-hidden="true" />
+		<span class="max-w-24 sm:max-w-36 truncate"><span aria-hidden="true">{currentCountry().flag}</span> {name}</span><ChevronDown size={14} aria-hidden="true" />
 	</summary>
 	<div class="glass absolute top-12 left-0 z-40 flex w-64 flex-col gap-2 rounded-2xl bg-bg/90 p-3">
 		<button

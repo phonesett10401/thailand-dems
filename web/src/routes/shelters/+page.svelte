@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { MediaQuery } from 'svelte/reactivity';
+		import { MediaQuery } from 'svelte/reactivity';
 	import { page } from '$app/state';
 	import Chip from '$lib/components/Chip.svelte';
 	import MapView from '$lib/components/MapView.svelte';
 	import ShelterSheet from '$lib/components/ShelterSheet.svelte';
 	import { api } from '$lib/config';
 	import { shelterStatusLabel } from '$lib/labels';
+	import { country, currentCountry } from '$lib/country.svelte';
 	import { here } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
 	import { applyFilters, shelterRows, type Filter, type ShelterRow } from '$lib/shelters';
@@ -26,7 +26,9 @@
 		['cleanAir', m.f_cleanAir]
 	];
 
-	onMount(() => {
+	// Reload when the country changes (the GPS banner can switch it while this page is open).
+	$effect(() => {
+		void country.code;
 		api.shelters().then((r) => {
 			shelters = r.data;
 			const focus = Number(page.url.searchParams.get('focus'));
@@ -46,6 +48,9 @@
 		{ id: 'me', kind: 'me', lat: here.place.lat, lon: here.place.lon, label: m.location_label() },
 		...rows.flatMap((r): MapMarker[] => (r.lat === null || r.lon === null ? [] : [{ id: String(r.s.ShelterID), kind: 'shelter', lat: r.lat, lon: r.lon, label: r.s.ShelterName }]))
 	]);
+	const view = $derived(
+		here.place.via === 'default' ? { center: currentCountry().view, zoom: currentCountry().view.zoom } : { center: here.place, zoom: 7 }
+	);
 	const select = (id: string) => (picked = rows.find((r) => String(r.s.ShelterID) === id) ?? null);
 	const facName = { medical: m.f_medical, pets: m.f_pets, cleanAir: m.f_cleanAir };
 </script>
@@ -53,7 +58,20 @@
 <div class="lg:fixed lg:inset-x-0 lg:top-[var(--header-h)] lg:bottom-0 lg:grid lg:grid-cols-[420px_1fr]">
 	<div class="page lg:m-0 lg:max-w-none lg:overflow-y-auto lg:border-r lg:border-line lg:p-5">
 		<h1 class="headline text-3xl">{m.shelters_title()}</h1>
+		{#if currentCountry().shelters === 'in-development'}
+			<div class="glass mt-4 rounded-2xl p-4">
+				<h2 class="font-semibold">{m.shelters_dev_title()}</h2>
+				<p class="mt-1 text-sm text-muted">{m.shelters_dev_body()}</p>
+			</div>
+		{:else if currentCountry().shelters === 'link'}
+			<div class="glass mt-4 rounded-2xl p-4">
+				<h2 class="font-semibold">{m.shelters_se_title()}</h2>
+				<p class="mt-1 text-sm text-muted">{m.shelters_se_body()}</p>
+				<a href={currentCountry().shelterLink} target="_blank" rel="noopener" class="mt-3 inline-flex min-h-11 items-center rounded-lg bg-white/10 px-4 text-sm font-semibold">{m.shelters_se_cta()}</a>
+			</div>
+		{:else}
 		<p class="mt-1 text-xs text-muted">{m.shelters_sample_note()}</p>
+		<p class="mt-1 text-xs text-muted">{m.shelters_th_note()}</p>
 		<div role="group" aria-label={m.shelters_filters()} class="chip-row mt-2 -mx-4 px-4 lg:-mx-5 lg:px-5">
 			{#each FILTERS as [f, label] (f)}<Chip on={on.has(f)} onclick={() => toggle(f)}>{label()}</Chip>{/each}
 		</div>
@@ -91,9 +109,10 @@
 				</ul>
 			</section>
 		{/if}
+		{/if}
 	</div>
-	{#if wide.current}
-		<MapView class="relative h-full" {markers} center={here.place} zoom={7} onselect={select} />
+	{#if wide.current && currentCountry().shelters === 'sample'}
+		<MapView class="relative h-full" {markers} center={view.center} zoom={view.zoom} onselect={select} />
 	{/if}
 </div>
 

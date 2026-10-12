@@ -29,7 +29,7 @@
 	} = $props();
 
 	const place = $derived(
-		here.place.via === 'gps' ? m.location_gps() : here.place.via === 'default' ? m.location_default() : here.place.name
+		here.place.via === 'gps' ? m.location_gps() : here.place.via === 'default' ? m.location_default({ city: currentCountry().defaultPlace.name }) : here.place.name
 	);
 	const active = $derived(a ? a.hazards.filter((h) => !h.sample && h.level !== 'safe') : []);
 	// a type whose feed failed is unknown, not quiet
