@@ -26,6 +26,9 @@
 	});
 	const kitName = (k: KitId) => (k === 'cold' ? m.haz_cold() : hazName(k));
 	onMount(() => (done = loadChecks()));
+	$effect(() => {
+		if (kit === 'cold' && country.code !== 'SE') pick(live.a ? defaultKit(live.a.hazards) : null);
+	});
 	const items = $derived(bagFor(kit));
 	const note = $derived(kit ? KIT_NOTE[kit] : undefined);
 	function flip(id: string) {
@@ -44,7 +47,7 @@
 
 	<h2 class="label mt-8 mb-3">{m.prep_guides()}</h2>
 	<ul class="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-		{#each GUIDES as id (id)}
+		{#each GUIDES.filter((id) => (id !== 'cold' && id !== 'snow') || currentCountry().weather === 'smhi') as id (id)}
 			<li>
 				<a href={localizeHref(`/prepare/${id}`)} class="glass flex h-full flex-col gap-1 rounded-2xl p-4 hover:bg-white/[0.07]">
 					<span class="font-semibold">{tx(GUIDE[id].title)}</span>

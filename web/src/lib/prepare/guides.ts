@@ -1,11 +1,18 @@
 import type { Hazard, HazardType, Lvl } from '../levels';
+import type { Country } from '../countries';
+import { currentCountry } from '../country.svelte';
 import { getLocale } from '../paraglide/runtime.js';
 
 export type Text = { en: string; th: string };
 export type Guide = { title: Text; summary: Text; before: Text[]; during: Text[]; after: Text[] };
 
 const t = (en: string, th: string): Text => ({ en, th });
-export const tx = (x: Text): string => x[getLocale()];
+/** Fill {medical} {fire} {police} {disaster} {officials} from a country. */
+export const gx = (x: Text, c: Country): string => {
+	const loc = getLocale();
+	return x[loc].replace(/\{(medical|fire|police|disaster|officials)\}/g, (_, k: keyof Country['guide']) => (k === 'officials' ? c.guide.officials[loc] : c.guide[k]));
+};
+export const tx = (x: Text): string => gx(x, currentCountry());
 
 export const GUIDES = ['flood', 'flash-flood', 'storm', 'smoke', 'heat', 'earthquake', 'tsunami', 'landslide', 'drought', 'chemical', 'cold', 'snow'] as const;
 export type GuideId = (typeof GUIDES)[number];
@@ -112,7 +119,7 @@ export const GUIDE: Record<GuideId, Guide> = {
 		during: [
 			t('Stay out of the sun between 11:00 and 15:00.', 'หลีกเลี่ยงแดดช่วง 11.00–15.00 น.'),
 			t('Drink water every 20 minutes, even if you are not thirsty.', 'ดื่มน้ำทุก 20 นาที แม้ไม่รู้สึกกระหาย'),
-			t('Confusion, fainting or very hot skin (with or without sweat) means heatstroke: call 1669 and cool the person with water and shade.', 'สับสน เป็นลม หรือตัวร้อนจัด (มีหรือไม่มีเหงื่อก็ได้) คืออาการโรคลมร้อน ให้โทร 1669 และพาผู้ป่วยเข้าที่ร่ม ใช้น้ำช่วยลดอุณหภูมิร่างกาย'),
+			t('Confusion, fainting or very hot skin (with or without sweat) means heatstroke: call {medical} and cool the person with water and shade.', 'สับสน เป็นลม หรือตัวร้อนจัด (มีหรือไม่มีเหงื่อก็ได้) คืออาการโรคลมร้อน ให้โทร {medical} และพาผู้ป่วยเข้าที่ร่ม ใช้น้ำช่วยลดอุณหภูมิร่างกาย'),
 			t('Never leave children or pets in a parked car.', 'ห้ามทิ้งเด็กหรือสัตว์เลี้ยงไว้ในรถที่จอดอยู่')
 		],
 		after: [
@@ -217,7 +224,7 @@ export const GUIDE: Record<GuideId, Guide> = {
 			t('Know if you live near factories or chemical storage.', 'รู้ว่าบ้านอยู่ใกล้โรงงานหรือคลังสารเคมีหรือไม่'),
 			t('Keep tape and a plastic sheet to seal a room.', 'เตรียมเทปและแผ่นพลาสติกไว้ปิดผนึกห้อง'),
 			t('Know two ways out of your area.', 'รู้เส้นทางออกจากพื้นที่ 2 เส้นทาง'),
-			t('Save 1784 and 199 in your phone.', 'บันทึกเบอร์ 1784 และ 199 ไว้ในโทรศัพท์')
+			t('Save {disaster} and {fire} in your phone.', 'บันทึกเบอร์ {disaster} และ {fire} ไว้ในโทรศัพท์')
 		],
 		during: [
 			t('Go indoors, close windows, turn off fans and air conditioning.', 'เข้าอาคาร ปิดหน้าต่าง ปิดพัดลมและเครื่องปรับอากาศ'),
@@ -243,14 +250,14 @@ export const GUIDE: Record<GuideId, Guide> = {
 		],
 		during: [
 			t('Limit time outside; cover skin, because frostbite can start in minutes in strong wind.', 'จำกัดเวลาอยู่นอกอาคาร ปกปิดผิวหนังให้มิดชิด เพราะลมแรงอาจทำให้เกิดอาการหิมะกัดได้ภายในไม่กี่นาที'),
-			t('Watch for hypothermia (shivering, confusion, slurred speech): get the person warm and dry and call 112.', 'สังเกตอาการอุณหภูมิกายต่ำ (ตัวสั่น สับสน พูดไม่ชัด) พาผู้ป่วยเข้าที่อบอุ่นและทำให้ตัวแห้ง แล้วโทร 112'),
+			t('Watch for hypothermia (shivering, confusion, slurred speech): get the person warm and dry and call {medical}.', 'สังเกตอาการอุณหภูมิกายต่ำ (ตัวสั่น สับสน พูดไม่ชัด) พาผู้ป่วยเข้าที่อบอุ่นและทำให้ตัวแห้ง แล้วโทร {medical}'),
 			t('Never use a grill, camping stove or generator indoors (carbon monoxide).', 'ห้ามใช้เตาย่าง เตาแคมป์ปิ้ง หรือเครื่องปั่นไฟในอาคาร (แก๊สคาร์บอนมอนอกไซด์)'),
 			t('Keep moving if you must be outside.', 'หากต้องอยู่นอกอาคาร ให้ขยับตัวอยู่เสมอ')
 		],
 		after: [
 			t("Warm frostbitten skin slowly with lukewarm water, not hot, and don't rub it.", 'ค่อยๆ อุ่นผิวหนังที่ถูกหิมะกัดด้วยน้ำอุ่นพอประมาณ ไม่ใช่น้ำร้อน และห้ามถู'),
 			t('Check pipes and heating.', 'ตรวจท่อน้ำและระบบทำความร้อน'),
-			t('Follow SMHI and local announcements.', 'ติดตามประกาศของ SMHI และหน่วยงานท้องถิ่น')
+			t('Follow {officials} and local announcements.', 'ติดตามประกาศของ{officials}และหน่วยงานท้องถิ่น')
 		]
 	},
 	snow: {
@@ -259,7 +266,7 @@ export const GUIDE: Record<GuideId, Guide> = {
 		before: [
 			t('Keep a shovel, warm clothes and food at home.', 'เตรียมพลั่ว เสื้อผ้าอบอุ่น และอาหารไว้ที่บ้าน'),
 			t('In a car, carry a blanket, water, a torch and a charged phone.', 'หากมีรถ ให้เตรียมผ้าห่ม น้ำ ไฟฉาย และโทรศัพท์ที่ชาร์จเต็มไว้ในรถ'),
-			t('Plan to stay home if SMHI warns.', 'วางแผนอยู่บ้านเมื่อ SMHI ออกคำเตือน')
+			t('Plan to stay home if {officials} warn.', 'วางแผนอยู่บ้านเมื่อ{officials}ออกคำเตือน')
 		],
 		during: [
 			t('Avoid unnecessary travel.', 'หลีกเลี่ยงการเดินทางที่ไม่จำเป็น'),
@@ -388,10 +395,4 @@ export function defaultKit(hazards: Hazard[]): KitId | null {
 	}
 	return best ? KIT_FOR[best.type]! : null;
 }
-
-/** Real SMHI event codes (metadata/events.json): THUNDER WIND WIND_MOUNTAINS STRONG_COOLING SNOW BLACK_ICE RAIN HIGH_TEMPERATURES WIND_SEA ICE_ACCRETION LOW_SEA_LEVEL HIGH_SEALEVEL WATER_SHORTAGE HIGH_FLOW FLOODING FIRE. */
-export const guideForSmhi = (code: string): GuideId | null =>
-	/WIND|THUNDER/.test(code) ? 'storm' : /SNOW/.test(code) ? 'snow' : /RAIN|FLOOD|FLOW|SEALEVEL/.test(code) ? 'flood' : /HIGH_TEMP/.test(code) ? 'heat' : /COOLING/.test(code) ? 'cold' : null;
-
-/** The SMHI event code of an official hazard (id `smhi-<CODE>-<areaId>[-<n>]`). */
-export const smhiCode = (h: Hazard): string | null => (h.type === 'official' ? (h.id.split('-')[1] ?? null) : null);
+export { guideForSmhi, smhiCode } from '../sources/smhi';

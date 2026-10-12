@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Hazard } from '../levels';
-import { bagFor, BASICS, defaultKit, EXTRAS, GUIDE, GUIDE_FOR, GUIDES, guideForSmhi, KITS, smhiCode, stepsFor } from './guides';
+import { COUNTRIES } from '../countries';
+import { bagFor, BASICS, defaultKit, EXTRAS, GUIDE, GUIDE_FOR, GUIDES, gx, guideForSmhi, KITS, smhiCode, stepsFor } from './guides';
 
 const hz = (type: Hazard['type'], level: Hazard['level'], sample = false): Hazard => ({
 	id: type, type, level, name: null, value: null, km: null, lat: null, lon: null, time: null, source: 't', sample, url: null
@@ -35,10 +36,16 @@ describe('guides', () => {
 		expect(GUIDES).toContain('snow');
 		const all = (id: 'cold' | 'snow') => [...GUIDE[id].before, ...GUIDE[id].during, ...GUIDE[id].after];
 		for (const id of ['cold', 'snow'] as const) for (const t of all(id)) expect(t.th.trim(), id).not.toBe('');
-		const during = GUIDE.cold.during.map((s) => s.en).join(' | ');
+		const during = GUIDE.cold.during.map((s) => gx(s, COUNTRIES.SE)).join(' | ');
 		expect(during).toMatch(/hypotherm/i);
 		expect(during).toMatch(/112/);
 		expect(during).toMatch(/carbon monoxide|generator|indoors/i);
+	});
+	it('no guide text hardcodes a number or agency', () => {
+		for (const id of GUIDES) {
+			const g = GUIDE[id];
+			for (const x of [g.title, g.summary, ...g.before, ...g.during, ...g.after]) expect(`${x.en} ${x.th}`, id).not.toMatch(/\d{3,4}|DDPM|TMD|SMHI|ปภ\.|กรมอุตุ/);
+		}
 	});
 	it('maps real SMHI event codes to guides', () => {
 		const want: Record<string, string | null> = {
@@ -54,9 +61,11 @@ describe('guides', () => {
 		expect(smhiCode({ ...hz('smoke', 'watch'), id: 'smhi-WIND-1' })).toBeNull();
 	});
 	it('the life-critical step is among the three shown at Warning', () => {
-		const en = (type: Parameters<typeof stepsFor>[0]) => stepsFor(type, 'warning').map((s) => s.en).join(' | ');
+		const en = (type: Parameters<typeof stepsFor>[0], c: keyof typeof COUNTRIES = 'TH') => stepsFor(type, 'warning').map((s) => gx(s, COUNTRIES[c])).join(' | ');
 		expect(en('storm')).toMatch(/evacuate/);
 		expect(en('heat')).toMatch(/1669/);
+		expect(en('heat', 'SE')).toMatch(/call 112/);
+		expect(en('heat', 'MM')).toMatch(/call 192/);
 		expect(en('tsunami')).toMatch(/30 m/);
 		expect(en('flood')).toMatch(/only if you are dry/);
 	});

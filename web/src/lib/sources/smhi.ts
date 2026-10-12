@@ -25,3 +25,11 @@ export async function getSmhi(fetchFn: FetchFn = (u, i) => fetch(u, i)): Promise
 	if (!res.ok) throw new Error(`HTTP ${res.status}`);
 	return (await res.json()) as SmhiWarning[];
 }
+
+export type SmhiGuide = 'storm' | 'snow' | 'flood' | 'heat' | 'cold';
+/** Real SMHI event codes (metadata/events.json): THUNDER WIND WIND_MOUNTAINS STRONG_COOLING SNOW BLACK_ICE RAIN HIGH_TEMPERATURES WIND_SEA ICE_ACCRETION LOW_SEA_LEVEL HIGH_SEALEVEL WATER_SHORTAGE HIGH_FLOW FLOODING FIRE. */
+export const guideForSmhi = (code: string): SmhiGuide | null =>
+	/WIND|THUNDER/.test(code) ? 'storm' : /SNOW/.test(code) ? 'snow' : /RAIN|FLOOD|FLOW|SEALEVEL/.test(code) ? 'flood' : /HIGH_TEMP/.test(code) ? 'heat' : /COOLING/.test(code) ? 'cold' : null;
+
+/** The SMHI event code of an official hazard (id `smhi-<CODE>-<areaId>[-<n>]`). */
+export const smhiCode = (h: { type: string; id: string }): string | null => (h.type === 'official' ? (h.id.split('-')[1] ?? null) : null);
