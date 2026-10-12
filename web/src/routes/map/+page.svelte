@@ -29,12 +29,8 @@
 	});
 
 	// Map = "what is happening anywhere": every current hazard, not only those near you.
-	// Readings for your own spot (haze, heat, rain, river) have no coordinates of their own: draw them at your location.
-	const all = $derived(
-		live.feeds
-			? collect(live.feeds, here.place, Date.now(), false).map((h) => (h.lat === null ? { ...h, lat: here.place.lat, lon: here.place.lon, local: true } : h))
-			: []
-	);
+	// Readings for your own spot (haze, heat, rain, river) have no place of their own: they live on Now, not here.
+	const all = $derived(live.feeds ? collect(live.feeds, here.place, Date.now(), false).filter((h) => h.lat !== null) : []);
 	const types = $derived([...new Set(all.map((h) => h.type))] as HazardType[]);
 	const chipColor = (t: string) => {
 		const lv = all.filter((h) => h.type === t && !h.sample).map((h) => h.level);
@@ -50,7 +46,7 @@
 	const markers = $derived<MapMarker[]>([
 		{ id: 'me', kind: 'me', lat: here.place.lat, lon: here.place.lon, label: m.location_label() },
 		...shown.flatMap((h): MapMarker[] =>
-			h.lat === null || h.lon === null ? [] : [{ id: h.id, kind: h.sample ? 'sample' : h.level, lat: h.lat, lon: h.lon, label: markerLabel(h), offset: 'local' in h ? [18, -18] : undefined }]
+			h.lat === null || h.lon === null ? [] : [{ id: h.id, kind: h.sample ? 'sample' : h.level, lat: h.lat, lon: h.lon, label: markerLabel(h) }]
 		),
 		...(hidden.has('shelters')
 			? []
