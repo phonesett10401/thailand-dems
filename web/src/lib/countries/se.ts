@@ -1,6 +1,6 @@
 import { distanceKm } from '$lib/geo';
 import type { Pt } from '$lib/types';
-import type { Country } from './index';
+import type { Country, CountryPlace } from './index';
 
 export const MCF_SHELTERS = 'https://www.mcf.se/sv/amnesomraden/beredskap-for-kris-och-krig/befolkningsskydd/skyddsrum-och-andra-skyddade-platser/';
 
@@ -9,7 +9,7 @@ export const se: Country = {
 	flag: '🇸🇪',
 	timeZone: 'Europe/Stockholm',
 	view: { lat: 62.0, lon: 16.0, zoom: 4 },
-	defaultPlace: { name: 'Stockholm', lat: 59.3293, lon: 18.0686, smhiId: 1 },
+	defaultPlace: { name: 'Stockholm', names: { en: 'Stockholm', th: 'สตอกโฮล์ม', my: 'စတော့ဟုမ်း' }, lat: 59.3293, lon: 18.0686, smhiId: 1 },
 	places: [
 		{ name: 'Blekinge County', lat: 56.1612, lon: 15.5869, smhiId: 10 },
 		{ name: 'Dalarna County', lat: 60.6065, lon: 15.6355, smhiId: 20 },
@@ -49,7 +49,7 @@ export const se: Country = {
 
 /** SMHI county id of the nearest SE place (a GPS fix has no county of its own). */
 export function smhiAreaFor(pt: Pt): number {
-	let best = se.defaultPlace;
+	let best: CountryPlace = se.defaultPlace;
 	for (const p of se.places) if (distanceKm(pt, p) < distanceKm(pt, best)) best = p;
 	return best.smhiId!;
 }

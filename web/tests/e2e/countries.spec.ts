@@ -1,4 +1,5 @@
 import type { Page } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 import { expect, test } from './fixtures';
 
 const pickCountry = async (page: Page, name: string) => {
@@ -19,7 +20,7 @@ test('Myanmar: SOS 199, its regions, shelters in development', async ({ page }) 
 	await expect(page.locator('[data-km]')).toHaveCount(0);
 });
 
-test('Sweden: SOS 112, MSB link, SMHI warning with official badge; Thailand restored', async ({ page }) => {
+test('Sweden: SOS 112, MCF link, SMHI warning with official badge; Thailand restored', async ({ page }) => {
 	await page.route('**/api/warnings/se', (r) =>
 		r.fulfill({
 			contentType: 'application/json',
@@ -42,6 +43,20 @@ test('Sweden: SOS 112, MSB link, SMHI warning with official badge; Thailand rest
 	await page.goto('/shelters');
 	await expect(page.getByRole('button', { name: /Bangkok Stadium/ })).toBeVisible();
 	await expect(page.getByText(/Example shelters/)).toBeVisible();
+});
+
+test('Sweden: an orange SMHI wind warning shows the storm steps on Now', async ({ page }) => {
+	await page.route('**/api/warnings/se', (r) =>
+		r.fulfill({
+			contentType: 'application/json',
+			body: JSON.stringify([{ areaId: 1, level: 'warning', event: 'Wind', code: 'WIND', start: '2026-10-13T06:00:00Z', end: null }])
+		})
+	);
+	await page.clock.setFixedTime(new Date('2026-10-13T08:00:00Z'));
+	await pickCountry(page, 'Sweden');
+	await page.goto('/');
+	await expect(page.getByText('What to do now')).toBeVisible();
+	await expect(page.getByText('Stay indoors, away from windows and glass doors.')).toBeVisible();
 });
 
 test('a place picked in Thailand does not leak into Sweden and returns on switch back', async ({ page }) => {
@@ -86,6 +101,20 @@ test('Switch changes country and keeps the GPS position as the place', async ({ 
 	await page.getByRole('button', { name: 'Switch', exact: true }).click();
 	await expect(sos(page)).toHaveAttribute('href', 'tel:112');
 	await expect(page.getByLabel('Change location')).toContainText('Your location');
+});
+
+test('Switch drops the old country shelters from Now', async ({ page, context }) => {
+	await context.grantPermissions(['geolocation']);
+	await context.setGeolocation({ latitude: 59.33, longitude: 18.07 });
+	const sample: { ShelterName: string }[] = JSON.parse(readFileSync('src/lib/sample/shelters.json', 'utf8'));
+	const thai = new RegExp(sample.map((x) => x.ShelterName).join('|'));
+	await page.goto('/');
+	await expect(page.getByText(thai).first()).toBeVisible();
+	await page.getByLabel('Change location').click();
+	await page.getByRole('button', { name: 'Use my location' }).click();
+	await page.getByRole('button', { name: 'Switch', exact: true }).click();
+	await expect(sos(page)).toHaveAttribute('href', 'tel:112');
+	await expect(page.getByText(thai)).toHaveCount(0);
 });
 
 test('the chosen country survives a reload', async ({ page }) => {

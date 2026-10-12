@@ -53,6 +53,7 @@ export function setPlace(p: Place): void {
 }
 
 export function switchCountry(code: CountryCode): void {
+	if (code === currentCountry().code) return;
 	setCountry(code);
 	const c = currentCountry();
 	here.place = saved(code) ?? { ...c.defaultPlace, via: 'default' };

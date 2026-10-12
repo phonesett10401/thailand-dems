@@ -6,7 +6,7 @@ export const th: Country = {
 	flag: '🇹🇭',
 	timeZone: 'Asia/Bangkok',
 	view: { lat: 13.7563, lon: 100.5018, zoom: 6 },
-	defaultPlace: { name: 'Bangkok', lat: 13.7563, lon: 100.5018 },
+	defaultPlace: { name: 'Bangkok', names: { en: 'Bangkok', th: 'กรุงเทพฯ', my: 'ဘန်ကောက်' }, lat: 13.7563, lon: 100.5018 },
 	places: (provinces as { Province: string; Latitude: string; Longitude: string }[]).map((p) => ({
 		name: p.Province,
 		lat: Number(p.Latitude),

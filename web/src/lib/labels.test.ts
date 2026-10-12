@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Hazard } from './levels';
-import { markerLabel, nearestOpen, nowTitle } from './labels';
+import { hazLine, markerLabel, nearestOpen, nowTitle } from './labels';
 import type { Shelter } from './types';
 
 describe('nowTitle', () => {
@@ -28,5 +28,14 @@ describe('markerLabel', () => {
 	it('names type, place and level; tags samples', () => {
 		expect(markerLabel(h({ name: 'Ayutthaya' }))).toBe('Flooding: Ayutthaya · Warning');
 		expect(markerLabel(h({ level: 'watch', sample: true }))).toBe('Flooding · Watch · Sample');
+	});
+});
+
+describe('hazLine for SMHI warnings', () => {
+	const off = (time: string | null): Hazard => ({ id: 'smhi-WIND-1', type: 'official', level: 'watch', name: 'Wind', value: null, km: null, lat: null, lon: null, time, source: 'SMHI', sample: false, url: null });
+	it('says when a warning starts only if that is still ahead', () => {
+		expect(hazLine(off('2099-01-02T06:00:00Z'))).toMatch(/^Wind · from /);
+		expect(hazLine(off('2020-01-02T06:00:00Z'))).toBe('Wind');
+		expect(hazLine(off(null))).toBe('Wind');
 	});
 });

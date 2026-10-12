@@ -29,10 +29,10 @@ describe('guides', () => {
 		expect(GUIDE_FOR.volcano).toBeUndefined();
 	});
 	it('what-to-do steps: watch = first 3 Before, warning = first 3 During, safe = none', () => {
-		expect(stepsFor('smoke', 'watch')).toEqual(GUIDE.smoke.before.slice(0, 3));
-		expect(stepsFor('smoke', 'warning')).toEqual(GUIDE.smoke.during.slice(0, 3));
-		expect(stepsFor('smoke', 'safe')).toEqual([]);
-		expect(stepsFor('volcano', 'warning')).toEqual([]);
+		expect(stepsFor(hz('smoke', 'watch'), 'watch')).toEqual(GUIDE.smoke.before.slice(0, 3));
+		expect(stepsFor(hz('smoke', 'warning'), 'warning')).toEqual(GUIDE.smoke.during.slice(0, 3));
+		expect(stepsFor(hz('smoke', 'safe'), 'safe')).toEqual([]);
+		expect(stepsFor(hz('volcano', 'warning'), 'warning')).toEqual([]);
 	});
 	it('has the cold and snow guides with life-critical steps', () => {
 		expect(GUIDES).toContain('cold');
@@ -64,7 +64,7 @@ describe('guides', () => {
 		expect(smhiCode({ ...hz('smoke', 'watch'), id: 'smhi-WIND-1' })).toBeNull();
 	});
 	it('the life-critical step is among the three shown at Warning', () => {
-		const en = (type: Parameters<typeof stepsFor>[0], c: keyof typeof COUNTRIES = 'TH') => stepsFor(type, 'warning').map((s) => gx(s, COUNTRIES[c])).join(' | ');
+		const en = (type: Hazard['type'], c: keyof typeof COUNTRIES = 'TH') => stepsFor(hz(type, 'warning'), 'warning').map((s) => gx(s, COUNTRIES[c])).join(' | ');
 		expect(en('storm')).toMatch(/evacuate/);
 		expect(en('heat')).toMatch(/1669/);
 		expect(en('heat', 'SE')).toMatch(/call 112/);
@@ -112,5 +112,17 @@ describe('go-bag by emergency', () => {
 		expect(defaultKit([hz('smoke', 'watch'), hz('flood', 'watch')])).toBe('smoke');
 		expect(defaultKit([hz('smoke', 'safe')])).toBeNull();
 		expect(defaultKit([hz('volcano', 'warning')])).toBeNull();
+	});
+	it('SMHI official warnings get steps and a kit through their event code', () => {
+		const off = (code: string, level: Hazard['level'] = 'warning'): Hazard => ({ ...hz('official', level), id: `smhi-${code}-1` });
+		expect(stepsFor(off('WIND'), 'warning')).toEqual(GUIDE.storm.during.slice(0, 3));
+		expect(stepsFor(off('WIND', 'watch'), 'watch')).toEqual(GUIDE.storm.before.slice(0, 3));
+		expect(stepsFor(off('FIRE'), 'warning')).toEqual([]);
+		expect(defaultKit([off('WIND')])).toBe('storm');
+		expect(defaultKit([off('SNOW')])).toBe('cold');
+		expect(defaultKit([off('STRONG_COOLING')])).toBe('cold');
+		expect(defaultKit([off('HIGH_FLOW')])).toBe('flood');
+		expect(defaultKit([off('HIGH_TEMPERATURES')])).toBe('heat');
+		expect(defaultKit([off('FIRE')])).toBeNull();
 	});
 });

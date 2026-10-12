@@ -161,7 +161,7 @@ describe('worst', () => {
 
 describe('countries', () => {
 	const STO = { lat: 59.3293, lon: 18.0686 };
-	const wind = (areaId: number, level: 'watch' | 'warning' = 'warning', code = 'WIND'): SmhiWarning => ({ areaId, level, event: 'Wind', code, start: '2026-10-13T06:00:00.000Z', end: null });
+	const wind = (areaId: number, level: 'watch' | 'warning' = 'warning', code = 'WIND'): SmhiWarning => ({ areaId, level, event: 'Wind', code, start: '2026-10-10T05:00:00.000Z', end: null });
 	const hot = (): Feeds => ({ ...calm(), forecast: fc(95, 55), smhi: [] });
 	const types = (hs: { type: string }[]) => hs.map((h) => h.type);
 
@@ -175,6 +175,13 @@ describe('countries', () => {
 		expect(a.hazards).toHaveLength(1);
 		expect(a.hazards[0]).toMatchObject({ type: 'official', level: 'warning', name: 'Wind', source: 'SMHI', km: null, lat: null, lon: null });
 		expect(a.level).toBe('warning');
+	});
+	it('SE warnings starting more than 24 h away are Watch, and keep their start', () => {
+		const at = (iso: string, level: 'watch' | 'warning' = 'warning') => ({ ...wind(1, level), start: iso });
+		const run = (w: SmhiWarning) => assess({ ...calm(), smhi: [w] }, STO, NOW, COUNTRIES.SE, 1).hazards[0];
+		expect(run(at(new Date(NOW + 30 * 3600e3).toISOString()))).toMatchObject({ level: 'watch', time: new Date(NOW + 30 * 3600e3).toISOString() });
+		expect(run(at(new Date(NOW + 3 * 3600e3).toISOString())).level).toBe('warning');
+		expect(run(at(new Date(NOW - 3 * 3600e3).toISOString())).level).toBe('warning');
 	});
 	it('SE ignores warnings for other areas', () => {
 		expect(assess({ ...calm(), smhi: [wind(14)] }, STO, NOW, COUNTRIES.SE, 1).hazards).toEqual([]);

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { MediaQuery } from 'svelte/reactivity';
+		import { MediaQuery } from 'svelte/reactivity';
 	import HazardSheet from '$lib/components/HazardSheet.svelte';
 	import MapView from '$lib/components/MapView.svelte';
 	import NowPanel from '$lib/components/NowPanel.svelte';
 	import { api } from '$lib/config';
+	import { country } from '$lib/country.svelte';
 	import { fmtHour, fmtTime } from '$lib/format';
 	import { occupancyPct, sortByDistance, toNum } from '$lib/geo';
 	import { currentLevel, live } from '$lib/hazards.svelte';
@@ -18,7 +18,9 @@
 	const wide = new MediaQuery('min-width: 1024px');
 	let shelters = $state<Shelter[]>([]);
 	let picked = $state<Hazard | null>(null);
-	onMount(() => {
+	// Reload when the country changes: shelters belong to one country.
+	$effect(() => {
+		void country.code;
 		api.shelters().then((r) => (shelters = r.data));
 	});
 

@@ -2,6 +2,7 @@ import type { Hazard, HazardType, Lvl } from '../levels';
 import type { Country } from '../countries';
 import { currentCountry } from '../country.svelte';
 import { getLocale } from '../paraglide/runtime.js';
+import { guideForSmhi, smhiCode } from '../sources/smhi';
 
 export type Text = { en: string; th: string; my: string };
 export type Guide = { title: Text; summary: Text; before: Text[]; during: Text[]; after: Text[] };
@@ -295,9 +296,13 @@ export const GUIDE_FOR: Partial<Record<HazardType, GuideId>> = {
 	chemical: 'chemical'
 };
 
+/** The guide for a hazard; an official SMHI warning is resolved through its event code. */
+export const guideOf = (h: Pick<Hazard, 'type' | 'id'>): GuideId | null =>
+	h.type === 'official' ? guideForSmhi(smhiCode(h) ?? '') : (GUIDE_FOR[h.type] ?? null);
+
 /** What to do now: the first three Before items at Watch, the first three During items at Warning. */
-export function stepsFor(type: HazardType, level: Lvl): Text[] {
-	const id = GUIDE_FOR[type];
+export function stepsFor(h: Pick<Hazard, 'type' | 'id'>, level: Lvl): Text[] {
+	const id = guideOf(h);
 	if (!id || level === 'safe') return [];
 	return (level === 'warning' ? GUIDE[id].during : GUIDE[id].before).slice(0, 3);
 }
@@ -375,6 +380,11 @@ export function bagFor(kit: KitId | null): BagItem[] {
 	return [...BASICS, ...(kit ? EXTRAS[kit] : [])].filter((i) => !seen.has(i.id) && seen.add(i.id));
 }
 
+const KIT_FOR_SMHI: Partial<Record<GuideId, KitId>> = { storm: 'storm', snow: 'cold', cold: 'cold', flood: 'flood', heat: 'heat' };
+const kitOf = (h: Hazard): KitId | undefined => {
+	const g = guideOf(h);
+	return h.type === 'official' ? (g ? KIT_FOR_SMHI[g] : undefined) : KIT_FOR[h.type];
+};
 export const KIT_FOR: Partial<Record<HazardType, KitId>> = {
 	flood: 'flood',
 	rain: 'flood',
@@ -390,11 +400,12 @@ export const KIT_FOR: Partial<Record<HazardType, KitId>> = {
 
 /** The kit of the worst live, non-safe hazard that has one; ties go to list order. */
 export function defaultKit(hazards: Hazard[]): KitId | null {
-	let best: Hazard | null = null;
+	let best: { h: Hazard; kit: KitId } | null = null;
 	for (const h of hazards) {
-		if (h.sample || h.level === 'safe' || !KIT_FOR[h.type]) continue;
-		if (!best || (h.level === 'warning' && best.level !== 'warning')) best = h;
+		const kit = kitOf(h);
+		if (h.sample || h.level === 'safe' || !kit) continue;
+		if (!best || (h.level === 'warning' && best.h.level !== 'warning')) best = { h, kit };
 	}
-	return best ? KIT_FOR[best.type]! : null;
+	return best?.kit ?? null;
 }
-export { guideForSmhi, smhiCode } from '../sources/smhi';
+export { guideForSmhi, smhiCode };

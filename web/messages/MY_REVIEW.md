@@ -676,10 +676,11 @@ These are the "During" steps. The first three of each are shown on the Now scree
 | `shelters_se_title` | Civil-defence shelters (skyddsrum) | အရပ်ဘက်ကာကွယ်ရေး ခိုလှုံရာများ (skyddsrum) |
 | `shelters_se_body` | Sweden has about 64,000 civil-defence shelters for war and air raids. For storms or floods, follow SMHI and your municipality. MCF (formerly MSB) keeps the official map. | ဆွီဒင်တွင် စစ်ပွဲနှင့် လေကြောင်းတိုက်ခိုက်မှုများအတွက် အရပ်ဘက်ကာကွယ်ရေး ခိုလှုံရာ 64,000 ခန့် ရှိသည်။ မုန်တိုင်း သို့မဟုတ် ရေကြီးခြင်းအတွက် SMHI နှင့် သင့်မြို့နယ်အုပ်ချုပ်ရေးကို လိုက်နာပါ။ MCF (ယခင် MSB) က တရားဝင် မြေပုံကို ထိန်းသိမ်းထားသည်။ |
 | `shelters_se_cta` | Open MCF's shelter map | MCF ၏ ခိုလှုံရာ မြေပုံကို ဖွင့်ရန် |
-
 | `about_real_smhi` | Sweden: official weather warnings: SMHI | ဆွီဒင်- တရားဝင် မိုးလေဝသ သတိပေးချက်များ- SMHI |
 | `about_row_pm25_who` | PM2.5 in Myanmar and Sweden: Watch above {w} µg/m³, Warning above {x} (WHO interim target) | မြန်မာနှင့် ဆွီဒင်တွင် PM2.5- {w} µg/m³ အထက် စောင့်ကြည့်၊ {x} အထက် သတိပေး (WHO ကြားကာလ ပစ်မှတ်) |
 | `demo_video_th_note` | The video shows the Thailand version. | ဗီဒီယိုတွင် ထိုင်းနိုင်ငံ ဗားရှင်းကို ပြထားသည်။ |
+| `map_all_hazards` | Hazards in {country} | {country}ရှိ အန္တရာယ်များ |
+| `line_from` | from {time} | {time} မှ စတင် |
 
 ---
 

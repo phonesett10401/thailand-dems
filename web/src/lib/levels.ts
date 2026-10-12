@@ -133,7 +133,9 @@ export function collect(f: Feeds, at: Pt, now: number, near: boolean, c: Country
 			const base = `smhi-${w.code}-${w.areaId}`;
 			const n = seen.get(base) ?? 0;
 			seen.set(base, n + 1);
-			out.push(live({ ...here, id: n ? `${base}-${n}` : base, type: 'official', level: w.level, name: w.event, value: null, time: w.start, source: 'SMHI', url: 'https://www.smhi.se/vader/varningar-och-brandrisk' }));
+			// a warning that starts more than a day from now is a heads-up, not a live warning
+			const level = Date.parse(w.start) - now > 24 * 3600e3 ? 'watch' : w.level;
+			out.push(live({ ...here, id: n ? `${base}-${n}` : base, type: 'official', level, name: w.event, value: null, time: w.start, source: 'SMHI', url: 'https://www.smhi.se/vader/varningar-och-brandrisk' }));
 		}
 	}
 

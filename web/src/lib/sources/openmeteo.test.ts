@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import air from './fixtures/air.json';
 import forecast from './fixtures/forecast.json';
 import river from './fixtures/river.json';
-import { parseAir, parseForecast, parseRiver, pm25Band } from './openmeteo';
+import { country } from '../country.svelte';
+import { airUrl, forecastUrl, parseAir, parseForecast, parseRiver, pm25Band } from './openmeteo';
 
 describe('parseForecast', () => {
 	it('maps current, 24 hours and 7 days', () => {
@@ -59,5 +60,16 @@ describe('pm25Band (Thai PCD 24-hour bands)', () => {
 		expect(pm25Band(30)).toBe('moderate');
 		expect(pm25Band(50)).toBe('unhealthy_some');
 		expect(pm25Band(120)).toBe('unhealthy');
+	});
+});
+
+describe('request day follows the country', () => {
+	it('asks for the time zone of the current country', () => {
+		const p = { lat: 59.33, lon: 18.07 };
+		country.code = 'SE';
+		expect(forecastUrl(p)).toContain('timezone=Europe%2FStockholm');
+		expect(airUrl(p)).toContain('timezone=Europe%2FStockholm');
+		country.code = 'TH';
+		expect(forecastUrl(p)).toContain('timezone=Asia%2FBangkok');
 	});
 });

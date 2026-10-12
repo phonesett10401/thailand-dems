@@ -45,3 +45,13 @@ describe('places per country', () => {
 		expect(here.place.via).toBe('province');
 	});
 });
+
+describe('switchCountry', () => {
+	it('choosing the current country keeps a GPS place', async () => {
+		const { here, setPlace, switchCountry } = await load();
+		const gps = { lat: 13.9, lon: 100.6, name: 'gps', via: 'gps' as const };
+		setPlace(gps);
+		switchCountry('TH');
+		expect(here.place).toEqual(gps);
+	});
+});

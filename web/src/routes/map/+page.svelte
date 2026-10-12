@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { TriangleAlert } from '@lucide/svelte';
-	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
+		import { goto } from '$app/navigation';
 	import Chip from '$lib/components/Chip.svelte';
 	import HazardList from '$lib/components/HazardList.svelte';
 	import HazardSheet from '$lib/components/HazardSheet.svelte';
@@ -26,7 +25,9 @@
 	let failed = $state(false); // no WebGL: show the list so nothing is lost
 	const showList = $derived(listOn || failed);
 	let hidden = $state<Set<string>>(new Set());
-	onMount(() => {
+	// Reload when the country changes: shelters belong to one country.
+	$effect(() => {
+		void country.code;
 		api.shelters().then((r) => (shelters = r.data));
 	});
 
@@ -77,7 +78,7 @@
 
 <div class="fixed inset-x-0 top-[var(--header-h)] bottom-[calc(4rem+env(safe-area-inset-bottom))] md:bottom-0 lg:grid lg:grid-cols-[360px_1fr]">
 	<aside class="hidden overflow-y-auto border-r border-line p-4 lg:block">
-		<h1 class="label mb-3">{m.map_all_hazards()}</h1>
+		<h1 class="label mb-3">{m.map_all_hazards({ country: { TH: m.country_TH, MM: m.country_MM, SE: m.country_SE }[country.code]() })}</h1>
 		{#if shown.length}<HazardList hazards={shown} onselect={(h) => (picked = h)} />{:else}<p class="text-sm text-muted">{m.map_none()}</p>{/if}
 	</aside>
 	<div class="relative h-full">

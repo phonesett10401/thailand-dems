@@ -1,5 +1,6 @@
 import { m } from '$lib/paraglide/messages.js';
 import type { Pm25Band } from './sources/openmeteo';
+import { fmtDateTime } from './format';
 import { sortByDistance, toNum } from './geo';
 import type { FeedKey, Hazard, HazardType, Overall } from './levels';
 import type { Pt, ReportSeverity, ReportType, Shelter } from './types';
@@ -80,6 +81,7 @@ export function hazLine(h: Hazard): string {
 	if (h.type === 'earthquake' && h.value !== null)
 		return h.km === null ? `M${h.value.toFixed(1)}` : m.line_quake({ mag: h.value.toFixed(1), km: km0(h.km) });
 	if (h.name && h.km !== null) return m.line_event({ name: h.name, km: km0(h.km) });
+	if (h.type === 'official' && h.name && h.time && Date.parse(h.time) > Date.now()) return `${h.name} · ${m.line_from({ time: fmtDateTime(h.time) })}`;
 	return h.name ?? '';
 }
 

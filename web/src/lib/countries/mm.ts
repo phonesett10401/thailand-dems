@@ -5,7 +5,7 @@ export const mm: Country = {
 	flag: '🇲🇲',
 	timeZone: 'Asia/Yangon',
 	view: { lat: 19.75, lon: 96.1, zoom: 5 },
-	defaultPlace: { name: 'Yangon', lat: 16.8409, lon: 96.1735 },
+	defaultPlace: { name: 'Yangon', names: { en: 'Yangon', th: 'ย่างกุ้ง', my: 'ရန်ကုန်' }, lat: 16.8409, lon: 96.1735 },
 	places: [
 		{ name: 'Ayeyarwady Region', lat: 16.7792, lon: 94.7325 },
 		{ name: 'Bago Region', lat: 17.3352, lon: 96.4813 },

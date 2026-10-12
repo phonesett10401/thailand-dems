@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { api } from '$lib/config';
-	import { currentCountry } from '$lib/country.svelte';
+	import { country, currentCountry } from '$lib/country.svelte';
 	import type { Overall } from '$lib/levels';
 	import { places, setPlace } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
@@ -18,8 +18,12 @@
 	let shelters = $state<Shelter[]>([]);
 	const current = $derived(deLocalizeHref(page.url.pathname));
 
-	onMount(() => {
+	$effect(() => {
+		void country.code;
 		api.shelters().then((r) => (shelters = r.data));
+	});
+
+	onMount(() => {
 		const slash = (e: KeyboardEvent) => {
 			const t = e.target as HTMLElement;
 			if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey || t.isContentEditable) return;

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ChevronDown, LocateFixed } from '@lucide/svelte';
-	import { currentCountry, suggestCountry } from '$lib/country.svelte';
+	import { currentCountry, defaultCity, suggestCountry } from '$lib/country.svelte';
 	import { detectCountry } from '$lib/countries';
 	import { here, places, setPlace, useGps } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
@@ -8,7 +8,7 @@
 	let box: HTMLDetailsElement;
 	let busy = $state(false);
 	const name = $derived(
-		here.place.via === 'gps' ? m.location_gps() : here.place.via === 'default' ? m.location_default({ city: currentCountry().defaultPlace.name }) : here.place.name
+		here.place.via === 'gps' ? m.location_gps() : here.place.via === 'default' ? m.location_default({ city: defaultCity() }) : here.place.name
 	);
 
 	async function gps() {

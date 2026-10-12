@@ -6,13 +6,15 @@ import { th } from './th';
 
 export type CountryCode = 'TH' | 'MM' | 'SE';
 export type CountryPlace = Pt & { name: string; smhiId?: number };
+export type Names = { en: string; th: string; my: string };
 export type Country = {
 	code: CountryCode;
 	flag: string;
 	/** IANA zone used to show clock times in this country. */
 	timeZone: string;
 	view: Pt & { zoom: number };
-	defaultPlace: CountryPlace;
+	/** `names` is the label in each language; `name` stays English (it is the place's identity). */
+	defaultPlace: CountryPlace & { names: Names };
 	places: CountryPlace[];
 	sos: string;
 	numbers: { tel: string; key: string }[]; // key → m.num_<key>() label

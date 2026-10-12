@@ -16,6 +16,11 @@ describe('country files', () => {
 			expect(p.name.trim()).not.toBe('');
 		}
 	});
+	it.each(codes)('%s default place has a name in every language', (c) => {
+		const n = COUNTRIES[c].defaultPlace.names;
+		for (const l of ['en', 'th', 'my'] as const) expect(n[l].trim()).not.toBe('');
+		expect(n.en).toBe(COUNTRIES[c].defaultPlace.name);
+	});
 	it('Myanmar lists its 15 states, regions and Naypyidaw', () => expect(COUNTRIES.MM.places).toHaveLength(15));
 	it('Sweden lists its 21 counties, each with an SMHI area id', () => {
 		expect(COUNTRIES.SE.places).toHaveLength(21);

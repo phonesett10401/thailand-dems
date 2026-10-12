@@ -51,3 +51,5 @@ Prepare for Sweden (Thai drafts, need native review): `num_1155`, `num_1182`, `n
 Burmese-round changes that touched Thai too (drafts, need native review): new `emergency_call_first_one` and `report_done_body_one` (used when a country has one number). Reworded and now taking the country's numbers as parameters: `first_visit_body`, `now_guidance`, `about_limits_body`, `report_done_body`, `emergency_call_first`.
 
 Copy and docs for three countries (Task 7): new `about_real_smhi`, `about_row_pm25_who`, `demo_video_th_note`. Reworded: `app_name` (now just "DEMS"), `about_intro`, `about_sample_shelters` (now one line per country), `demo_hood_flow_body` (adds the SMHI sentence), `demo_video_label` (says it is the Thailand version).
+
+Countries final-review fixes (Thai drafts, need native review): reworded `map_all_hazards` (now takes the country name: "ภัยใน{country}"); new `line_from` ("ตั้งแต่ {time}", shown for an SMHI warning that has not started yet).

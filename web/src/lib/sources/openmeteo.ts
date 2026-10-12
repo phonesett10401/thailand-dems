@@ -1,4 +1,5 @@
 import type { Pt } from '../types';
+import { currentCountry } from '../country.svelte';
 import { fetchJson } from './http';
 
 type RawForecast = {
@@ -27,12 +28,12 @@ export type Pm25Band = 'very_good' | 'good' | 'moderate' | 'unhealthy_some' | 'u
 
 const unix = (s: number) => new Date(s * 1000);
 const where = (p: Pt) => `latitude=${p.lat.toFixed(3)}&longitude=${p.lon.toFixed(3)}`;
-const TZ = 'timezone=Asia%2FBangkok&timeformat=unixtime';
+const TZ = () => `timezone=${encodeURIComponent(currentCountry().timeZone)}&timeformat=unixtime`;
 
 export const forecastUrl = (p: Pt) =>
-	`https://api.open-meteo.com/v1/forecast?${where(p)}&current=temperature_2m,precipitation,wind_speed_10m,weather_code&hourly=temperature_2m,precipitation_probability&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,apparent_temperature_max&forecast_days=7&forecast_hours=24&${TZ}`;
+	`https://api.open-meteo.com/v1/forecast?${where(p)}&current=temperature_2m,precipitation,wind_speed_10m,weather_code&hourly=temperature_2m,precipitation_probability&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,apparent_temperature_max&forecast_days=7&forecast_hours=24&${TZ()}`;
 export const airUrl = (p: Pt) =>
-	`https://air-quality-api.open-meteo.com/v1/air-quality?${where(p)}&current=pm2_5,us_aqi&${TZ}`;
+	`https://air-quality-api.open-meteo.com/v1/air-quality?${where(p)}&current=pm2_5,us_aqi&${TZ()}`;
 export const riverUrl = (p: Pt) =>
 	`https://flood-api.open-meteo.com/v1/flood?${where(p)}&daily=river_discharge&forecast_days=7`;
 
