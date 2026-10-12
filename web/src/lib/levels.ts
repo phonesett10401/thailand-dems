@@ -115,21 +115,21 @@ export function collect(f: Feeds, at: Pt, now: number, near: boolean, c: Country
 		if (level !== 'safe') out.push(live({ ...here, id: 'air', type: 'smoke', level, value: f.air.pm25, time: f.air.time.toISOString(), source: c.air === 'thai-pcd' ? 'Open-Meteo' : 'Open-Meteo (WHO interim target)' }));
 	}
 	if (c.weather === 'dems') {
-	const day = f.forecast?.days[0];
-	if (day) {
-		const heat = day.feels === null ? 'safe' : over(day.feels, T.heat, true);
-		if (heat !== 'safe') out.push(live({ ...here, id: 'heat', type: 'heat', level: heat, value: day.feels, time: today, source: 'Open-Meteo' }));
-		const rain = over(day.rain, T.rain, true);
-		if (rain !== 'safe') out.push(live({ ...here, id: 'rain', type: 'rain', level: rain, value: day.rain, time: today, source: 'Open-Meteo' }));
-	}
-	if (f.river?.rising) {
-		out.push(live({ ...here, id: 'river', type: 'flood', level: 'watch', value: f.river.peak, time: today, source: 'Open-Meteo river model' }));
-	}
+		const day = f.forecast?.days[0];
+		if (day) {
+			const heat = day.feels === null ? 'safe' : over(day.feels, T.heat, true);
+			if (heat !== 'safe') out.push(live({ ...here, id: 'heat', type: 'heat', level: heat, value: day.feels, time: today, source: 'Open-Meteo' }));
+			const rain = over(day.rain, T.rain, true);
+			if (rain !== 'safe') out.push(live({ ...here, id: 'rain', type: 'rain', level: rain, value: day.rain, time: today, source: 'Open-Meteo' }));
+		}
+		if (f.river?.rising) {
+			out.push(live({ ...here, id: 'river', type: 'flood', level: 'watch', value: f.river.peak, time: today, source: 'Open-Meteo river model' }));
+		}
 	}
 	if (c.weather === 'smhi' && smhiArea !== undefined) {
 		const seen = new Map<string, number>();
 		for (const w of f.smhi ?? []) {
-			if (w.areaId !== smhiArea) continue;
+			if (w.areaId !== smhiArea || (w.end !== null && Date.parse(w.end) < now)) continue;
 			const base = `smhi-${w.code}-${w.areaId}`;
 			const n = seen.get(base) ?? 0;
 			seen.set(base, n + 1);
@@ -185,4 +185,13 @@ export const shown = (a: Assessment, now: number): Overall => (now - a.checkedAt
 export function keepLast(prev: Assessment | null, next: Assessment): Assessment {
 	if (next.level !== 'unknown' || !prev || prev === next) return next;
 	return { ...prev, level: 'unknown', failed: next.failed };
+}
+
+/** Types the Now screen may call "quiet" for this country, each needing its feeds to have loaded. */
+export function quietTypes(a: Assessment, c: Country): HazardType[] {
+	const need: Partial<Record<HazardType, FeedKey[]>> =
+		c.weather === 'smhi'
+			? { flood: ['gdacs', 'smhi'], storm: ['gdacs', 'smhi'], earthquake: ['quakes'], smoke: ['air'] }
+			: { flood: ['river', 'gdacs'], storm: ['gdacs'], earthquake: ['quakes'], smoke: ['air'], heat: ['forecast'] };
+	return (Object.keys(need) as HazardType[]).filter((t) => !a.hazards.some((h) => h.type === t) && !need[t]!.some((k) => a.failed.includes(k)));
 }

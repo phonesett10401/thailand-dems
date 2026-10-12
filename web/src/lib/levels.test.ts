@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { COUNTRIES } from './countries';
 import type { SmhiWarning } from './sources/smhi';
-import { assess, collect, keepLast, shown, T, worst, type Feeds } from './levels';
+import { assess, collect, keepLast, quietTypes, shown, T, worst, type Feeds } from './levels';
 import type { Air, Forecast } from './sources/openmeteo';
 import type { Disaster, HazardEvent } from './types';
 
@@ -183,6 +183,7 @@ describe('countries', () => {
 		const ids = assess({ ...calm(), smhi: [wind(1), wind(1), wind(1, 'watch', 'RAIN')] }, STO, NOW, COUNTRIES.SE, 1).hazards.map((h) => h.id);
 		expect(new Set(ids).size).toBe(3);
 		expect(ids).toContain('smhi-RAIN-1');
+		expect(ids).toContain('smhi-WIND-1-1');
 		expect(ids.every((i) => i.split('-')[1] === 'WIND' || i.split('-')[1] === 'RAIN')).toBe(true);
 	});
 	it('SE with SMHI down: named as failed, level from the other feeds, not unknown', () => {
@@ -199,5 +200,25 @@ describe('countries', () => {
 		const mm = assess({ ...calm(), air: air(41.2) }, BKK, NOW, COUNTRIES.MM).hazards[0];
 		expect(mm).toMatchObject({ type: 'smoke', level: 'watch', source: 'Open-Meteo (WHO interim target)' });
 		expect(assess({ ...calm(), air: air(41.2) }, BKK, NOW, TH).hazards[0].source).toBe('Open-Meteo');
+	});
+	it('SE ignores a rising river (DEMS weather rules are off)', () => {
+		const f = { ...calm(), river: { today: 1, peak: 50, peakDate: '2026-10-12', rising: true }, smhi: [] };
+		expect(assess(f, STO, NOW, COUNTRIES.SE, 1).hazards).toEqual([]);
+	});
+	it('SE ignores expired SMHI warnings', () => {
+		const old = { ...wind(1), end: new Date(NOW - 1000).toISOString() };
+		const live = { ...wind(1, 'watch', 'SNOW'), end: new Date(NOW + 1000).toISOString() };
+		const h = assess({ ...calm(), smhi: [old, live] }, STO, NOW, COUNTRIES.SE, 1).hazards;
+		expect(h.map((x) => x.id)).toEqual(['smhi-SNOW-1']);
+	});
+	it('quiet list: SE never calls heat quiet, and not flood/storm while SMHI is down', () => {
+		const se = COUNTRIES.SE;
+		expect(quietTypes(assess({ ...calm(), smhi: [] }, STO, NOW, se, 1), se)).not.toContain('heat');
+		expect(quietTypes(assess({ ...calm(), smhi: [] }, STO, NOW, se, 1), se)).toContain('flood');
+		const down = quietTypes(assess({ ...calm(), smhi: undefined }, STO, NOW, se, 1), se);
+		expect(down).not.toContain('flood');
+		expect(down).not.toContain('storm');
+		expect(down).toContain('earthquake');
+		expect(quietTypes(assess(calm(), BKK, NOW, TH), TH)).toEqual(['flood', 'storm', 'earthquake', 'smoke', 'heat']);
 	});
 });

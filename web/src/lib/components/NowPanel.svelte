@@ -2,7 +2,8 @@
 	import { ArrowRight, TriangleAlert } from '@lucide/svelte';
 	import { fmtTime } from '$lib/format';
 	import { feedName, hazName, nowTitle } from '$lib/labels';
-	import type { Assessment, FeedKey, Feeds, Hazard, HazardType, Overall } from '$lib/levels';
+	import { quietTypes, type Assessment, type Feeds, type Hazard, type HazardType, type Overall } from '$lib/levels';
+	import { currentCountry } from '$lib/country.svelte';
 	import { here } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
 	import { localizeHref } from '$lib/paraglide/runtime.js';
@@ -31,20 +32,8 @@
 		here.place.via === 'gps' ? m.location_gps() : here.place.via === 'default' ? m.location_default() : here.place.name
 	);
 	const active = $derived(a ? a.hazards.filter((h) => !h.sample && h.level !== 'safe') : []);
-	const QUIET: HazardType[] = ['flood', 'storm', 'earthquake', 'smoke', 'heat'];
-	const NEEDS: Partial<Record<HazardType, FeedKey[]>> = {
-		smoke: ['air'],
-		heat: ['forecast'],
-		flood: ['river', 'gdacs'],
-		storm: ['gdacs'],
-		earthquake: ['quakes']
-	};
 	// a type whose feed failed is unknown, not quiet
-	const quiet = $derived(
-		a && level !== 'unknown'
-			? QUIET.filter((t) => !a.hazards.some((h) => h.type === t) && !NEEDS[t]?.some((k) => a.failed.includes(k))).map(hazName)
-			: []
-	);
+	const quiet = $derived(a && level !== 'unknown' ? quietTypes(a, currentCountry()).map(hazName) : []);
 	const checking = $derived(a === null); // assess() always returns an Assessment once a refresh finishes
 	const title = $derived(
 		checking ? m.now_checking_title() : level === 'unknown' ? m.now_unknown_title() : level === 'safe' ? m.now_safe_title() : nowTitle(active.map((h) => h.type))
