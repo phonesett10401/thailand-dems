@@ -92,9 +92,11 @@ export const feedName = (k: FeedKey): string =>
 	({ air: m.feed_air, forecast: m.feed_forecast, river: m.feed_river, gdacs: m.feed_gdacs, quakes: m.feed_quakes, smhi: m.feed_smhi })[k]();
 
 /** "Haze and flooding": distinct hazard names, worst first, at most three. */
-export function nowTitle(types: HazardType[]): string {
-	if (!types.length) return '';
-	const names = [...new Set(types)].slice(0, 3).map(hazName);
+export function nowTitle(items: (HazardType | { type: HazardType; name: string | null })[]): string {
+	if (!items.length) return '';
+	// official SMHI warnings read as their event ("Snow"), not "Official warning"
+	const label = (i: (typeof items)[number]) => (typeof i === 'string' ? hazName(i) : i.type === 'official' && i.name ? i.name : hazName(i.type));
+	const names = [...new Set(items.map(label))].slice(0, 3);
 	const s =
 		names.length === 1
 			? m.now_title_1({ a: names[0] })

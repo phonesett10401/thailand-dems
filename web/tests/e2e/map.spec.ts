@@ -104,7 +104,31 @@ test('readings for your own spot (haze) stay off the map: no chip, no marker', a
 	await expect(page.getByRole('button', { name: /^Haze ·/ })).toHaveCount(0);
 });
 
-test('the map says it shows the whole region, not just what is near you', async ({ page }) => {
+test('the map says it shows the country, not just what is near you', async ({ page }) => {
 	await page.goto('/map');
-	await expect(page.getByText('The map shows the whole region. Your level only counts hazards near you.')).toBeVisible();
+	await expect(page.getByText('The map shows hazards in Thailand. Your level only counts hazards near you.')).toBeVisible();
+});
+
+const quake = (id: string, place: string, lon: number, lat: number) => ({
+	type: 'Feature',
+	id,
+	properties: { mag: 5, place, time: Date.now() - 3600_000, url: `https://earthquake.usgs.gov/${id}` },
+	geometry: { type: 'Point', coordinates: [lon, lat, 10] }
+});
+
+test('only hazards in the selected country are listed; far-away quakes are dropped', async ({ page }) => {
+	await page.route('https://earthquake.usgs.gov/**', (r) =>
+		r.fulfill({ contentType: 'application/json', body: JSON.stringify({ type: 'FeatureCollection', features: [quake('a', 'Chiang Mai, Thailand', 98.99, 18.79), quake('b', 'Sumatra, Indonesia', 95.5, 3.5)] }) })
+	);
+	await page.goto('/map');
+	await page.getByRole('button', { name: 'List', exact: true }).click();
+	await expect(page.getByRole('button', { name: /Chiang Mai, Thailand/ })).toBeVisible();
+	await expect(page.getByText(/Sumatra/)).toHaveCount(0);
+});
+
+test('Sweden: no Shelters chip', async ({ page }) => {
+	await page.addInitScript(() => localStorage.setItem('dems.country', 'SE'));
+	await page.goto('/map');
+	await expect(page.getByRole('button', { name: 'List', exact: true })).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Shelters', exact: true })).toHaveCount(0);
 });

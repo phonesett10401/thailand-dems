@@ -36,7 +36,7 @@
 	const quiet = $derived(a && level !== 'unknown' ? quietTypes(a, currentCountry()).map(hazName) : []);
 	const checking = $derived(a === null); // assess() always returns an Assessment once a refresh finishes
 	const title = $derived(
-		checking ? m.now_checking_title() : level === 'unknown' ? m.now_unknown_title() : level === 'safe' ? m.now_safe_title() : nowTitle(active.map((h) => h.type))
+		checking ? m.now_checking_title() : level === 'unknown' ? m.now_unknown_title() : level === 'safe' ? m.now_safe_title() : nowTitle(active)
 	);
 	const reason = $derived(
 		level === 'unknown'

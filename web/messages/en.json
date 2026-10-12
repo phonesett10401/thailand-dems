@@ -404,7 +404,7 @@
 	"demo_ch_bag": "Go-bag",
 	"demo_ch_how": "How it works",
 	"about_demo_link": "Watch the demo tour",
-	"map_scope": "The map shows the whole region. Your level only counts hazards near you.",
+	"map_scope": "The map shows hazards in {country}. Your level only counts hazards near you.",
 	"num_1155": "Tourist police",
 	"num_1182": "Weather (TMD)",
 	"num_mm_199": "Police",

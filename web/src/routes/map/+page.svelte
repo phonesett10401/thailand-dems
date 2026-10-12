@@ -10,6 +10,7 @@
 	import { live } from '$lib/hazards.svelte';
 	import { hazName, markerLabel } from '$lib/labels';
 	import { country, currentCountry } from '$lib/country.svelte';
+	import { detectCountry } from '$lib/countries';
 	import { smhiAreaFor } from '$lib/countries/se';
 	import { collect, type Hazard, type HazardType, worst } from '$lib/levels';
 	import { here } from '$lib/location.svelte';
@@ -33,7 +34,8 @@
 
 	// Map = "what is happening anywhere": every current hazard, not only those near you.
 	// Readings for your own spot (haze, heat, rain, river) have no place of their own: they live on Now, not here.
-	const all = $derived(live.feeds ? collect(live.feeds, here.place, Date.now(), false, currentCountry(), country.code === 'SE' ? smhiAreaFor(here.place) : undefined).filter((h) => h.lat !== null) : []);
+	const all = $derived(live.feeds ? collect(live.feeds, here.place, Date.now(), false, currentCountry(), country.code === 'SE' ? smhiAreaFor(here.place) : undefined).filter((h) => h.lat !== null && h.lon !== null && detectCountry({ lat: h.lat, lon: h.lon }) === country.code) : []);
+	const countryName = $derived({ TH: m.country_TH, MM: m.country_MM, SE: m.country_SE }[country.code]());
 	const view = $derived(
 		here.place.via === 'default' ? { center: currentCountry().view, zoom: currentCountry().view.zoom } : { center: here.place, zoom: 6 }
 	);
@@ -78,7 +80,7 @@
 
 <div class="fixed inset-x-0 top-[var(--header-h)] bottom-[calc(4rem+env(safe-area-inset-bottom))] md:bottom-0 lg:grid lg:grid-cols-[360px_1fr]">
 	<aside class="hidden overflow-y-auto border-r border-line p-4 lg:block">
-		<h1 class="label mb-3">{m.map_all_hazards({ country: { TH: m.country_TH, MM: m.country_MM, SE: m.country_SE }[country.code]() })}</h1>
+		<h1 class="label mb-3">{m.map_all_hazards({ country: countryName })}</h1>
 		{#if shown.length}<HazardList hazards={shown} onselect={(h) => (picked = h)} />{:else}<p class="text-sm text-muted">{m.map_none()}</p>{/if}
 	</aside>
 	<div class="relative h-full">
@@ -88,9 +90,9 @@
 			{#each types as t (t)}
 				<Chip on={!hidden.has(t)} color={chipColor(t)} onclick={() => toggle(t)}>{hazName(t)}</Chip>
 			{/each}
-			<Chip on={!hidden.has('shelters')} color="#f2f2f4" onclick={() => toggle('shelters')}>{m.map_shelters()}</Chip>
+			{#if currentCountry().shelters === 'sample'}<Chip on={!hidden.has('shelters')} color="#f2f2f4" onclick={() => toggle('shelters')}>{m.map_shelters()}</Chip>{/if}
 		</div>
-		<p class="glass pointer-events-none absolute top-16 left-3 max-w-[16rem] rounded-xl bg-bg/70 px-3 py-1.5 text-[11px] leading-snug text-muted">{m.map_scope()}</p>
+		<p class="glass pointer-events-none absolute top-16 left-3 max-w-[16rem] rounded-xl bg-bg/70 px-3 py-1.5 text-[11px] leading-snug text-muted">{m.map_scope({ country: countryName })}</p>
 		{#if showList}
 			<div class="glass absolute inset-x-3 {failed ? 'bottom-40' : 'bottom-3'} max-h-[55%] overflow-y-auto rounded-2xl bg-bg/80 p-3 lg:hidden">
 				{#if shown.length}<HazardList hazards={shown} onselect={(h) => (picked = h)} />{:else}<p class="text-sm text-muted">{m.map_none()}</p>{/if}

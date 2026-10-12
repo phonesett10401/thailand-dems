@@ -53,3 +53,5 @@ Burmese-round changes that touched Thai too (drafts, need native review): new `e
 Copy and docs for three countries (Task 7): new `about_real_smhi`, `about_row_pm25_who`, `demo_video_th_note`. Reworded: `app_name` (now just "DEMS"), `about_intro`, `about_sample_shelters` (now one line per country), `demo_hood_flow_body` (adds the SMHI sentence), `demo_video_label` (says it is the Thailand version).
 
 Countries final-review fixes (Thai drafts, need native review): reworded `map_all_hazards` (now takes the country name: "ภัยใน{country}"); new `line_from` ("ตั้งแต่ {time}", shown for an SMHI warning that has not started yet).
+
+Map follows the country (Thai draft, need native review): reworded `map_scope` (now takes the country name: "แผนที่แสดงภัยใน{country} ระดับภัยของคุณนับเฉพาะภัยที่อยู่ใกล้คุณ").

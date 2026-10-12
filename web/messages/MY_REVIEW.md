@@ -681,6 +681,7 @@ These are the "During" steps. The first three of each are shown on the Now scree
 | `demo_video_th_note` | The video shows the Thailand version. | ဗီဒီယိုတွင် ထိုင်းနိုင်ငံ ဗားရှင်းကို ပြထားသည်။ |
 | `map_all_hazards` | Hazards in {country} | {country}ရှိ အန္တရာယ်များ |
 | `line_from` | from {time} | {time} မှ စတင် |
+| `map_scope` | The map shows hazards in {country}. Your level only counts hazards near you. | မြေပုံသည် {country}ရှိ အန္တရာယ်များကို ပြသည်။ သင့်အဆင့်တွင် သင့်အနီးရှိ အန္တရာယ်များကိုသာ ထည့်တွက်သည်။ |
 
 ---
 

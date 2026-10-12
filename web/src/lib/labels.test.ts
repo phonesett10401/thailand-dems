@@ -10,6 +10,10 @@ describe('nowTitle', () => {
 		expect(nowTitle(['smoke', 'heat', 'earthquake', 'rain'])).toBe('Haze, extreme heat and earthquake');
 		expect(nowTitle(['smoke', 'smoke'])).toBe('Haze near you');
 	});
+	it('names an official SMHI warning by its event', () => {
+		expect(nowTitle([{ type: 'official', name: 'Snow' }])).toBe('Snow near you');
+		expect(nowTitle([{ type: 'official', name: 'Snow' }, { type: 'smoke', name: null }])).toBe('Snow and haze');
+	});
 });
 
 describe('nearestOpen', () => {
