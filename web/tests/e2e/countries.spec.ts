@@ -201,3 +201,46 @@ test.describe('Sweden with no earthquakes', () => {
 		expect(col).toBe(1);
 	});
 });
+
+test.describe('Sweden map: SMHI warning areas', () => {
+	const poly = (x: number, y: number) => ({ type: 'Polygon', coordinates: [[[x, y], [x + 2, y], [x + 2, y + 1], [x, y]]] });
+	const rows = [
+		{ areaId: 23, level: 'watch', event: 'Snow', code: 'SNOW', start: '2026-10-01T00:00:00Z', end: null, zoneId: 1, areas: ['Jämtland County'], geometry: poly(13, 63) },
+		{ areaId: 99, level: 'warning', event: 'Wind at sea', code: 'WIND_SEA', start: '2026-10-01T00:00:00Z', end: null, zoneId: 2, areas: ['Bothnian Sea'], geometry: poly(19, 61) }
+	];
+	test.beforeEach(async ({ page }) => {
+		await page.addInitScript(() => localStorage.setItem('dems.country', 'SE'));
+		await page.route('https://earthquake.usgs.gov/**', (r) => r.fulfill({ contentType: 'application/json', body: '{"type":"FeatureCollection","features":[]}' }));
+		await page.route('https://www.gdacs.org/**', (r) => r.fulfill({ contentType: 'application/json', body: '{"features":[]}' }));
+	});
+
+	test('chips, list rows with area names, and chip toggling', async ({ page }) => {
+		await page.route('**/api/warnings/se', (r) => r.fulfill({ contentType: 'application/json', body: JSON.stringify(rows) }));
+		await page.goto('/map');
+		const snow = page.getByRole('button', { name: 'Snow', exact: true });
+		await expect(snow).toBeVisible();
+		await expect(page.getByRole('button', { name: 'Wind at sea', exact: true })).toBeVisible();
+		await page.getByRole('button', { name: 'List', exact: true }).click();
+		const rowSnow = page.getByRole('button', { name: /^Snow.*Jämtland County/ });
+		await expect(rowSnow).toBeVisible();
+		await expect(page.getByRole('button', { name: /^Wind at sea.*Bothnian Sea/ })).toBeVisible();
+		await snow.click();
+		await expect(rowSnow).toBeHidden();
+		await expect(page.getByRole('button', { name: /^Wind at sea.*Bothnian Sea/ })).toBeVisible();
+	});
+
+	test('a row opens the details sheet', async ({ page }) => {
+		await page.route('**/api/warnings/se', (r) => r.fulfill({ contentType: 'application/json', body: JSON.stringify(rows) }));
+		await page.goto('/map');
+		await page.getByRole('button', { name: 'List', exact: true }).click();
+		await page.getByRole('button', { name: /^Wind at sea.*Bothnian Sea/ }).click();
+		await expect(page.getByRole('dialog')).toContainText('SMHI');
+	});
+
+	test('no warnings says so', async ({ page }) => {
+		await page.route('**/api/warnings/se', (r) => r.fulfill({ contentType: 'application/json', body: '[]' }));
+		await page.goto('/map');
+		await page.getByRole('button', { name: 'List', exact: true }).click();
+		await expect(page.getByText('No SMHI warnings right now.').last()).toBeVisible();
+	});
+});

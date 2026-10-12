@@ -1,6 +1,6 @@
 import type { Country } from './countries';
 import { distanceKm, toNum } from './geo';
-import { guideForSmhi, smhiCode, type SmhiWarning } from './sources/smhi';
+import { guideForSmhi, SMHI_URL, smhiCode, smhiLevel, type SmhiWarning } from './sources/smhi';
 import type { Air, Forecast, River } from './sources/openmeteo';
 import type { DbAlert, Disaster, HazardEvent, HazardKind, Pt } from './types';
 
@@ -36,6 +36,8 @@ export type Hazard = {
 	source: string;
 	sample: boolean;
 	url: string | null;
+	/** Official SMHI zones: the areas it covers, joined. */
+	detail?: string | null;
 };
 export type FeedKey = 'air' | 'forecast' | 'river' | 'gdacs' | 'quakes' | 'smhi';
 /** A live feed that is `undefined` failed to load. `river: null` means no river at this point. */
@@ -133,9 +135,8 @@ export function collect(f: Feeds, at: Pt, now: number, near: boolean, c: Country
 			const base = `smhi-${w.code}-${w.areaId}`;
 			const n = seen.get(base) ?? 0;
 			seen.set(base, n + 1);
-			// a warning that starts more than a day from now is a heads-up, not a live warning
-			const level = Date.parse(w.start) - now > 24 * 3600e3 ? 'watch' : w.level;
-			out.push(live({ ...here, id: n ? `${base}-${n}` : base, type: 'official', level, name: w.event, value: null, time: w.start, source: 'SMHI', url: 'https://www.smhi.se/vader/varningar-och-brandrisk' }));
+			const level = smhiLevel(w, now);
+			out.push(live({ ...here, id: n ? `${base}-${n}` : base, type: 'official', level, name: w.event, value: null, time: w.start, source: 'SMHI', url: SMHI_URL }));
 		}
 	}
 

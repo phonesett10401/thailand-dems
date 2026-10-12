@@ -260,6 +260,7 @@
 	"map_shelters": "ที่พักพิง",
 	"map_all_hazards": "ภัยใน{country}",
 	"map_none": "ไม่มีภัยให้แสดง",
+	"map_smhi_none": "ขณะนี้ไม่มีคำเตือนจาก SMHI",
 	"map_report": "แจ้งเหตุ",
 	"map_list": "รายการ",
 	"f_open": "เปิดรับ",

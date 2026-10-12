@@ -1,14 +1,16 @@
 [
 	{ "id": 1, "event": { "en": "Wind", "code": "WIND" }, "warningAreas": [
-		{ "approximateStart": "2026-10-13T06:00:00.000Z", "approximateEnd": "2026-10-13T20:00:00.000Z",
+		{ "id": 101, "area": { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [[[17,59],[19,59],[19,60],[17,59]]] } },
+		  "approximateStart": "2026-10-13T06:00:00.000Z", "approximateEnd": "2026-10-13T20:00:00.000Z",
 		  "warningLevel": { "code": "ORANGE" }, "affectedAreas": [{ "id": 1, "en": "Stockholm County" }] } ] },
 	{ "id": 2, "event": { "en": "Snow", "code": "SNOW" }, "warningAreas": [
-		{ "approximateStart": "2026-10-13T06:00:00.000Z", "approximateEnd": null,
+		{ "id": 102, "area": { "type": "Feature", "geometry": { "type": "MultiPolygon", "coordinates": [[[[18,65],[20,65],[20,66],[18,65]]],[[[21,67],[22,67],[22,68],[21,67]]]] } },
+		  "approximateStart": "2026-10-13T06:00:00.000Z", "approximateEnd": null,
 		  "warningLevel": { "code": "YELLOW" }, "affectedAreas": [{ "id": 25, "en": "Norrbotten County" }, { "id": 24, "en": "Västerbotten County" }] } ] },
 	{ "id": 3, "event": { "en": "Risk for water shortage", "code": "WATER_SHORTAGE" }, "warningAreas": [
 		{ "approximateStart": "2026-04-20T22:00:00.000Z", "approximateEnd": null,
 		  "warningLevel": { "code": "MESSAGE" }, "affectedAreas": [{ "id": 1, "en": "Stockholm County" }] } ] },
 	{ "id": 4, "event": { "en": "Rain", "code": "RAIN" }, "warningAreas": [
-		{ "approximateStart": "2026-10-13T06:00:00.000Z", "approximateEnd": null,
+		{ "id": 104, "approximateStart": "2026-10-13T06:00:00.000Z", "approximateEnd": null,
 		  "warningLevel": { "code": "RED" }, "affectedAreas": [{ "id": 14, "en": "Västra Götaland County" }] } ] }
 ]

@@ -12,7 +12,8 @@
 	import { country, currentCountry } from '$lib/country.svelte';
 	import { detectCountry } from '$lib/countries';
 	import { smhiAreaFor } from '$lib/countries/se';
-	import { collect, type Hazard, type HazardType, worst } from '$lib/levels';
+	import { buildZones, zoneHazard } from '$lib/sources/smhi';
+	import { collect, type Hazard, type HazardType, RANK, worst } from '$lib/levels';
 	import { here } from '$lib/location.svelte';
 	import { LEVEL_HEX } from '$lib/logo';
 	import { m } from '$lib/paraglide/messages.js';
@@ -45,6 +46,15 @@
 		return lv.length ? LEVEL_HEX[worst(lv)] : LEVEL_HEX.unknown;
 	};
 	const shown = $derived(all.filter((h) => !hidden.has(h.type)));
+	// SMHI's own warning areas, drawn exactly as SMHI gives them. Display only: they never change your level.
+	const smhiOn = $derived(currentCountry().weather === 'smhi');
+	const zones = $derived(smhiOn && live.feeds?.smhi ? buildZones(live.feeds.smhi, Date.now()) : []);
+	const zoneHaz = $derived(zones.map((z) => ({ z, h: zoneHazard(z) })).sort((a, b) => RANK[b.h.level] - RANK[a.h.level]));
+	const zoneEvents = $derived([...new Set(zones.map((z) => z.event))]);
+	const eventColor = (e: string) => LEVEL_HEX[worst(zones.filter((z) => z.event === e).map((z) => z.level))];
+	const shownZones = $derived(zoneHaz.filter(({ z }) => !hidden.has(`smhi:${z.event}`)));
+	const listed = $derived([...shownZones.map((x) => x.h), ...shown]);
+	const drawn = $derived(shownZones.flatMap(({ z, h }) => (z.geometry ? [{ id: h.id, color: LEVEL_HEX[h.level], geometry: z.geometry }] : [])));
 	const toggle = (k: string) => {
 		const n = new Set(hidden);
 		if (n.has(k)) n.delete(k);
@@ -74,28 +84,31 @@
 			goto(localizeHref(`/shelters?focus=${id.slice(1)}`));
 			return;
 		}
-		picked = all.find((h) => h.id === id) ?? null;
+		picked = all.find((h) => h.id === id) ?? zoneHaz.find((x) => x.h.id === id)?.h ?? null;
 	}
 </script>
 
 <div class="fixed inset-x-0 top-[var(--header-h)] bottom-[calc(4rem+env(safe-area-inset-bottom))] md:bottom-0 lg:grid lg:grid-cols-[360px_1fr]">
 	<aside class="hidden overflow-y-auto border-r border-line p-4 lg:block">
 		<h1 class="label mb-3">{m.map_all_hazards({ country: countryName })}</h1>
-		{#if shown.length}<HazardList hazards={shown} onselect={(h) => (picked = h)} />{:else}<p class="text-sm text-muted">{m.map_none()}</p>{/if}
+		{#if listed.length}<HazardList hazards={listed} onselect={(h) => (picked = h)} />{:else}<p class="text-sm text-muted">{smhiOn && live.feeds?.smhi && !zones.length ? m.map_smhi_none() : m.map_none()}</p>{/if}
 	</aside>
 	<div class="relative h-full">
-		<MapView class="relative h-full" bind:failed {markers} {areas} center={view.center} zoom={view.zoom} onselect={select} />
+		<MapView class="relative h-full" bind:failed {markers} {areas} zones={drawn} center={view.center} zoom={view.zoom} onselect={select} />
 		<div role="group" aria-label={m.map_layers()} class="chip-row absolute inset-x-0 top-2 px-3">
 			{#if !failed}<span class="contents lg:hidden"><Chip on={showList} onclick={() => (listOn = !listOn)}>{m.map_list()}</Chip></span>{/if}
 			{#each types as t (t)}
 				<Chip on={!hidden.has(t)} color={chipColor(t)} onclick={() => toggle(t)}>{hazName(t)}</Chip>
+			{/each}
+			{#each zoneEvents as e (e)}
+				<Chip on={!hidden.has(`smhi:${e}`)} color={eventColor(e)} onclick={() => toggle(`smhi:${e}`)}>{e}</Chip>
 			{/each}
 			{#if currentCountry().shelters === 'sample'}<Chip on={!hidden.has('shelters')} color="#f2f2f4" onclick={() => toggle('shelters')}>{m.map_shelters()}</Chip>{/if}
 		</div>
 		<p class="glass pointer-events-none absolute top-16 left-3 max-w-[16rem] rounded-xl bg-bg/70 px-3 py-1.5 text-[11px] leading-snug text-muted">{m.map_scope({ country: countryName })}</p>
 		{#if showList}
 			<div class="glass absolute inset-x-3 {failed ? 'bottom-40' : 'bottom-3'} max-h-[55%] overflow-y-auto rounded-2xl bg-bg/80 p-3 lg:hidden">
-				{#if shown.length}<HazardList hazards={shown} onselect={(h) => (picked = h)} />{:else}<p class="text-sm text-muted">{m.map_none()}</p>{/if}
+				{#if listed.length}<HazardList hazards={listed} onselect={(h) => (picked = h)} />{:else}<p class="text-sm text-muted">{smhiOn && live.feeds?.smhi && !zones.length ? m.map_smhi_none() : m.map_none()}</p>{/if}
 			</div>
 		{/if}
 		<a

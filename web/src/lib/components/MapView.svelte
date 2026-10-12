@@ -12,6 +12,7 @@
 	import EmptyState from './EmptyState.svelte';
 
 	type Area = { id: string; lat: number; lon: number; km: number; color: string };
+	type Zone = { id: string; color: string; geometry: unknown };
 	type Line = { id: string; coords: [number, number][]; color: string };
 	let {
 		markers,
@@ -20,6 +21,7 @@
 		focus = null,
 		onselect,
 		areas = [],
+		zones = [],
 		lines = [],
 		fit = null,
 		failed = $bindable(false),
@@ -31,6 +33,7 @@
 		focus?: Pt | null;
 		onselect?: (id: string) => void;
 		areas?: Area[];
+		zones?: Zone[];
 		lines?: Line[];
 		fit?: [number, number][] | null;
 		failed?: boolean;
@@ -64,6 +67,16 @@
 			mm.addSource('areas', { type: 'geojson', data: empty });
 			mm.addLayer({ id: 'areas-fill', type: 'fill', source: 'areas', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.16 } });
 			mm.addLayer({ id: 'areas-edge', type: 'line', source: 'areas', paint: { 'line-color': ['get', 'color'], 'line-width': 1.5, 'line-opacity': 0.7 } });
+			// exact official areas (SMHI), drawn as given
+			mm.addSource('zones', { type: 'geojson', data: empty });
+			mm.addLayer({ id: 'zones-fill', type: 'fill', source: 'zones', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.25 } });
+			mm.addLayer({ id: 'zones-edge', type: 'line', source: 'zones', paint: { 'line-color': ['get', 'color'], 'line-width': 1.5 } });
+			mm.on('click', 'zones-fill', (e) => {
+				const id = e.features?.[0]?.properties?.id;
+				if (id) onselect?.(id);
+			});
+			mm.on('mouseenter', 'zones-fill', () => (mm.getCanvas().style.cursor = 'pointer'));
+			mm.on('mouseleave', 'zones-fill', () => (mm.getCanvas().style.cursor = ''));
 			mm.addSource('lines', { type: 'geojson', data: empty });
 			mm.addLayer({
 				id: 'lines',
@@ -98,6 +111,10 @@
 		(map.getSource('areas') as GeoJSONSource).setData({
 			type: 'FeatureCollection',
 			features: areas.map((a) => ({ type: 'Feature', properties: { color: a.color }, geometry: { type: 'Polygon', coordinates: [circle(a, 48)] } }))
+		});
+		(map.getSource('zones') as GeoJSONSource).setData({
+			type: 'FeatureCollection',
+			features: zones.map((z) => ({ type: 'Feature', properties: { id: z.id, color: z.color }, geometry: z.geometry as never }))
 		});
 		(map.getSource('lines') as GeoJSONSource).setData({
 			type: 'FeatureCollection',

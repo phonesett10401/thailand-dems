@@ -81,7 +81,10 @@ export function hazLine(h: Hazard): string {
 	if (h.type === 'earthquake' && h.value !== null)
 		return h.km === null ? `M${h.value.toFixed(1)}` : m.line_quake({ mag: h.value.toFixed(1), km: km0(h.km) });
 	if (h.name && h.km !== null) return m.line_event({ name: h.name, km: km0(h.km) });
-	if (h.type === 'official' && h.name && h.time && Date.parse(h.time) > Date.now()) return `${h.name} · ${m.line_from({ time: fmtDateTime(h.time) })}`;
+	if (h.type === 'official' && h.name) {
+		const parts = [h.name, h.detail, h.time && Date.parse(h.time) > Date.now() ? m.line_from({ time: fmtDateTime(h.time) }) : null];
+		return parts.filter(Boolean).join(' · ');
+	}
 	return h.name ?? '';
 }
 

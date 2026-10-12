@@ -260,6 +260,7 @@
 	"map_shelters": "Shelters",
 	"map_all_hazards": "Hazards in {country}",
 	"map_none": "No hazards to show.",
+	"map_smhi_none": "No SMHI warnings right now.",
 	"map_report": "Report",
 	"map_list": "List",
 	"f_open": "Open",

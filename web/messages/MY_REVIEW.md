@@ -508,6 +508,7 @@ These are the "During" steps. The first three of each are shown on the Now scree
 | `map_shelters` | Shelters | ခိုလှုံရာနေရာများ |
 | `map_all_hazards` | Hazards in Thailand | ထိုင်းနိုင်ငံရှိ အန္တရာယ်များ |
 | `map_none` | No hazards to show. | ပြရန် အန္တရာယ် မရှိပါ။ |
+| `map_smhi_none` | No SMHI warnings right now. | ယခုအချိန်တွင် SMHI သတိပေးချက် မရှိပါ။ |
 | `map_report` | Report | သတင်းပို့ |
 | `map_list` | List | စာရင်း |
 | `f_open` | Open | ဖွင့်ထားသည် |

@@ -13,7 +13,7 @@ for (const path of ['/', '/map', '/shelters', '/report', '/th', '/route?to=shelt
 }
 
 for (const code of ['SE', 'MM']) {
-	for (const path of ['/', '/shelters']) {
+	for (const path of code === 'SE' ? ['/', '/shelters', '/map'] : ['/', '/shelters']) {
 		test(`no serious accessibility violations on ${path} in ${code}`, async ({ page }) => {
 			await page.addInitScript((c) => localStorage.setItem('dems.country', c), code);
 			await page.goto(path);
