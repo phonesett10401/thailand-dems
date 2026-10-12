@@ -3,7 +3,7 @@ import { expect, test } from './fixtures';
 
 const pickCountry = async (page: Page, name: string) => {
 	await page.goto('/more');
-	await page.getByRole('radio', { name: new RegExp(name) }).click();
+	await page.getByRole('button', { name: new RegExp(name) }).click();
 };
 const sos = (page: Page) => page.getByRole('link', { name: /^Call \d+, emergency number$/ });
 const tab = (page: Page, name: string) => page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name });
@@ -30,10 +30,10 @@ test('Sweden: SOS 112, MSB link, SMHI warning with official badge; Thailand rest
 	await pickCountry(page, 'Sweden');
 	await expect(sos(page)).toHaveAttribute('href', 'tel:112');
 	await page.goto('/shelters');
-	const msb = page.getByRole('link', { name: /MSB/ });
-	await expect(msb).toHaveAttribute('href', /^https:\/\/www\.msb\.se/);
+	const mcf = page.getByRole('link', { name: /MCF/ });
+	await expect(mcf).toHaveAttribute('href', /^https:\/\/www\.mcf\.se/);
 	await page.goto('/');
-	await expect(page.getByText('Warning', { exact: true }).first()).toBeVisible();
+	await expect(page.locator('.lv-warning').getByText('Warning', { exact: true }).first()).toBeVisible();
 	await expect(page.getByRole('button', { name: /Wind/ })).toBeVisible();
 	await expect(page.getByText('Official: SMHI')).toBeVisible();
 
@@ -47,7 +47,7 @@ test('Sweden: SOS 112, MSB link, SMHI warning with official badge; Thailand rest
 test('a place picked in Thailand does not leak into Sweden and returns on switch back', async ({ page }) => {
 	await page.goto('/');
 	await page.getByLabel('Change location').click();
-	await page.getByLabel('Choose province').selectOption('Chiang Mai');
+	await page.getByLabel('Choose an area').selectOption('Chiang Mai');
 	await expect(page.getByLabel('Change location')).toContainText('Chiang Mai');
 	await pickCountry(page, 'Sweden');
 	await expect(page.getByLabel('Change location')).toContainText('Stockholm');
@@ -68,6 +68,12 @@ test('GPS in Sweden while in Thailand offers a switch; Not now is remembered', a
 	await expect(banner).toHaveCount(0);
 	await tab(page, 'Map').click();
 	await expect(page).toHaveURL(/\/map/);
+	await expect(page.getByText("You're in Sweden")).toHaveCount(0);
+	// remembered for the session: asking again after a reload shows no banner
+	await page.reload();
+	await page.getByLabel('Change location').click();
+	await page.getByRole('button', { name: 'Use my location' }).click();
+	await expect(page.getByLabel('Change location')).toContainText('Your location');
 	await expect(page.getByText("You're in Sweden")).toHaveCount(0);
 });
 

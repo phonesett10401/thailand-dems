@@ -1,5 +1,5 @@
 <script lang="ts">
-		import { MediaQuery } from 'svelte/reactivity';
+	import { MediaQuery } from 'svelte/reactivity';
 	import { page } from '$app/state';
 	import Chip from '$lib/components/Chip.svelte';
 	import MapView from '$lib/components/MapView.svelte';
@@ -70,45 +70,45 @@
 				<a href={currentCountry().shelterLink} target="_blank" rel="noopener" class="mt-3 inline-flex min-h-11 items-center rounded-lg bg-white/10 px-4 text-sm font-semibold">{m.shelters_se_cta()}</a>
 			</div>
 		{:else}
-		<p class="mt-1 text-xs text-muted">{m.shelters_sample_note()}</p>
-		<p class="mt-1 text-xs text-muted">{m.shelters_th_note()}</p>
-		<div role="group" aria-label={m.shelters_filters()} class="chip-row mt-2 -mx-4 px-4 lg:-mx-5 lg:px-5">
-			{#each FILTERS as [f, label] (f)}<Chip on={on.has(f)} onclick={() => toggle(f)}>{label()}</Chip>{/each}
-		</div>
-		{#if shelters === null}
-			<p class="mt-4 text-sm text-muted">{m.loading()}</p>
-		{:else if rows.length === 0}
-			<p class="mt-4 text-sm text-muted">{m.shelters_none()}</p>
-		{:else}
-			<ul class="mt-3 flex flex-col gap-2.5">
-				{#each rows as r (r.s.ShelterID)}
-					<li>
-						<button type="button" onclick={() => (picked = r)} class="glass flex min-h-11 w-full flex-col gap-2 rounded-2xl p-3.5 text-left hover:bg-white/[0.07]">
-							<span class="flex items-start justify-between gap-3">
-								<span><span class="block font-semibold">{r.s.ShelterName}</span><span class="block text-xs text-muted">{r.s.City} · {shelterStatusLabel(r.s.Status)}</span></span>
-								<span class="font-mono text-sm" data-km={r.km ?? undefined}>{r.km === null ? m.shelter_distance_unknown() : `${r.km.toFixed(1)} km`}</span>
-							</span>
-							<span class="h-1.5 overflow-hidden rounded-full bg-white/10" aria-hidden="true">
-								<i class="block h-full {r.pct >= 90 ? 'bg-warning' : r.pct >= 70 ? 'bg-watch' : 'bg-safe'}" style="width:{r.pct}%"></i>
-							</span>
-							{#if r.facilities.length}
-								<span class="flex flex-wrap gap-1">{#each r.facilities as f (f)}<span class="label rounded border border-line px-1.5 py-0.5">{facName[f]()}</span>{/each}</span>
-							{/if}
-						</button>
-					</li>
-				{/each}
-			</ul>
-		{/if}
-		{#if routes.length}
-			<section class="mt-8">
-				<h2 class="label mb-2">{m.evac_list_title()} · {m.sample_tag()}</h2>
-				<ul class="flex flex-col gap-1.5 text-sm">
-					{#each routes as r (r.RouteID)}
-						<li class="rounded-xl border border-line p-3"><b class="font-semibold">{r.RouteName}</b><br /><span class="text-xs text-muted">{m.evac_line({ from: r.StartPoint, to: r.EndPoint, km: r.Distance, min: r.EstimatedTime })}</span></li>
+			<p class="mt-1 text-xs text-muted">{m.shelters_sample_note()}</p>
+			<p class="mt-1 text-xs text-muted">{m.shelters_th_note()}</p>
+			<div role="group" aria-label={m.shelters_filters()} class="chip-row mt-2 -mx-4 px-4 lg:-mx-5 lg:px-5">
+				{#each FILTERS as [f, label] (f)}<Chip on={on.has(f)} onclick={() => toggle(f)}>{label()}</Chip>{/each}
+			</div>
+			{#if shelters === null}
+				<p class="mt-4 text-sm text-muted">{m.loading()}</p>
+			{:else if rows.length === 0}
+				<p class="mt-4 text-sm text-muted">{m.shelters_none()}</p>
+			{:else}
+				<ul class="mt-3 flex flex-col gap-2.5">
+					{#each rows as r (r.s.ShelterID)}
+						<li>
+							<button type="button" onclick={() => (picked = r)} class="glass flex min-h-11 w-full flex-col gap-2 rounded-2xl p-3.5 text-left hover:bg-white/[0.07]">
+								<span class="flex items-start justify-between gap-3">
+									<span><span class="block font-semibold">{r.s.ShelterName}</span><span class="block text-xs text-muted">{r.s.City} · {shelterStatusLabel(r.s.Status)}</span></span>
+									<span class="font-mono text-sm" data-km={r.km ?? undefined}>{r.km === null ? m.shelter_distance_unknown() : `${r.km.toFixed(1)} km`}</span>
+								</span>
+								<span class="h-1.5 overflow-hidden rounded-full bg-white/10" aria-hidden="true">
+									<i class="block h-full {r.pct >= 90 ? 'bg-warning' : r.pct >= 70 ? 'bg-watch' : 'bg-safe'}" style="width:{r.pct}%"></i>
+								</span>
+								{#if r.facilities.length}
+									<span class="flex flex-wrap gap-1">{#each r.facilities as f (f)}<span class="label rounded border border-line px-1.5 py-0.5">{facName[f]()}</span>{/each}</span>
+								{/if}
+							</button>
+						</li>
 					{/each}
 				</ul>
-			</section>
-		{/if}
+			{/if}
+			{#if routes.length}
+				<section class="mt-8">
+					<h2 class="label mb-2">{m.evac_list_title()} · {m.sample_tag()}</h2>
+					<ul class="flex flex-col gap-1.5 text-sm">
+						{#each routes as r (r.RouteID)}
+							<li class="rounded-xl border border-line p-3"><b class="font-semibold">{r.RouteName}</b><br /><span class="text-xs text-muted">{m.evac_line({ from: r.StartPoint, to: r.EndPoint, km: r.Distance, min: r.EstimatedTime })}</span></li>
+						{/each}
+					</ul>
+				</section>
+			{/if}
 		{/if}
 	</div>
 	{#if wide.current && currentCountry().shelters === 'sample'}

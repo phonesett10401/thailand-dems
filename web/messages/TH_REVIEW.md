@@ -39,7 +39,6 @@ Also new (About page link): `about_demo_link`.
 
 Also new (Map note): `map_scope`.
 
-## Countries (2026-10)
 
 Keys added for SMHI official warnings (Thai drafts, need native review): `haz_official`, `feed_smhi`, `official_badge`.
 
@@ -48,3 +47,4 @@ Prepare for Sweden (Thai drafts, need native review): `num_1155`, `num_1182`, `n
 ## Countries (2026-10)
 
 New Thai drafts needing native review: `country_label`, `country_TH`, `country_MM`, `country_SE`, `country_banner`, `country_switch`, `country_not_now`, `shelters_th_note`, `shelters_dev_title`, `shelters_dev_body`, `shelters_se_title`, `shelters_se_body`, `shelters_se_cta`. Reworded: `location_default` (now `{city} (default)`), `sos_aria` (now `Call {num}, emergency number`).
+Also reworded for any country: `location_pick` ("Choose an area"), `location_denied`; `shelters_se_body` and `shelters_se_cta` now name MCF (formerly MSB).

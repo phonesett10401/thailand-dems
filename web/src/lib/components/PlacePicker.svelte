@@ -34,7 +34,7 @@
 		class="flex min-h-11 cursor-pointer list-none items-center gap-1 rounded-lg px-2 text-sm text-muted hover:text-text [&::-webkit-details-marker]:hidden"
 		aria-label={m.place_change()}
 	>
-		<span class="max-w-24 sm:max-w-36 truncate"><span aria-hidden="true">{currentCountry().flag}</span> {name}</span><ChevronDown size={14} aria-hidden="true" />
+		<span aria-hidden="true">{currentCountry().flag}</span><span class="max-w-24 sm:max-w-36 truncate">{name}</span><ChevronDown size={14} aria-hidden="true" />
 	</summary>
 	<div class="glass absolute top-12 left-0 z-40 flex w-64 flex-col gap-2 rounded-2xl bg-bg/90 p-3">
 		<button

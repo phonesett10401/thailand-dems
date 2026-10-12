@@ -2,7 +2,7 @@ import { distanceKm } from '$lib/geo';
 import type { Pt } from '$lib/types';
 import type { Country } from './index';
 
-export const MSB_SHELTERS = 'https://www.msb.se/skyddsrum';
+export const MCF_SHELTERS = 'https://www.mcf.se/sv/amnesomraden/beredskap-for-kris-och-krig/befolkningsskydd/skyddsrum-och-andra-skyddade-platser/';
 
 export const se: Country = {
 	code: 'SE',
@@ -43,7 +43,7 @@ export const se: Country = {
 	air: 'who-it',
 	weather: 'smhi',
 	shelters: 'link',
-	shelterLink: MSB_SHELTERS
+	shelterLink: MCF_SHELTERS
 };
 
 /** SMHI county id of the nearest SE place (a GPS fix has no county of its own). */

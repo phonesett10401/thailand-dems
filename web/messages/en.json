@@ -33,10 +33,10 @@
 	"home_nearby_events": "Recent events",
 	"location_label": "Location",
 	"location_use_gps": "Use my location",
-	"location_pick": "Choose province",
+	"location_pick": "Choose an area",
 	"location_default": "{city} (default)",
 	"location_gps": "Your location",
-	"location_denied": "Location unavailable. Choose a province instead.",
+	"location_denied": "Location unavailable. Choose an area instead.",
 	"pm25_title": "Air quality (PM2.5)",
 	"pm25_band_very_good": "Very good",
 	"pm25_band_good": "Good",
@@ -424,6 +424,6 @@
 	"shelters_dev_title": "Shelters: in development",
 	"shelters_dev_body": "Myanmar has no public shelter list we can use yet. In an emergency, follow official and local announcements.",
 	"shelters_se_title": "Civil-defence shelters (skyddsrum)",
-	"shelters_se_body": "Sweden has about 64,000 civil-defence shelters for war and air raids. For storms or floods, follow SMHI and your municipality. MSB keeps the official map.",
-	"shelters_se_cta": "Open MSB's shelter map"
+	"shelters_se_body": "Sweden has about 64,000 civil-defence shelters for war and air raids. For storms or floods, follow SMHI and your municipality. MCF (formerly MSB) keeps the official map.",
+	"shelters_se_cta": "Open MCF's shelter map"
 }

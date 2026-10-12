@@ -48,13 +48,13 @@ for (const [from, to] of [
 
 test.describe('geolocation denied', () => {
 	test.use({ permissions: [] });
-	test('the place picker asks for a province instead', async ({ page, context }) => {
+	test('the place picker asks for an area instead', async ({ page, context }) => {
 		await context.clearPermissions();
 		await page.goto('/');
 		await page.getByLabel('Change location').click();
 		const picker = page.locator('header details');
 		await picker.getByRole('button', { name: 'Use my location' }).click();
-		await expect(picker.getByText('Location unavailable. Choose a province instead.')).toBeVisible();
+		await expect(picker.getByText('Location unavailable. Choose an area instead.')).toBeVisible();
 	});
 });
 
