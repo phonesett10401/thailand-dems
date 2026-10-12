@@ -2,13 +2,19 @@ import sampleAlerts from './sample/alerts.json';
 import sampleDisasters from './sample/disasters.json';
 import sampleRoutes from './sample/evacuation-routes.json';
 import sampleShelters from './sample/shelters.json';
+import type { CountryCode } from './countries';
 import type { FetchFn } from './sources/http';
 import type { DbAlert, Disaster, EvacRoute, ReportInput, Shelter } from './types';
 
 export type Loaded<T> = { data: T; live: boolean };
 export type PostResult = { ok: true } | { ok: false; reason: 'offline' | 'rejected' | 'limited' };
 
-export function createApi(base: string, onOffline: () => void, fetchFn: FetchFn = (u, i) => fetch(u, i)) {
+export function createApi(base: string, onOffline: () => void, fetchFn: FetchFn = (u, i) => fetch(u, i),
+	getCountry: () => CountryCode = () => 'TH'
+) {
+	const q = () => `?country=${getCountry()}`;
+	// Sample data is all Thai: outside TH an offline fallback is an empty list.
+	const thOnly = <T>(rows: T) => (getCountry() === 'TH' ? rows : ([] as T));
 	async function get<T>(path: string, fallback: T): Promise<Loaded<T>> {
 		try {
 			const res = await fetchFn(base + path, { signal: AbortSignal.timeout(6000) });
@@ -38,9 +44,9 @@ export function createApi(base: string, onOffline: () => void, fetchFn: FetchFn 
 	}
 
 	return {
-		shelters: () => get<Shelter[]>('/shelters', sampleShelters as Shelter[]),
-		disasters: () => get<Disaster[]>('/disasters', sampleDisasters as Disaster[]),
-		alerts: () => get<DbAlert[]>('/alerts', sampleAlerts as DbAlert[]),
+		shelters: () => get<Shelter[]>('/shelters' + q(), thOnly(sampleShelters as Shelter[])),
+		disasters: () => get<Disaster[]>('/disasters' + q(), thOnly(sampleDisasters as Disaster[])),
+		alerts: () => get<DbAlert[]>('/alerts' + q(), thOnly(sampleAlerts as DbAlert[])),
 		evacuationRoutes: () => get<EvacRoute[]>('/evacuation/routes', sampleRoutes as EvacRoute[]),
 		submitReport: (r: ReportInput) => post('/reports', r)
 	};

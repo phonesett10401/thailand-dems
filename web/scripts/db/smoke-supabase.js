@@ -108,6 +108,12 @@ for (const t of ['shelters', 'user_reports', 'volunteer_accounts']) {
 	check(!res.ok || body.length === 0, `Data API cannot read ${t} with the publishable key (HTTP ${res.status})`);
 }
 
+// 3b. Countries migration: shelters.country exists and defaults to TH.
+{
+	const [c] = await sql`select column_default from information_schema.columns where table_schema = 'public' and table_name = 'shelters' and column_name = 'country'`;
+	check(c?.column_default?.startsWith("'TH'"), 'shelters.country column exists with default TH');
+}
+
 // 4. Sign-ups are disabled.
 const settings = await (
 	await fetch(`${base}/auth/v1/settings`, { headers: { apikey: web.PUBLIC_SUPABASE_PUBLISHABLE_KEY } })
