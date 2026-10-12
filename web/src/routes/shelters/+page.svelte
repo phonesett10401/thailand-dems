@@ -56,7 +56,7 @@
 </script>
 
 <div class="lg:fixed lg:inset-x-0 lg:top-[var(--header-h)] lg:bottom-0 lg:grid {currentCountry().shelters === 'sample' ? 'lg:grid-cols-[420px_1fr]' : 'lg:grid-cols-1'}">
-	<div class="page lg:m-0 lg:max-w-none lg:overflow-y-auto lg:p-5 {currentCountry().shelters === 'sample' ? 'lg:border-r lg:border-line' : ''}">
+	<div class="page lg:overflow-y-auto lg:p-5 {currentCountry().shelters === 'sample' ? 'lg:m-0 lg:max-w-none lg:border-r lg:border-line' : 'lg:mx-auto lg:max-w-xl'}">
 		<h1 class="headline text-3xl">{m.shelters_title()}</h1>
 		{#if currentCountry().shelters === 'in-development'}
 			<div class="glass mt-4 rounded-2xl p-4">
