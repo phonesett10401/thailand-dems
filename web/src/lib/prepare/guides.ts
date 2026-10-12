@@ -7,7 +7,7 @@ export type Guide = { title: Text; summary: Text; before: Text[]; during: Text[]
 const t = (en: string, th: string): Text => ({ en, th });
 export const tx = (x: Text): string => x[getLocale()];
 
-export const GUIDES = ['flood', 'flash-flood', 'storm', 'smoke', 'heat', 'earthquake', 'tsunami', 'landslide', 'drought', 'chemical'] as const;
+export const GUIDES = ['flood', 'flash-flood', 'storm', 'smoke', 'heat', 'earthquake', 'tsunami', 'landslide', 'drought', 'chemical', 'cold', 'snow'] as const;
 export type GuideId = (typeof GUIDES)[number];
 
 // Thai text is a draft for native review (messages/TH_REVIEW.md).
@@ -231,6 +231,46 @@ export const GUIDE: Record<GuideId, Guide> = {
 			t('See a doctor if your eyes, skin or breathing hurt.', 'พบแพทย์หากแสบตา ระคายเคืองผิว หรือเจ็บขณะหายใจ'),
 			t('Do not eat garden vegetables until they are checked.', 'อย่ากินผักที่ปลูกไว้จนกว่าจะได้รับการตรวจ')
 		]
+	},
+	cold: {
+		title: t('Extreme cold', 'อากาศหนาวจัด'),
+		summary: t('Severe cold and wind chill that can cause frostbite and hypothermia.', 'อากาศหนาวจัดและลมหนาวที่อาจทำให้เกิดอาการหิมะกัด (ฟรอสต์ไบต์) และอุณหภูมิกายต่ำ (ไฮโปเทอร์เมีย)'),
+		before: [
+			t('Dress in layers, with a hat, gloves and windproof outer layer.', 'สวมเสื้อผ้าหลายชั้น พร้อมหมวก ถุงมือ และเสื้อชั้นนอกกันลม'),
+			t('Keep a phone power bank charged.', 'ชาร์จพาวเวอร์แบงก์สำหรับโทรศัพท์ไว้ให้เต็ม'),
+			t('Check on elderly neighbours.', 'ตรวจดูความปลอดภัยของเพื่อนบ้านผู้สูงอายุ'),
+			t('Keep some food and water at home in case of power cuts.', 'เก็บอาหารและน้ำไว้ที่บ้านเผื่อไฟฟ้าดับ')
+		],
+		during: [
+			t('Limit time outside; cover skin, because frostbite can start in minutes in strong wind.', 'จำกัดเวลาอยู่นอกอาคาร ปกปิดผิวหนังให้มิดชิด เพราะลมแรงอาจทำให้เกิดอาการหิมะกัดได้ภายในไม่กี่นาที'),
+			t('Watch for hypothermia (shivering, confusion, slurred speech): get the person warm and dry and call 112.', 'สังเกตอาการอุณหภูมิกายต่ำ (ตัวสั่น สับสน พูดไม่ชัด) พาผู้ป่วยเข้าที่อบอุ่นและทำให้ตัวแห้ง แล้วโทร 112'),
+			t('Never use a grill, camping stove or generator indoors (carbon monoxide).', 'ห้ามใช้เตาย่าง เตาแคมป์ปิ้ง หรือเครื่องปั่นไฟในอาคาร (แก๊สคาร์บอนมอนอกไซด์)'),
+			t('Keep moving if you must be outside.', 'หากต้องอยู่นอกอาคาร ให้ขยับตัวอยู่เสมอ')
+		],
+		after: [
+			t("Warm frostbitten skin slowly with lukewarm water, not hot, and don't rub it.", 'ค่อยๆ อุ่นผิวหนังที่ถูกหิมะกัดด้วยน้ำอุ่นพอประมาณ ไม่ใช่น้ำร้อน และห้ามถู'),
+			t('Check pipes and heating.', 'ตรวจท่อน้ำและระบบทำความร้อน'),
+			t('Follow SMHI and local announcements.', 'ติดตามประกาศของ SMHI และหน่วยงานท้องถิ่น')
+		]
+	},
+	snow: {
+		title: t('Heavy snow', 'หิมะตกหนัก'),
+		summary: t('Heavy snowfall that blocks roads and cuts power.', 'หิมะตกหนักจนถนนถูกปิดกั้นและไฟฟ้าอาจดับ'),
+		before: [
+			t('Keep a shovel, warm clothes and food at home.', 'เตรียมพลั่ว เสื้อผ้าอบอุ่น และอาหารไว้ที่บ้าน'),
+			t('In a car, carry a blanket, water, a torch and a charged phone.', 'หากมีรถ ให้เตรียมผ้าห่ม น้ำ ไฟฉาย และโทรศัพท์ที่ชาร์จเต็มไว้ในรถ'),
+			t('Plan to stay home if SMHI warns.', 'วางแผนอยู่บ้านเมื่อ SMHI ออกคำเตือน')
+		],
+		during: [
+			t('Avoid unnecessary travel.', 'หลีกเลี่ยงการเดินทางที่ไม่จำเป็น'),
+			t('If stuck in a car, stay in it, keep the exhaust pipe clear of snow and run the engine only briefly for heat.', 'หากติดอยู่ในรถ ให้อยู่ในรถ เคลียร์หิมะออกจากท่อไอเสีย และสตาร์ตเครื่องเพื่อให้ความอบอุ่นเพียงช่วงสั้นๆ'),
+			t('Watch for snow sliding from roofs.', 'ระวังหิมะไหลลงมาจากหลังคา')
+		],
+		after: [
+			t('Clear snow carefully and take breaks (heart strain).', 'ตักหิมะอย่างระมัดระวังและพักเป็นระยะ (หัวใจทำงานหนัก)'),
+			t('Check on neighbours.', 'ตรวจดูความปลอดภัยของเพื่อนบ้าน'),
+			t('Keep roofs and vents clear.', 'เคลียร์หิมะจากหลังคาและช่องระบายอากาศ')
+		]
 	}
 };
 
@@ -256,7 +296,7 @@ export function stepsFor(type: HazardType, level: Lvl): Text[] {
 }
 
 export type BagItem = { id: string; text: Text };
-export const KITS = ['flood', 'storm', 'smoke', 'heat', 'earthquake', 'tsunami', 'chemical'] as const;
+export const KITS = ['flood', 'storm', 'smoke', 'heat', 'earthquake', 'tsunami', 'chemical', 'cold'] as const;
 export type KitId = (typeof KITS)[number];
 
 export const BASICS: BagItem[] = [
@@ -295,6 +335,13 @@ export const EXTRAS: Record<KitId, BagItem[]> = {
 	],
 	earthquake: [I.shoes, { id: 'gloves', text: t('Work gloves', 'ถุงมือทำงาน') }, I.whistle, { id: 'dustmask', text: t('Dust masks', 'หน้ากากกันฝุ่น') }],
 	tsunami: [I.shoes, I.whistle, I.drybags],
+	cold: [
+		{ id: 'warmlayers', text: t('Warm layers and a windproof jacket', 'เสื้อผ้าหนาอบอุ่นหลายชั้นและเสื้อแจ็คเก็ตกันลม') },
+		{ id: 'hatgloves', text: t('Hat, gloves and scarf', 'หมวก ถุงมือ และผ้าพันคอ') },
+		{ id: 'powerbank', text: t('Charged power bank', 'พาวเวอร์แบงก์ที่ชาร์จเต็ม') },
+		{ id: 'handwarmers', text: t('Hand warmers', 'แผ่นให้ความร้อนสำหรับมือ') },
+		{ id: 'thermos', text: t('Thermos for a hot drink', 'กระติกน้ำร้อนสำหรับเครื่องดื่มอุ่นๆ') }
+	],
 	chemical: [
 		I.sheet,
 		{ id: 'wipes', text: t('Wet wipes', 'ทิชชู่เปียก') },
@@ -342,11 +389,9 @@ export function defaultKit(hazards: Hazard[]): KitId | null {
 	return best ? KIT_FOR[best.type]! : null;
 }
 
-export const NUMBERS: { tel: string; name: Text }[] = [
-	{ tel: '1784', name: t('Disaster hotline (DDPM)', 'สายด่วนป้องกันและบรรเทาสาธารณภัย (ปภ.)') },
-	{ tel: '1669', name: t('Medical emergency', 'การแพทย์ฉุกเฉิน') },
-	{ tel: '191', name: t('Police', 'ตำรวจ') },
-	{ tel: '199', name: t('Fire', 'ดับเพลิง') },
-	{ tel: '1155', name: t('Tourist police', 'ตำรวจท่องเที่ยว') },
-	{ tel: '1182', name: t('Weather (TMD)', 'พยากรณ์อากาศ (กรมอุตุนิยมวิทยา)') }
-];
+/** Real SMHI event codes (metadata/events.json): THUNDER WIND WIND_MOUNTAINS STRONG_COOLING SNOW BLACK_ICE RAIN HIGH_TEMPERATURES WIND_SEA ICE_ACCRETION LOW_SEA_LEVEL HIGH_SEALEVEL WATER_SHORTAGE HIGH_FLOW FLOODING FIRE. */
+export const guideForSmhi = (code: string): GuideId | null =>
+	/WIND|THUNDER/.test(code) ? 'storm' : /SNOW/.test(code) ? 'snow' : /RAIN|FLOOD|FLOW|SEALEVEL/.test(code) ? 'flood' : /HIGH_TEMP/.test(code) ? 'heat' : /COOLING/.test(code) ? 'cold' : null;
+
+/** The SMHI event code of an official hazard (id `smhi-<CODE>-<areaId>[-<n>]`). */
+export const smhiCode = (h: Hazard): string | null => (h.type === 'official' ? (h.id.split('-')[1] ?? null) : null);

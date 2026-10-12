@@ -114,3 +114,12 @@ export function nearestOpen(shelters: Shelter[], at: Pt): { s: Shelter; km: numb
 
 export const markerLabel = (h: Hazard): string =>
 	[hazName(h.type) + (h.name ? `: ${h.name}` : ''), levelWord(h.level), ...(h.sample ? [m.sample_tag()] : [])].join(' · ');
+
+const NUM_LABEL: Record<string, () => string> = {
+	'1784': m.num_1784, '1669': m.num_1669, '191': m.num_191, '199': m.num_199, '1155': m.num_1155, '1182': m.num_1182,
+	mm_199: m.num_mm_199, mm_192: m.num_mm_192, mm_191: m.num_mm_191,
+	se_112: m.num_se_112, se_1177: m.num_se_1177, se_11414: m.num_se_11414, se_11313: m.num_se_11313
+};
+export const numLabel = (key: string): string => NUM_LABEL[key]?.() ?? key;
+/** "11414" → "114 14" for display; the tel: link keeps the digits only. */
+export const showTel = (tel: string): string => (tel === '11414' ? '114 14' : tel === '11313' ? '113 13' : tel);

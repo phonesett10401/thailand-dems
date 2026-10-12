@@ -402,5 +402,15 @@
 	"demo_ch_bag": "Go-bag",
 	"demo_ch_how": "How it works",
 	"about_demo_link": "Watch the demo tour",
-	"map_scope": "The map shows the whole region. Your level only counts hazards near you."
+	"map_scope": "The map shows the whole region. Your level only counts hazards near you.",
+	"num_1155": "Tourist police",
+	"num_1182": "Weather (TMD)",
+	"num_mm_199": "Police",
+	"num_mm_192": "Ambulance",
+	"num_mm_191": "Fire",
+	"num_se_112": "Emergency (police, ambulance, fire)",
+	"num_se_1177": "Health advice",
+	"num_se_11414": "Police, non-emergency",
+	"num_se_11313": "Information in a major incident",
+	"haz_cold": "Extreme cold"
 }

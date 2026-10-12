@@ -5,13 +5,13 @@
 	import type { Hazard } from '$lib/levels';
 	import { m } from '$lib/paraglide/messages.js';
 	import { localizeHref } from '$lib/paraglide/runtime.js';
-	import { GUIDE_FOR, stepsFor, tx } from '$lib/prepare/guides';
+	import { GUIDE_FOR, guideForSmhi, smhiCode, stepsFor, tx } from '$lib/prepare/guides';
 	import LevelBadge from './LevelBadge.svelte';
 	import Sheet from './Sheet.svelte';
 
 	let { hazard = $bindable(null) }: { hazard: Hazard | null } = $props();
 	const steps = $derived(hazard ? stepsFor(hazard.type, hazard.level) : []);
-	const guide = $derived(hazard ? GUIDE_FOR[hazard.type] : undefined);
+	const guide = $derived(hazard ? (hazard.type === 'official' ? guideForSmhi(smhiCode(hazard) ?? '') : GUIDE_FOR[hazard.type]) : undefined);
 </script>
 
 <Sheet

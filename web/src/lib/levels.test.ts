@@ -219,6 +219,12 @@ describe('countries', () => {
 		expect(down).not.toContain('flood');
 		expect(down).not.toContain('storm');
 		expect(down).toContain('earthquake');
+		const warn = (code: string): SmhiWarning => ({ code, areaId: 1, level: 'watch', event: code, start: '2026-10-10T00:00:00Z', end: null } as SmhiWarning);
+		const q = (code: string) => quietTypes(assess({ ...calm(), smhi: [warn(code)] }, STO, NOW, se, 1), se);
+		expect(q('RAIN')).not.toContain('flood');
+		expect(q('WIND')).not.toContain('storm');
+		expect(q('RAIN')).toContain('storm');
+		expect(q('WATER_SHORTAGE')).toContain('flood');
 		expect(quietTypes(assess(calm(), BKK, NOW, TH), TH)).toEqual(['flood', 'storm', 'earthquake', 'smoke', 'heat']);
 	});
 });

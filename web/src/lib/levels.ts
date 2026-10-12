@@ -1,5 +1,6 @@
 import type { Country } from './countries';
 import { distanceKm, toNum } from './geo';
+import { guideForSmhi, smhiCode, type GuideId } from './prepare/guides';
 import type { SmhiWarning } from './sources/smhi';
 import type { Air, Forecast, River } from './sources/openmeteo';
 import type { DbAlert, Disaster, HazardEvent, HazardKind, Pt } from './types';
@@ -193,5 +194,6 @@ export function quietTypes(a: Assessment, c: Country): HazardType[] {
 		c.weather === 'smhi'
 			? { flood: ['gdacs', 'smhi'], storm: ['gdacs', 'smhi'], earthquake: ['quakes'], smoke: ['air'] }
 			: { flood: ['river', 'gdacs'], storm: ['gdacs'], earthquake: ['quakes'], smoke: ['air'], heat: ['forecast'] };
-	return (Object.keys(need) as HazardType[]).filter((t) => !a.hazards.some((h) => h.type === t) && !need[t]!.some((k) => a.failed.includes(k)));
+	const official = a.hazards.filter((h) => h.type === 'official').map((h) => guideForSmhi(smhiCode(h) ?? ''));
+	return (Object.keys(need) as HazardType[]).filter((t) => !a.hazards.some((h) => h.type === t) && !official.includes(t as GuideId) && !need[t]!.some((k) => a.failed.includes(k)));
 }

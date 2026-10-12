@@ -42,3 +42,5 @@ Also new (Map note): `map_scope`.
 ## Countries (2026-10)
 
 Keys added for SMHI official warnings (Thai drafts, need native review): `haz_official`, `feed_smhi`, `official_badge`.
+
+Prepare for Sweden (Thai drafts, need native review): `num_1155`, `num_1182`, `num_mm_199`, `num_mm_192`, `num_mm_191`, `num_se_112`, `num_se_1177`, `num_se_11414`, `num_se_11313`, `haz_cold`. The new `cold` and `snow` guides and the `cold` go-bag kit in `src/lib/prepare/guides.ts` (`th:` fields) also need native review, especially the hypothermia and carbon-monoxide steps.
