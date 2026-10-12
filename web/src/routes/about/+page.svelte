@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { thresholdRows } from '$lib/thresholds';
+	import { PlayCircle } from '@lucide/svelte';
 	import { m } from '$lib/paraglide/messages.js';
+	import { localizeHref } from '$lib/paraglide/runtime.js';
 
 	const rows = thresholdRows();
 </script>
@@ -8,6 +10,9 @@
 <div class="page max-w-2xl">
 	<h1 class="headline text-4xl">{m.about_title()}</h1>
 	<p class="mt-3 text-[#c9c9cf]">{m.about_intro()}</p>
+	<a href={localizeHref('/demo')} class="glass mt-4 inline-flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-semibold">
+		<PlayCircle size={18} aria-hidden="true" />{m.about_demo_link()}
+	</a>
 
 	<section class="mt-8">
 		<h2 class="label mb-2">{m.about_real()}</h2>

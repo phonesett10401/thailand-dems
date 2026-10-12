@@ -34,3 +34,5 @@ A native Thai speaker should still review all of the Thai before it is treated a
 ## Demo page (2026-10-11)
 
 New keys (Thai drafts, need native review): `demo_title`, `demo_video_label`, `demo_sound`, `demo_lead_1`, `demo_lead_2`, `demo_lead_3`, `demo_honest`, `demo_try`, `demo_roles_title`, `demo_live`, `demo_phase2`, `demo_role_citizen`, `demo_role_citizen_body`, `demo_role_volunteer`, `demo_role_volunteer_body`, `demo_role_admin`, `demo_role_admin_body`, `demo_hood_title`, `demo_hood_intro`, `demo_hood_arch`, `demo_hood_arch_body`, `demo_arch_1`, `demo_arch_2`, `demo_arch_3`, `demo_hood_flow`, `demo_hood_flow_body`, `demo_flow_1`, `demo_flow_2`, `demo_flow_3`, `demo_flow_4`, `demo_hood_db`, `demo_hood_db_body`, `demo_hood_tests`, `demo_hood_tests_body`, `demo_hood_data`, `demo_hood_data_body`, `demo_hood_history`, `demo_hood_history_body`, `demo_thresholds`, `demo_chapters`, `demo_ch_map`, `demo_ch_level`, `demo_ch_route`, `demo_ch_bag`, `demo_ch_how`.
+
+Also new (About page link): `about_demo_link`.
