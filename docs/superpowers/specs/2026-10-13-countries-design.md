@@ -13,7 +13,7 @@ DEMS works for **Thailand, Myanmar and Sweden**. Users pick a country from a cho
 | Country choice | A **Country** row on More. It is remembered in localStorage and defaults to Thailand. If GPS places the user in another supported country, a banner offers to switch (it never switches on its own). |
 | Languages | EN / TH / MY, independent of country. Sweden needs no Swedish. Burmese is AI-drafted, then **checked by the owner before merge** (`MY_REVIEW.md`). Thai stays as it is (`TH_REVIEW.md`). |
 | Shelters | Thailand: **sample**, labelled more clearly, because Thailand publishes no public shelter list. Myanmar: **in development**. Sweden: **link to MSB's official shelter map**, because no open MSB dataset was found. If MSB publishes one later, load it as real data. |
-| Sweden official warnings | **SMHI warnings count toward the level** (yellow → Watch, orange/red → Warning), labelled "Official: SMHI". |
+| Sweden weather | **SMHI's own official warnings decide every weather level in Sweden** (yellow → Watch, orange/red → Warning, labelled "Official: SMHI"). DEMS's own weather thresholds (heat, rain, river) are **not used** in Sweden; only air (WHO), quakes (USGS) and GDACS stay DEMS rules there. |
 | Name | "DEMS". The header shows the flag plus the place. The domain is unchanged. |
 | Demo video | Unchanged (Thailand example). The page says it shows Thailand. |
 
@@ -33,8 +33,7 @@ type Country = {
   sos: string;                                                   // 1784 / 199 / 112
   numbers: { num: string; name: () => string }[];                // Prepare + Call buttons
   air: 'thai-pcd' | 'who-it';                                    // label only; values identical
-  heat: [number, number];                                        // TH/MM [41,54] feels-like; SE [30,33] max temp
-  extra: ('cold' | 'wind' | 'snow' | 'smhi')[];                  // SE only
+  weather: 'dems' | 'smhi';                                      // TH/MM: DEMS heat/rain/river rules; SE: SMHI official warnings only
   shelters: 'sample' | 'in-development' | 'link';
   shelterLink?: string;                                          // SE: MSB skyddsrumskarta URL
 };
@@ -77,19 +76,14 @@ The engine (`levels.ts` `collect`/`assess`) stays shared. Country-dependent valu
 |---|---|---|---|
 | Earthquake | M4.5 / M6 within 300 km in 24 h | same | same |
 | GDACS | 300 km (cyclone 500), Orange → Watch, Red → Warning | same | same |
-| Rain | 35 / 90 mm | same | same |
-| River model | rising → Watch only | same | same |
+| Rain | 35 / 90 mm | same | — (SMHI decides) |
+| River model | rising → Watch only | same | — (SMHI decides) |
 | PM2.5 | >37.5 / >75, labelled "Thai PCD" | same numbers, labelled "WHO interim target 3 / 1" | same as MM |
-| Heat | feels-like ≥41 / ≥54 | same as TH | daily max ≥30 / ≥33 (SMHI heat levels; confirm in plan) |
-| **Cold** (new) | — | — | daily min feels-like ≤−25 / ≤−35 |
-| **Wind gusts** (new) | — | — | daily max gust ≥21 / ≥25 m/s |
-| **Snow** (new) | — | — | 24 h snowfall ≥15 / ≥30 cm |
-| **SMHI official** (new) | — | — | warning covering the user's län: Yellow → Watch, Orange/Red → Warning |
+| Heat | feels-like ≥41 / ≥54 | same as TH | — (SMHI decides) |
+| **SMHI official** (new) | — | — | every SMHI warning covering the user's län (wind, snow, rain, high temperatures, …): Yellow → Watch, Orange/Red → Warning |
 
-- **Open-Meteo forecast request:** adds `apparent_temperature_min`, `wind_gusts_10m_max` and `snowfall_sum` to the daily fields. Wind uses `wind_speed_unit=ms`.
-- **New hazard types:** `cold`, `wind`, `snow` and `official`, each with `hazName` and guide entries.
-  - The `official` hazard shows SMHI's event name in the user's language (`en`; `sv` is not shown).
-  - It carries the badge "Official: SMHI".
+- **Open-Meteo:** no new fields. In SE the forecast and river feeds still load (for the condition tiles) but do not create hazards; only the air feed does.
+- **New hazard type `official`** (SE). Its title is SMHI's event name in English (for example "Wind", "Snow", "High temperatures"; `sv` is not shown). It carries the badge "Official: SMHI", and its Prepare link maps SMHI event codes to DEMS guides where one exists (wind → storm, snow → snow, rain → flood, high temperatures → heat; otherwise no guide link).
 - **Rules that don't change:**
   - The worst live hazard sets the level.
   - Unknown, never Safe, when every feed fails.
@@ -144,7 +138,7 @@ The engine (`levels.ts` `collect`/`assess`) stays shared. Country-dependent valu
   - the default place is inside the bbox
   - `sos` is present
 - SE county names match the SMHI fixture names.
-- Thresholds: cold, wind, snow and SE heat at the boundary values; the PM2.5 label per country.
+- In SE, DEMS heat/rain/river rules create no hazards; air, quakes and GDACS still do. PM2.5 label per country.
 - SMHI normalisation:
   - Yellow → watch; Orange and Red → warning
   - unknown codes are ignored
