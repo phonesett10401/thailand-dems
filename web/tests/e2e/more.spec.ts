@@ -17,4 +17,8 @@ test('About explains sources, sample data, thresholds and limits', async ({ page
 	await expect(page.getByText(/never Safe/)).toBeVisible();
 	await expect(page.getByRole('heading', { name: 'Limits' })).toBeVisible();
 	await expect(page.getByText(/openrouteservice/)).toBeVisible();
+	await expect(page.getByText('Sweden: official weather warnings: SMHI')).toBeVisible();
+	await expect(page.getByText(/Thailand: example shelters/)).toBeVisible();
+	await expect(page.getByText(/Sweden: link to MCF/)).toBeVisible();
+	await expect(page.getByText(/WHO interim target/)).toBeVisible();
 });

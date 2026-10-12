@@ -249,7 +249,7 @@ These are the "During" steps. The first three of each are shown on the Now scree
 
 | Key | English | မြန်မာ |
 |---|---|---|
-| `app_name` | DEMS Thailand | DEMS ထိုင်း |
+| `app_name` | DEMS | DEMS |
 | `tabs_label` | Main | ပင်မ |
 | `nav_home` | Home | ပင်မစာမျက်နှာ |
 | `nav_map` | Map | မြေပုံ |
@@ -398,14 +398,14 @@ These are the "During" steps. The first three of each are shown on the Now scree
 | `num_199` | Fire | မီးသတ် |
 | `info_more` | More | နောက်ထပ် |
 | `about_title` | About this demo | ဤ demo အကြောင်း |
-| `about_intro` | DEMS Thailand is a student project. It is built like a real public tool, but it is not an official service. | DEMS ထိုင်း သည် ကျောင်းသား ပရောဂျက်တစ်ခု ဖြစ်သည်။ တကယ့် အများပြည်သူသုံး ကိရိယာကဲ့သို့ တည်ဆောက်ထားသော်လည်း တရားဝင် ဝန်ဆောင်မှု မဟုတ်ပါ။ |
+| `about_intro` | DEMS is a student project. It is built like a real public tool, but it is not an official service. | DEMS သည် ကျောင်းသား ပရောဂျက်တစ်ခု ဖြစ်သည်။ တကယ့် အများပြည်သူသုံး ကိရိယာကဲ့သို့ တည်ဆောက်ထားသော်လည်း တရားဝင် ဝန်ဆောင်မှု မဟုတ်ပါ။ |
 | `about_real` | Real (live public sources) | အမှန် (အများပြည်သူ တိုက်ရိုက် ရင်းမြစ်များ) |
 | `about_sample` | Sample (this demo's own database) | နမူနာ (ဤ demo ၏ ကိုယ်ပိုင် ဒေတာဘေ့စ်) |
 | `about_real_weather` | Weather, air quality, river flow: Open-Meteo | မိုးလေဝသ၊ လေထုအရည်အသွေး၊ မြစ်ရေစီးဆင်းမှု- Open-Meteo |
 | `about_real_events` | Disaster alerts: GDACS | ဘေးအန္တရာယ် သတိပေးချက်များ- GDACS |
 | `about_real_quakes` | Earthquakes: USGS | ငလျင်များ- USGS |
 | `about_real_map` | Map: OpenFreeMap / OpenStreetMap contributors | မြေပုံ- OpenFreeMap / OpenStreetMap ပါဝင်ကူညီသူများ |
-| `about_sample_shelters` | Shelters and their capacity | ခိုလှုံရာနေရာများနှင့် ၎င်းတို့၏ လက်ခံနိုင်မှု |
+| `about_sample_shelters` | Thailand: example shelters (no public list exists). Myanmar: in development. Sweden: link to MCF's official civil-defence shelter map. | ထိုင်း- ဥပမာ ခိုလှုံရာနေရာများ (အများပြည်သူ စာရင်း မရှိပါ)။ မြန်မာ- ဖော်ဆောင်ဆဲ။ ဆွီဒင်- MCF ၏ တရားဝင် အရပ်ဘက်ကာကွယ်ရေး ခိုလှုံရာ မြေပုံသို့ လင့်ခ်။ |
 | `about_sample_disasters` | Disasters and alerts in the database | ဒေတာဘေ့စ်ရှိ ဘေးအန္တရာယ်များနှင့် သတိပေးချက်များ |
 | `about_sample_routes` | Evacuation routes | ဘေးလွတ်ရာ ရွှေ့ပြောင်းရေး လမ်းကြောင်းများ |
 | `about_reports` | Reports you send are stored in the demo database only and are not seen by any authority. | သင်ပို့သော သတင်းပို့ချက်များကို demo ဒေတာဘေ့စ်တွင်သာ သိမ်းဆည်းပြီး မည်သည့် အာဏာပိုင်ကမျှ မမြင်ရပါ။ |
@@ -607,7 +607,7 @@ These are the "During" steps. The first three of each are shown on the Now scree
 | `error_home` | Go to Now | ယခု သို့ သွားရန် |
 | `login_unavailable` | Sign-in is unavailable right now. Please try again shortly. | ယခု ဝင်ရောက်၍ မရနိုင်ပါ။ ခဏနေမှ ထပ်ကြိုးစားပါ။ |
 | `demo_title` | Disaster alerts, explained | ဘေးအန္တရာယ် သတိပေးချက်များ၊ ရှင်းလင်းချက် |
-| `demo_video_label` | DEMS Thailand demo video, 35 seconds, captions on screen | DEMS ထိုင်း demo ဗီဒီယို၊ 35 စက္ကန့်၊ မျက်နှာပြင်ပေါ်တွင် စာတန်းပါ |
+| `demo_video_label` | DEMS demo video (Thailand version), 35 seconds, captions on screen | DEMS demo ဗီဒီယို (ထိုင်းနိုင်ငံ ဗားရှင်း)၊ 35 စက္ကန့်၊ မျက်နှာပြင်ပေါ်တွင် စာတန်းပါ |
 | `demo_sound` | Sound | အသံ |
 | `demo_lead_1` | DEMS checks public weather, air quality, river, earthquake and global disaster data near you. | DEMS သည် သင့်အနီးရှိ အများပြည်သူ မိုးလေဝသ၊ လေထုအရည်အသွေး၊ မြစ်၊ ငလျင်နှင့် ကမ္ဘာ့ဘေးအန္တရာယ် ဒေတာများကို စစ်ဆေးသည်။ |
 | `demo_lead_2` | It turns all of that into one level: Safe, Watch or Warning. | ၎င်းတို့အားလုံးကို အဆင့်တစ်ခုတည်းအဖြစ် ပြောင်းပေးသည်- ဘေးကင်း၊ စောင့်ကြည့် သို့မဟုတ် သတိပေး။ |
@@ -631,7 +631,7 @@ These are the "During" steps. The first three of each are shown on the Now scree
 | `demo_arch_2` | SvelteKit on Vercel | Vercel ပေါ်ရှိ SvelteKit |
 | `demo_arch_3` | Supabase Postgres | Supabase Postgres ဒေတာဘေ့စ် |
 | `demo_hood_flow` | How data flows | ဒေတာ စီးဆင်းပုံ |
-| `demo_hood_flow_body` | DEMS asks public sources for conditions near you, compares each value with published thresholds and gives every hazard a level. The worst live hazard sets your level. If no source answers, the level is Unknown, never Safe, and data older than 3 hours turns Unknown too. | DEMS သည် သင့်အနီးရှိ အခြေအနေများကို အများပြည်သူ ရင်းမြစ်များထံ မေးမြန်းပြီး တန်ဖိုးတစ်ခုစီကို ထုတ်ပြန်ထားသော သတ်မှတ်ချက်များနှင့် နှိုင်းယှဉ်ကာ အန္တရာယ်တိုင်းကို အဆင့်တစ်ခု ပေးသည်။ ဖြစ်ပွားနေသော အဆိုးဆုံး အန္တရာယ်က သင့်အဆင့်ကို သတ်မှတ်သည်။ မည်သည့် ရင်းမြစ်ကမျှ မတုံ့ပြန်လျှင် အဆင့်သည် မသိရ ဖြစ်ပြီး ဘယ်တော့မှ ဘေးကင်း မဖြစ်ပါ။ 3 နာရီထက် ပိုဟောင်းသော ဒေတာလည်း မသိရ ဖြစ်သွားသည်။ |
+| `demo_hood_flow_body` | DEMS asks public sources for conditions near you, compares each value with published thresholds and gives every hazard a level. The worst live hazard sets your level. If no source answers, the level is Unknown, never Safe, and data older than 3 hours turns Unknown too. In Sweden, SMHI's official warnings set the weather level. | DEMS သည် သင့်အနီးရှိ အခြေအနေများကို အများပြည်သူ ရင်းမြစ်များထံ မေးမြန်းပြီး တန်ဖိုးတစ်ခုစီကို ထုတ်ပြန်ထားသော သတ်မှတ်ချက်များနှင့် နှိုင်းယှဉ်ကာ အန္တရာယ်တိုင်းကို အဆင့်တစ်ခု ပေးသည်။ ဖြစ်ပွားနေသော အဆိုးဆုံး အန္တရာယ်က သင့်အဆင့်ကို သတ်မှတ်သည်။ မည်သည့် ရင်းမြစ်ကမျှ မတုံ့ပြန်လျှင် အဆင့်သည် မသိရ ဖြစ်ပြီး ဘယ်တော့မှ ဘေးကင်း မဖြစ်ပါ။ 3 နာရီထက် ပိုဟောင်းသော ဒေတာလည်း မသိရ ဖြစ်သွားသည်။ ဆွီဒင်တွင် SMHI ၏ တရားဝင် သတိပေးချက်များက မိုးလေဝသ အဆင့်ကို သတ်မှတ်သည်။ |
 | `demo_flow_1` | Public sources | အများပြည်သူ ရင်းမြစ်များ |
 | `demo_flow_2` | Threshold rules | သတ်မှတ်ချက် စည်းမျဉ်းများ |
 | `demo_flow_3` | One level | အဆင့်တစ်ခု |
@@ -676,6 +676,10 @@ These are the "During" steps. The first three of each are shown on the Now scree
 | `shelters_se_title` | Civil-defence shelters (skyddsrum) | အရပ်ဘက်ကာကွယ်ရေး ခိုလှုံရာများ (skyddsrum) |
 | `shelters_se_body` | Sweden has about 64,000 civil-defence shelters for war and air raids. For storms or floods, follow SMHI and your municipality. MCF (formerly MSB) keeps the official map. | ဆွီဒင်တွင် စစ်ပွဲနှင့် လေကြောင်းတိုက်ခိုက်မှုများအတွက် အရပ်ဘက်ကာကွယ်ရေး ခိုလှုံရာ 64,000 ခန့် ရှိသည်။ မုန်တိုင်း သို့မဟုတ် ရေကြီးခြင်းအတွက် SMHI နှင့် သင့်မြို့နယ်အုပ်ချုပ်ရေးကို လိုက်နာပါ။ MCF (ယခင် MSB) က တရားဝင် မြေပုံကို ထိန်းသိမ်းထားသည်။ |
 | `shelters_se_cta` | Open MCF's shelter map | MCF ၏ ခိုလှုံရာ မြေပုံကို ဖွင့်ရန် |
+
+| `about_real_smhi` | Sweden: official weather warnings: SMHI | ဆွီဒင်- တရားဝင် မိုးလေဝသ သတိပေးချက်များ- SMHI |
+| `about_row_pm25_who` | PM2.5 in Myanmar and Sweden: Watch above {w} µg/m³, Warning above {x} (WHO interim target) | မြန်မာနှင့် ဆွီဒင်တွင် PM2.5- {w} µg/m³ အထက် စောင့်ကြည့်၊ {x} အထက် သတိပေး (WHO ကြားကာလ ပစ်မှတ်) |
+| `demo_video_th_note` | The video shows the Thailand version. | ဗီဒီယိုတွင် ထိုင်းနိုင်ငံ ဗားရှင်းကို ပြထားသည်။ |
 
 ---
 

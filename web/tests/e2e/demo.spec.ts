@@ -27,6 +27,7 @@ test('upright phone gets the vertical video; the page explains DEMS', async ({ p
 	await expect(sources.nth(1)).toHaveAttribute('src', '/demo/demo-16x9.mp4');
 	expect(await ratio(page)).toBeCloseTo(0.56, 1);
 	await expect(page.getByText(/not official warnings/)).toBeVisible();
+	await expect(page.getByText('The video shows the Thailand version.')).toBeVisible();
 });
 
 for (const [name, size] of [['landscape phone', { width: 915, height: 412 }], ['tablet', { width: 1024, height: 768 }]] as const) {
@@ -68,7 +69,7 @@ test('Try the live app goes to Now; roles and under-the-hood sections work', asy
 	const arch = page.locator('details', { hasText: 'Architecture' });
 	await arch.locator('summary').click();
 	await expect(arch.getByText(/SvelteKit app does both/)).toBeVisible();
-	await expect(page.getByText(/Watch above 37.5/)).toBeAttached();
+	await expect(page.getByText(/^PM2.5: Watch above 37.5/)).toBeAttached();
 	await page.getByRole('link', { name: 'Try the live app' }).click();
 	await expect(page).toHaveURL(/\/$/);
 });
