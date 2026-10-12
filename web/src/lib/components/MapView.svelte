@@ -88,7 +88,7 @@
 			dot.setAttribute('aria-label', mk.label);
 			dot.title = mk.label;
 			dot.addEventListener('click', () => onselect?.(mk.id));
-			return new Marker({ element: dot }).setLngLat([mk.lon, mk.lat]).addTo(mm);
+			return new Marker({ element: dot, offset: mk.offset }).setLngLat([mk.lon, mk.lat]).addTo(mm);
 		});
 		return () => added.forEach((a) => a.remove());
 	});

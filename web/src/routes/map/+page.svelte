@@ -29,7 +29,12 @@
 	});
 
 	// Map = "what is happening anywhere": every current hazard, not only those near you.
-	const all = $derived(live.feeds ? collect(live.feeds, here.place, Date.now(), false) : []);
+	// Readings for your own spot (haze, heat, rain, river) have no coordinates of their own: draw them at your location.
+	const all = $derived(
+		live.feeds
+			? collect(live.feeds, here.place, Date.now(), false).map((h) => (h.lat === null ? { ...h, lat: here.place.lat, lon: here.place.lon, local: true } : h))
+			: []
+	);
 	const types = $derived([...new Set(all.map((h) => h.type))] as HazardType[]);
 	const chipColor = (t: string) => {
 		const lv = all.filter((h) => h.type === t && !h.sample).map((h) => h.level);
@@ -45,7 +50,7 @@
 	const markers = $derived<MapMarker[]>([
 		{ id: 'me', kind: 'me', lat: here.place.lat, lon: here.place.lon, label: m.location_label() },
 		...shown.flatMap((h): MapMarker[] =>
-			h.lat === null || h.lon === null ? [] : [{ id: h.id, kind: h.sample ? 'sample' : h.level, lat: h.lat, lon: h.lon, label: markerLabel(h) }]
+			h.lat === null || h.lon === null ? [] : [{ id: h.id, kind: h.sample ? 'sample' : h.level, lat: h.lat, lon: h.lon, label: markerLabel(h), offset: 'local' in h ? [18, -18] : undefined }]
 		),
 		...(hidden.has('shelters')
 			? []
@@ -83,6 +88,7 @@
 			{/each}
 			<Chip on={!hidden.has('shelters')} color="#f2f2f4" onclick={() => toggle('shelters')}>{m.map_shelters()}</Chip>
 		</div>
+		<p class="glass pointer-events-none absolute top-16 left-3 max-w-[16rem] rounded-xl bg-bg/70 px-3 py-1.5 text-[11px] leading-snug text-muted">{m.map_scope()}</p>
 		{#if showList}
 			<div class="glass absolute inset-x-3 {failed ? 'bottom-40' : 'bottom-3'} max-h-[55%] overflow-y-auto rounded-2xl bg-bg/80 p-3 lg:hidden">
 				{#if shown.length}<HazardList hazards={shown} onselect={(h) => (picked = h)} />{:else}<p class="text-sm text-muted">{m.map_none()}</p>{/if}
