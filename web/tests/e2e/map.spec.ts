@@ -96,3 +96,16 @@ test.describe('desktop', () => {
 		await expect(page.getByRole('button', { name: /^Flooding Flood in Ayutthaya/ })).toBeVisible();
 	});
 });
+
+test('readings for your own spot (haze) are drawn at your location and follow their chip', async ({ page }) => {
+	await page.goto('/map');
+	const haze = page.getByRole('button', { name: 'Haze · Watch' });
+	await expect(haze).toBeVisible();
+	await page.getByRole('button', { name: 'Haze', exact: true }).click();
+	await expect(haze).toHaveCount(0);
+});
+
+test('the map says it shows the whole region, not just what is near you', async ({ page }) => {
+	await page.goto('/map');
+	await expect(page.getByText('The map shows the whole region. Your level only counts hazards near you.')).toBeVisible();
+});
