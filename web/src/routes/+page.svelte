@@ -8,7 +8,7 @@
 	import { fmtHour, fmtTime } from '$lib/format';
 	import { occupancyPct, sortByDistance, toNum } from '$lib/geo';
 	import { currentLevel, live } from '$lib/hazards.svelte';
-	import { hazName, markerLabel, nearestOpen } from '$lib/labels';
+	import { hazName, hazTitle, markerLabel, nearestOpen } from '$lib/labels';
 	import type { Hazard } from '$lib/levels';
 	import { here } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
@@ -84,7 +84,7 @@
 				<div class="glass flex flex-col gap-2 rounded-2xl p-3.5">
 					<h2 class="label">{m.now_recent()}</h2>
 					{#each recent as h (h.id)}
-						<div class="grid grid-cols-[44px_1fr] gap-2 text-xs"><span class="font-mono text-muted">{fmtTime(h.time!)}</span><span class="truncate">{hazName(h.type)} · {h.name ?? ''}</span></div>
+						<div class="grid grid-cols-[44px_1fr] gap-2 text-xs"><span class="font-mono text-muted">{fmtTime(h.time!)}</span><span class="truncate">{hazName(h.type)} · {h.type === 'official' ? hazTitle(h) : (h.name ?? '')}</span></div>
 					{:else}
 						<p class="text-xs text-muted">{m.now_recent_none()}</p>
 					{/each}

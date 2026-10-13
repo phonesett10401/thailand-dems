@@ -3,7 +3,7 @@
 	import { fmtTime } from '$lib/format';
 	import { feedName, hazName, nowTitle } from '$lib/labels';
 	import { quietTypes, type Assessment, type Feeds, type Hazard, type HazardType, type Overall } from '$lib/levels';
-	import { callParams, currentCountry, defaultCity } from '$lib/country.svelte';
+	import { callParams, currentCountry, defaultCity, placeName } from '$lib/country.svelte';
 	import { here } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
 	import { localizeHref } from '$lib/paraglide/runtime.js';
@@ -29,7 +29,7 @@
 	} = $props();
 
 	const place = $derived(
-		here.place.via === 'gps' ? m.location_gps() : here.place.via === 'default' ? m.location_default({ city: defaultCity() }) : here.place.name
+		here.place.via === 'gps' ? m.location_gps() : here.place.via === 'default' ? m.location_default({ city: defaultCity() }) : placeName(here.place.name)
 	);
 	const active = $derived(a ? a.hazards.filter((h) => !h.sample && h.level !== 'safe') : []);
 	// a type whose feed failed is unknown, not quiet

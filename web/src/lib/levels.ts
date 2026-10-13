@@ -36,8 +36,8 @@ export type Hazard = {
 	source: string;
 	sample: boolean;
 	url: string | null;
-	/** Official SMHI zones: the areas it covers, joined. */
-	detail?: string | null;
+	/** Official SMHI zones: the areas it covers (SMHI id + English name). */
+	areas?: { id?: number; en: string }[];
 };
 export type FeedKey = 'air' | 'forecast' | 'river' | 'gdacs' | 'quakes' | 'smhi';
 /** A live feed that is `undefined` failed to load. `river: null` means no river at this point. */

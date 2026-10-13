@@ -15,6 +15,11 @@ export const country = $state<{ code: CountryCode }>({ code: typeof localStorage
 export const currentCountry = (): Country => COUNTRIES[country.code];
 /** The default place's label in the reader's language. */
 export const defaultCity = () => currentCountry().defaultPlace.names[getLocale()];
+/** A place's label in the reader's language; `name` (English) stays its identity. */
+export const placeName = (name: string): string => {
+	const c = currentCountry();
+	return [c.defaultPlace, ...c.places].find((p) => p.name === name)?.names?.[getLocale()] ?? name;
+};
 /** The country's numbers and agencies, for messages that name them. */
 export const callParams = () => {
 	const c = currentCountry();

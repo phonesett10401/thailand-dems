@@ -431,5 +431,21 @@
 	"shelters_se_cta": "Open MCF's shelter map",
 	"about_real_smhi": "Sweden: official weather warnings: SMHI",
 	"about_row_pm25_who": "PM2.5 in Myanmar and Sweden: Watch above {w} µg/m³, Warning above {x} (WHO interim target)",
-	"demo_video_th_note": "The video shows the Thailand version."
+	"demo_video_th_note": "The video shows the Thailand version.",
+	"smhi_ev_thunder": "Thunderstorm",
+	"smhi_ev_wind": "Wind",
+	"smhi_ev_wind_mountains": "Wind in the alpine region",
+	"smhi_ev_strong_cooling": "Strong cooling",
+	"smhi_ev_snow": "Snow",
+	"smhi_ev_black_ice": "Black ice",
+	"smhi_ev_rain": "Rain",
+	"smhi_ev_high_temperatures": "High temperatures",
+	"smhi_ev_wind_sea": "Wind at sea",
+	"smhi_ev_ice_accretion": "Ice accretion",
+	"smhi_ev_low_sea_level": "Low sea level",
+	"smhi_ev_high_sealevel": "High sea level",
+	"smhi_ev_water_shortage": "Risk for water shortage",
+	"smhi_ev_high_flow": "High water discharge",
+	"smhi_ev_flooding": "Flooding",
+	"smhi_ev_fire": "Fire risk"
 }

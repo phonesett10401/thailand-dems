@@ -431,5 +431,21 @@
 	"shelters_se_cta": "เปิดแผนที่หลุมหลบภัยของ MCF",
 	"about_real_smhi": "สวีเดน: คำเตือนสภาพอากาศอย่างเป็นทางการ: SMHI",
 	"about_row_pm25_who": "ฝุ่น PM2.5 ในเมียนมาและสวีเดน: เฝ้าระวังเมื่อเกิน {w} มคก./ลบ.ม. เตือนภัยเมื่อเกิน {x} (เป้าหมายระยะเปลี่ยนผ่านของ WHO)",
-	"demo_video_th_note": "วิดีโอนี้แสดงเวอร์ชันประเทศไทย"
+	"demo_video_th_note": "วิดีโอนี้แสดงเวอร์ชันประเทศไทย",
+	"smhi_ev_thunder": "พายุฝนฟ้าคะนอง",
+	"smhi_ev_wind": "ลมแรง",
+	"smhi_ev_wind_mountains": "ลมแรงบนเขตภูเขาสูง",
+	"smhi_ev_strong_cooling": "ความหนาวเย็นจัดจากลม",
+	"smhi_ev_snow": "หิมะตก",
+	"smhi_ev_black_ice": "น้ำแข็งเคลือบถนน",
+	"smhi_ev_rain": "ฝนตกหนัก",
+	"smhi_ev_high_temperatures": "อุณหภูมิสูง",
+	"smhi_ev_wind_sea": "ลมแรงในทะเล",
+	"smhi_ev_ice_accretion": "น้ำแข็งเกาะเรือในทะเล",
+	"smhi_ev_low_sea_level": "ระดับน้ำทะเลต่ำ",
+	"smhi_ev_high_sealevel": "ระดับน้ำทะเลสูง",
+	"smhi_ev_water_shortage": "เสี่ยงขาดแคลนน้ำ",
+	"smhi_ev_high_flow": "น้ำในแม่น้ำไหลแรงและสูง",
+	"smhi_ev_flooding": "น้ำท่วม",
+	"smhi_ev_fire": "เสี่ยงไฟป่า"
 }

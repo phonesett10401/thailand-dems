@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { distanceKm } from '$lib/geo';
 import { smhiAreaFor } from './se';
+import { areaName, SE_AREAS } from './se-areas';
+import { overwriteGetLocale } from '$lib/paraglide/runtime.js';
 import { COUNTRIES, detectCountry, type CountryCode } from './index';
 
 const codes = Object.keys(COUNTRIES) as CountryCode[];
@@ -63,5 +65,37 @@ describe('smhiAreaFor', () => {
 	it('picks the county of the nearest SE place', () => {
 		expect(smhiAreaFor({ lat: 57.7089, lon: 11.9746 })).toBe(14); // Gothenburg
 		expect(smhiAreaFor({ lat: 59.33, lon: 18.07 })).toBe(1);
+	});
+});
+
+describe('localised place and area names', () => {
+	const langs = ['en', 'th', 'my'] as const;
+	it('every SE county and SMHI sea district has en/th/my names', () => {
+		const ids = [...COUNTRIES.SE.places.map((p) => p.smhiId!), ...Array.from({ length: 18 }, (_, i) => 41 + i)];
+		for (const id of ids) for (const l of langs) expect(SE_AREAS[id]?.[l]?.trim(), `${id} ${l}`).toBeTruthy();
+	});
+	it('areaName follows the locale and falls back to SMHI English', () => {
+		try {
+			expect(areaName(56, 'Kattegat')).toBe('Kattegat');
+			overwriteGetLocale(() => 'my');
+			expect(areaName(56, 'Kattegat')).toMatch(/[က-႟]/);
+			expect(areaName(999, 'Nowhere Bay')).toBe('Nowhere Bay');
+			expect(areaName(undefined, 'Nowhere Bay')).toBe('Nowhere Bay');
+		} finally {
+			overwriteGetLocale(() => 'en');
+		}
+	});
+	it.each(['SE', 'MM'] as const)('%s places carry en/th/my names, en = name', (c) => {
+		for (const p of COUNTRIES[c].places) {
+			for (const l of langs) expect(p.names?.[l]?.trim(), `${p.name} ${l}`).toBeTruthy();
+			expect(p.names!.en).toBe(p.name);
+		}
+	});
+	it('Myanmar places use official Burmese names in Myanmar script', () => {
+		for (const p of COUNTRIES.MM.places) expect(p.names!.my).toMatch(/^[က-႟ ]+$/);
+		const my = (n: string) => COUNTRIES.MM.places.find((p) => p.name === n)!.names!.my;
+		expect(my('Yangon Region')).toBe('ရန်ကုန်တိုင်းဒေသကြီး');
+		expect(my('Shan State')).toBe('ရှမ်းပြည်နယ်');
+		expect(my('Naypyidaw Union Territory')).toBe('နေပြည်တော် ပြည်ထောင်စုနယ်မြေ');
 	});
 });

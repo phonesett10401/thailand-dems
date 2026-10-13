@@ -1,6 +1,7 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import type { Hazard } from './levels';
-import { hazLine, markerLabel, nearestOpen, nowTitle } from './labels';
+import { hazLine, markerLabel, nearestOpen, nowTitle, smhiEventName } from './labels';
+import { overwriteGetLocale } from './paraglide/runtime.js';
 import type { Shelter } from './types';
 
 describe('nowTitle', () => {
@@ -41,5 +42,28 @@ describe('hazLine for SMHI warnings', () => {
 		expect(hazLine(off('2099-01-02T06:00:00Z'))).toMatch(/^Wind · from /);
 		expect(hazLine(off('2020-01-02T06:00:00Z'))).toBe('Wind');
 		expect(hazLine(off(null))).toBe('Wind');
+	});
+});
+
+describe('SMHI names in the reader language', () => {
+	afterEach(() => overwriteGetLocale(() => 'en'));
+	const zone: Hazard = { id: 'smhi-WIND_SEA-z2', type: 'official', level: 'warning', name: 'Wind at sea', value: null, km: null, lat: null, lon: null, time: null, source: 'SMHI', sample: false, url: null, areas: [{ id: 56, en: 'Kattegat' }, { id: 999, en: 'Nowhere Bay' }] };
+	it('smhiEventName per locale, unknown codes fall back to SMHI English', () => {
+		expect(smhiEventName('WIND_SEA', 'Wind at sea')).toBe('Wind at sea');
+		expect(smhiEventName('NEW_EVENT', 'New event')).toBe('New event');
+		expect(smhiEventName(null, 'New event')).toBe('New event');
+		overwriteGetLocale(() => 'th');
+		expect(smhiEventName('WIND_SEA', 'Wind at sea')).toMatch(/[฀-๿]/);
+		overwriteGetLocale(() => 'my');
+		expect(smhiEventName('WIND_SEA', 'Wind at sea')).toMatch(/[က-႟]/);
+		expect(smhiEventName('NEW_EVENT', 'New event')).toBe('New event');
+	});
+	it('hazLine and nowTitle use the localised event and area names', () => {
+		expect(hazLine(zone)).toBe('Wind at sea · Kattegat, Nowhere Bay');
+		overwriteGetLocale(() => 'my');
+		const line = hazLine(zone);
+		expect(line).not.toMatch(/Wind at sea|Kattegat/);
+		expect(line).toContain('Nowhere Bay');
+		expect(nowTitle([zone])).toMatch(/^[က-႟]/);
 	});
 });

@@ -20,6 +20,7 @@ describe('normaliseSmhi', () => {
 		expect(snow[0].geometry?.type).toBe('MultiPolygon');
 		expect(snow[0].geometry).toBe(snow[1].geometry);
 		expect(snow[0].areas).toEqual(['Norrbotten County', 'Västerbotten County']);
+		expect(snow[0].areaIds).toEqual([25, 24]);
 		expect(w.find((x) => x.code === 'WIND')?.geometry?.type).toBe('Polygon');
 	});
 	it('omits geometry when missing or not a polygon', () => {
@@ -45,5 +46,6 @@ describe('zones', () => {
 	it('zoneHazard is an official hazard without a point', () => {
 		const h = zoneHazard(buildZones(rows, now).find((x) => x.zoneId === 101)!);
 		expect(h).toMatchObject({ type: 'official', name: 'Wind', level: 'warning', source: 'SMHI', lat: null, lon: null, id: 'smhi-WIND-z101' });
+		expect(zoneHazard(buildZones(rows, now).find((x) => x.zoneId === 102)!).areas).toEqual([{ id: 25, en: 'Norrbotten County' }, { id: 24, en: 'Västerbotten County' }]);
 	});
 });

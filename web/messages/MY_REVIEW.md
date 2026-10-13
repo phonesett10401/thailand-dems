@@ -683,7 +683,80 @@ These are the "During" steps. The first three of each are shown on the Now scree
 | `map_all_hazards` | Hazards in {country} | {country}ရှိ အန္တရာယ်များ |
 | `line_from` | from {time} | {time} မှ စတင် |
 | `map_scope` | The map shows hazards in {country}. Your level only counts hazards near you. | မြေပုံသည် {country}ရှိ အန္တရာယ်များကို ပြသည်။ သင့်အဆင့်တွင် သင့်အနီးရှိ အန္တရာယ်များကိုသာ ထည့်တွက်သည်။ |
+| `smhi_ev_thunder` | Thunderstorm | မိုးကြိုးမုန်တိုင်း |
+| `smhi_ev_wind` | Wind | လေပြင်း |
+| `smhi_ev_wind_mountains` | Wind in the alpine region | တောင်ပေါ်ဒေသတွင် လေပြင်း |
+| `smhi_ev_strong_cooling` | Strong cooling | လေအေးဒဏ် ပြင်းထန်ခြင်း |
+| `smhi_ev_snow` | Snow | နှင်းကျခြင်း |
+| `smhi_ev_black_ice` | Black ice | လမ်းပေါ် ရေခဲဖုံးခြင်း |
+| `smhi_ev_rain` | Rain | မိုးသည်းထန်ခြင်း |
+| `smhi_ev_high_temperatures` | High temperatures | အပူချိန် မြင့်မားခြင်း |
+| `smhi_ev_wind_sea` | Wind at sea | ပင်လယ်ပြင်တွင် လေပြင်း |
+| `smhi_ev_ice_accretion` | Ice accretion | ပင်လယ်တွင် သင်္ဘောပေါ် ရေခဲတက်ခြင်း |
+| `smhi_ev_low_sea_level` | Low sea level | ပင်လယ်ရေမျက်နှာပြင် နိမ့်ခြင်း |
+| `smhi_ev_high_sealevel` | High sea level | ပင်လယ်ရေမျက်နှာပြင် မြင့်ခြင်း |
+| `smhi_ev_water_shortage` | Risk for water shortage | ရေရှားပါးနိုင်ခြေ |
+| `smhi_ev_high_flow` | High water discharge | မြစ်ရေ စီးဆင်းမှု မြင့်မားခြင်း |
+| `smhi_ev_flooding` | Flooding | ရေကြီးမှု |
+| `smhi_ev_fire` | Fire risk | တောမီး ဖြစ်နိုင်ခြေ |
+| `se_area_1` | Stockholm County | စတော့ဟုမ်းခရိုင် |
+| `se_area_3` | Uppsala County | ဥပ္ပဆာလာခရိုင် |
+| `se_area_4` | Södermanland County | ဆိုဒါမန်လန်ခရိုင် |
+| `se_area_5` | Östergötland County | အိုစတာယော့တလန်ခရိုင် |
+| `se_area_6` | Jönköping County | ယွန်ချော့ပင်ခရိုင် |
+| `se_area_7` | Kronoberg County | ခရိုနိုဘယ်ရီခရိုင် |
+| `se_area_8` | Kalmar County | ကာလ်မာခရိုင် |
+| `se_area_9` | Gotland County | ဂေါ့တလန်ခရိုင် |
+| `se_area_10` | Blekinge County | ဘလက်ကင်းဂျခရိုင် |
+| `se_area_12` | Skåne County | စကိုးနဲခရိုင် |
+| `se_area_13` | Halland County | ဟာလန်ခရိုင် |
+| `se_area_14` | Västra Götaland County | ဗက်စတြာယော့တလန်ခရိုင် |
+| `se_area_17` | Värmland County | ဗာမလန်ခရိုင် |
+| `se_area_18` | Örebro County | အိုရီဘရိုခရိုင် |
+| `se_area_19` | Västmanland County | ဗက်စမန်လန်ခရိုင် |
+| `se_area_20` | Dalarna County | ဒါလာနာခရိုင် |
+| `se_area_21` | Gävleborg County | ယက်ဗလဲဘော့ခရိုင် |
+| `se_area_22` | Västernorrland County | ဗက်စတာနော့လန်ခရိုင် |
+| `se_area_23` | Jämtland County | ယမ့်တလန်ခရိုင် |
+| `se_area_24` | Västerbotten County | ဗက်စတာဘော့တန်ခရိုင် |
+| `se_area_25` | Norrbotten County | နော့ဘော့တန်ခရိုင် |
+| `se_area_41` | Bay of Bothnia | ဘော့သနီးယား ပင်လယ်အော် |
+| `se_area_42` | The Quark | ကွာ့ကင် ရေလက်ကြား |
+| `se_area_43` | Northern Sea of Bothnia | ဘော့သနီးယားပင်လယ် မြောက်ပိုင်း |
+| `se_area_44` | Southern Sea of Bothnia | ဘော့သနီးယားပင်လယ် တောင်ပိုင်း |
+| `se_area_45` | Sea of Åland | အိုလန်ပင်လယ် |
+| `se_area_46` | Archipelago Sea | ကျွန်းစုပင်လယ် |
+| `se_area_47` | Gulf of Finland | ဖင်လန် ပင်လယ်အော် |
+| `se_area_48` | Northern Baltic | ဘော်လတစ်ပင်လယ် မြောက်ပိုင်း |
+| `se_area_49` | Central Baltic | ဘော်လတစ်ပင်လယ် အလယ်ပိုင်း |
+| `se_area_50` | Gulf of Riga | ရီဂါ ပင်လယ်အော် |
+| `se_area_51` | Southeastern Baltic | ဘော်လတစ်ပင်လယ် အရှေ့တောင်ပိုင်း |
+| `se_area_52` | Southern Baltic | ဘော်လတစ်ပင်လယ် တောင်ပိုင်း |
+| `se_area_53` | Western Baltic | ဘော်လတစ်ပင်လယ် အနောက်ပိုင်း |
+| `se_area_54` | The Belts | ဘဲလ့် ရေလက်ကြားများ |
+| `se_area_55` | The Sound | အိုရီဆွန်း ရေလက်ကြား |
+| `se_area_56` | Kattegat | ကတ်တီဂတ် ရေလက်ကြား |
+| `se_area_57` | Skagerrak | စကာဂရက် ရေလက်ကြား |
+| `se_area_58` | Lake Vänern | ဗန်နန်ကန် |
+| `mm_place` | Yangon | ရန်ကုန် |
+| `mm_place` | Ayeyarwady Region | ဧရာဝတီတိုင်းဒေသကြီး |
+| `mm_place` | Bago Region | ပဲခူးတိုင်းဒေသကြီး |
+| `mm_place` | Chin State | ချင်းပြည်နယ် |
+| `mm_place` | Kachin State | ကချင်ပြည်နယ် |
+| `mm_place` | Kayah State | ကယားပြည်နယ် |
+| `mm_place` | Kayin State | ကရင်ပြည်နယ် |
+| `mm_place` | Magway Region | မကွေးတိုင်းဒေသကြီး |
+| `mm_place` | Mandalay Region | မန္တလေးတိုင်းဒေသကြီး |
+| `mm_place` | Mon State | မွန်ပြည်နယ် |
+| `mm_place` | Naypyidaw Union Territory | နေပြည်တော် ပြည်ထောင်စုနယ်မြေ |
+| `mm_place` | Rakhine State | ရခိုင်ပြည်နယ် |
+| `mm_place` | Sagaing Region | စစ်ကိုင်းတိုင်းဒေသကြီး |
+| `mm_place` | Shan State | ရှမ်းပြည်နယ် |
+| `mm_place` | Tanintharyi Region | တနင်္သာရီတိုင်းဒေသကြီး |
+| `mm_place` | Yangon Region | ရန်ကုန်တိုင်းဒေသကြီး |
 
 ---
+
+Added after sign-off (2026-10-13): SMHI event and Swedish/Myanmar place names — please glance at these
 
 Reviewed by: Phone Sett Paing Kyaw (owner, native speaker) — approved  Date: 2026-10-13

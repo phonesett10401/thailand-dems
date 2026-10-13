@@ -1,6 +1,7 @@
 import { distanceKm } from '$lib/geo';
 import type { Pt } from '$lib/types';
 import type { Country, CountryPlace } from './index';
+import { SE_AREAS } from './se-areas';
 
 export const MCF_SHELTERS = 'https://www.mcf.se/sv/amnesomraden/beredskap-for-kris-och-krig/befolkningsskydd/skyddsrum-och-andra-skyddade-platser/';
 
@@ -32,7 +33,7 @@ export const se: Country = {
 		{ name: 'Västra Götaland County', lat: 57.7089, lon: 11.9746, smhiId: 14 },
 		{ name: 'Örebro County', lat: 59.2753, lon: 15.2134, smhiId: 18 },
 		{ name: 'Östergötland County', lat: 58.4108, lon: 15.6214, smhiId: 5 }
-	],
+	].map((p) => ({ ...p, names: SE_AREAS[p.smhiId] })),
 	sos: '112',
 	numbers: [
 		{ tel: '112', key: 'se_112' },

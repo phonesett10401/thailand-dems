@@ -12,6 +12,8 @@ export type SmhiWarning = {
 	end: string | null;
 	zoneId?: number;
 	areas?: string[];
+	/** SMHI area ids, in the same order as `areas` (for names in the reader's language). */
+	areaIds?: number[];
 	geometry?: SmhiGeometry;
 };
 const LEVEL: Record<string, SmhiWarning['level']> = { YELLOW: 'watch', ORANGE: 'warning', RED: 'warning' };
@@ -28,9 +30,11 @@ export function normaliseSmhi(raw: unknown): SmhiWarning[] {
 			const g = a.area?.geometry;
 			const geo = (g?.type === 'Polygon' || g?.type === 'MultiPolygon') && Array.isArray(g.coordinates) ? { geometry: g as SmhiGeometry } : {};
 			const zone = Number.isInteger(a.id) ? { zoneId: a.id as number } : {};
-			const areas = a.affectedAreas.flatMap((x: { en?: unknown }) => (typeof x?.en === 'string' ? [x.en] : []));
+			const named = a.affectedAreas.filter((x: { en?: unknown }) => typeof x?.en === 'string');
+			const areas: string[] = named.map((x: { en: string }) => x.en);
+			const areaIds: number[] = named.map((x: { id?: unknown }) => x.id);
 			for (const area of a.affectedAreas)
-				if (Number.isInteger(area?.id)) out.push({ areaId: area.id, level, event, code, start: a.approximateStart ?? '', end: a.approximateEnd ?? null, ...zone, areas, ...geo });
+				if (Number.isInteger(area?.id)) out.push({ areaId: area.id, level, event, code, start: a.approximateStart ?? '', end: a.approximateEnd ?? null, ...zone, areas, areaIds, ...geo });
 		}
 	}
 	return out;
@@ -57,13 +61,13 @@ export const smhiLevel = (w: { level: SmhiWarning['level']; start: string }, now
 
 export const SMHI_URL = 'https://www.smhi.se/vader/varningar-och-brandrisk';
 
-export type SmhiZone = { zoneId: number; event: string; code: string; level: Lvl; start: string; areas: string[]; geometry?: SmhiGeometry };
+export type SmhiZone = { zoneId: number; event: string; code: string; level: Lvl; start: string; areas: string[]; areaIds?: number[]; geometry?: SmhiGeometry };
 /** One zone per SMHI warning area that has not expired. Display only; a user's level still comes from `collect`. */
 export function buildZones(rows: SmhiWarning[], now: number): SmhiZone[] {
 	const zones = new Map<number, SmhiZone>();
 	for (const w of rows) {
 		if (w.zoneId === undefined || zones.has(w.zoneId) || (w.end !== null && Date.parse(w.end) < now)) continue;
-		zones.set(w.zoneId, { zoneId: w.zoneId, event: w.event, code: w.code, level: smhiLevel(w, now), start: w.start, areas: w.areas ?? [], geometry: w.geometry });
+		zones.set(w.zoneId, { zoneId: w.zoneId, event: w.event, code: w.code, level: smhiLevel(w, now), start: w.start, areas: w.areas ?? [], areaIds: w.areaIds, geometry: w.geometry });
 	}
 	return [...zones.values()];
 }
@@ -81,5 +85,5 @@ export const zoneHazard = (z: SmhiZone): Hazard => ({
 	source: 'SMHI',
 	sample: false,
 	url: SMHI_URL,
-	detail: z.areas.join(', ') || null
+	areas: z.areas.map((en, i) => ({ id: z.areaIds?.[i], en }))
 });

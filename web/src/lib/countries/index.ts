@@ -5,7 +5,8 @@ import { se } from './se';
 import { th } from './th';
 
 export type CountryCode = 'TH' | 'MM' | 'SE';
-export type CountryPlace = Pt & { name: string; smhiId?: number };
+/** `name` is the English identity; `names` the label in each language (falls back to `name`). */
+export type CountryPlace = Pt & { name: string; names?: Names; smhiId?: number };
 export type Names = { en: string; th: string; my: string };
 export type Country = {
 	code: CountryCode;

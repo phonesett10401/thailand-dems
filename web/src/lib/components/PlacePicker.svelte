@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ChevronDown, LocateFixed } from '@lucide/svelte';
-	import { currentCountry, defaultCity, suggestCountry } from '$lib/country.svelte';
+	import { currentCountry, defaultCity, placeName, suggestCountry } from '$lib/country.svelte';
 	import { detectCountry } from '$lib/countries';
 	import { here, places, setPlace, useGps } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
@@ -8,7 +8,7 @@
 	let box: HTMLDetailsElement;
 	let busy = $state(false);
 	const name = $derived(
-		here.place.via === 'gps' ? m.location_gps() : here.place.via === 'default' ? m.location_default({ city: defaultCity() }) : here.place.name
+		here.place.via === 'gps' ? m.location_gps() : here.place.via === 'default' ? m.location_default({ city: defaultCity() }) : placeName(here.place.name)
 	);
 
 	async function gps() {
@@ -50,7 +50,7 @@
 			<select onchange={pick} class="min-h-11 rounded-lg border border-line bg-raised px-2 text-sm text-text">
 				<option value="">{m.location_pick()}</option>
 				{#each places() as p (p.name)}
-					<option value={p.name} selected={here.place.via === 'province' && here.place.name === p.name}>{p.name}</option>
+					<option value={p.name} selected={here.place.via === 'province' && here.place.name === p.name}>{placeName(p.name)}</option>
 				{/each}
 			</select>
 		</label>

@@ -55,3 +55,85 @@ Copy and docs for three countries (Task 7): new `about_real_smhi`, `about_row_pm
 Countries final-review fixes (Thai drafts, need native review): reworded `map_all_hazards` (now takes the country name: "ภัยใน{country}"); new `line_from` ("ตั้งแต่ {time}", shown for an SMHI warning that has not started yet).
 
 Map follows the country (Thai draft, need native review): reworded `map_scope` (now takes the country name: "แผนที่แสดงภัยใน{country} ระดับภัยของคุณนับเฉพาะภัยที่อยู่ใกล้คุณ").
+
+## SMHI events and Swedish/Myanmar place names (2026-10-13)
+
+Thai drafts, need native review. SMHI event keys (`messages/th.json`):
+
+- `smhi_ev_thunder`: Thunderstorm → พายุฝนฟ้าคะนอง
+- `smhi_ev_wind`: Wind → ลมแรง
+- `smhi_ev_wind_mountains`: Wind in the alpine region → ลมแรงบนเขตภูเขาสูง
+- `smhi_ev_strong_cooling`: Strong cooling → ความหนาวเย็นจัดจากลม
+- `smhi_ev_snow`: Snow → หิมะตก
+- `smhi_ev_black_ice`: Black ice → น้ำแข็งเคลือบถนน
+- `smhi_ev_rain`: Rain → ฝนตกหนัก
+- `smhi_ev_high_temperatures`: High temperatures → อุณหภูมิสูง
+- `smhi_ev_wind_sea`: Wind at sea → ลมแรงในทะเล
+- `smhi_ev_ice_accretion`: Ice accretion → น้ำแข็งเกาะเรือในทะเล
+- `smhi_ev_low_sea_level`: Low sea level → ระดับน้ำทะเลต่ำ
+- `smhi_ev_high_sealevel`: High sea level → ระดับน้ำทะเลสูง
+- `smhi_ev_water_shortage`: Risk for water shortage → เสี่ยงขาดแคลนน้ำ
+- `smhi_ev_high_flow`: High water discharge → น้ำในแม่น้ำไหลแรงและสูง
+- `smhi_ev_flooding`: Flooding → น้ำท่วม
+- `smhi_ev_fire`: Fire risk → เสี่ยงไฟป่า
+
+Swedish counties and SMHI sea districts (`src/lib/countries/se-areas.ts`):
+
+- Stockholm County → เทศมณฑลสตอกโฮล์ม
+- Uppsala County → เทศมณฑลอุปซอลา
+- Södermanland County → เทศมณฑลเซอเดอร์มันลันด์
+- Östergötland County → เทศมณฑลเอิสเตอร์เยิตลันด์
+- Jönköping County → เทศมณฑลเยินเชอปิง
+- Kronoberg County → เทศมณฑลโครโนแบร์ย
+- Kalmar County → เทศมณฑลคาลมาร์
+- Gotland County → เทศมณฑลกอตลันด์
+- Blekinge County → เทศมณฑลเบลคิงเง
+- Skåne County → เทศมณฑลสโกเน
+- Halland County → เทศมณฑลฮัลลันด์
+- Västra Götaland County → เทศมณฑลเวสตราเยอตาลันด์
+- Värmland County → เทศมณฑลแวร์มลันด์
+- Örebro County → เทศมณฑลเออเรบรู
+- Västmanland County → เทศมณฑลเวสต์มันลันด์
+- Dalarna County → เทศมณฑลดาลาร์นา
+- Gävleborg County → เทศมณฑลแยฟเลบอร์ย
+- Västernorrland County → เทศมณฑลเวสเตอร์นอร์ลันด์
+- Jämtland County → เทศมณฑลแยมต์ลันด์
+- Västerbotten County → เทศมณฑลเวสเตอร์บ็อตเทน
+- Norrbotten County → เทศมณฑลนอร์บ็อตเทน
+- Bay of Bothnia → อ่าวบอทเนีย
+- The Quark → ช่องแคบควาร์เกน
+- Northern Sea of Bothnia → ทะเลบอทเนียตอนเหนือ
+- Southern Sea of Bothnia → ทะเลบอทเนียตอนใต้
+- Sea of Åland → ทะเลโอลันด์
+- Archipelago Sea → ทะเลหมู่เกาะ
+- Gulf of Finland → อ่าวฟินแลนด์
+- Northern Baltic → ทะเลบอลติกตอนเหนือ
+- Central Baltic → ทะเลบอลติกตอนกลาง
+- Gulf of Riga → อ่าวริกา
+- Southeastern Baltic → ทะเลบอลติกตะวันออกเฉียงใต้
+- Southern Baltic → ทะเลบอลติกตอนใต้
+- Western Baltic → ทะเลบอลติกตะวันตก
+- The Belts → ช่องแคบเบลต์
+- The Sound → ช่องแคบเออเรซุนด์
+- Kattegat → ช่องแคบคัตเตกัต
+- Skagerrak → ช่องแคบสกาเกอร์รัก
+- Lake Vänern → ทะเลสาบแวเนิร์น
+
+Myanmar states and regions (`src/lib/countries/mm.ts`):
+
+- Yangon → ย่างกุ้ง
+- Ayeyarwady Region → เขตอิระวดี
+- Bago Region → เขตพะโค
+- Chin State → รัฐชิน
+- Kachin State → รัฐคะฉิ่น
+- Kayah State → รัฐกะยา
+- Kayin State → รัฐกะเหรี่ยง
+- Magway Region → เขตมะกเว
+- Mandalay Region → เขตมัณฑะเลย์
+- Mon State → รัฐมอญ
+- Naypyidaw Union Territory → ดินแดนสหภาพเนปยีดอ
+- Rakhine State → รัฐยะไข่
+- Sagaing Region → เขตสะกาย
+- Shan State → รัฐฉาน
+- Tanintharyi Region → เขตตะนาวศรี
+- Yangon Region → เขตย่างกุ้ง

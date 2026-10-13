@@ -8,7 +8,7 @@
 	import { api } from '$lib/config';
 	import { toNum } from '$lib/geo';
 	import { live } from '$lib/hazards.svelte';
-	import { hazName, markerLabel } from '$lib/labels';
+	import { hazName, markerLabel, smhiEventName } from '$lib/labels';
 	import { country, currentCountry } from '$lib/country.svelte';
 	import { detectCountry } from '$lib/countries';
 	import { smhiAreaFor } from '$lib/countries/se';
@@ -101,7 +101,7 @@
 				<Chip on={!hidden.has(t)} color={chipColor(t)} onclick={() => toggle(t)}>{hazName(t)}</Chip>
 			{/each}
 			{#each zoneEvents as e (e)}
-				<Chip on={!hidden.has(`smhi:${e}`)} color={eventColor(e)} onclick={() => toggle(`smhi:${e}`)}>{e}</Chip>
+				<Chip on={!hidden.has(`smhi:${e}`)} color={eventColor(e)} onclick={() => toggle(`smhi:${e}`)}>{smhiEventName(zones.find((z) => z.event === e)?.code ?? null, e)}</Chip>
 			{/each}
 			{#if currentCountry().shelters === 'sample'}<Chip on={!hidden.has('shelters')} color="#f2f2f4" onclick={() => toggle('shelters')}>{m.map_shelters()}</Chip>{/if}
 		</div>

@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { api } from '$lib/config';
-	import { country, currentCountry } from '$lib/country.svelte';
+	import { country, currentCountry, placeName } from '$lib/country.svelte';
 	import type { Overall } from '$lib/levels';
 	import { places, setPlace } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
@@ -40,7 +40,7 @@
 	function search(e: Event) {
 		const input = e.currentTarget as HTMLInputElement;
 		const q = input.value.trim();
-		const p = places().find((x) => x.name === q);
+		const p = places().find((x) => x.name === q || placeName(x.name) === q);
 		const s = shelters.find((x) => x.ShelterName === q);
 		if (p) setPlace({ ...p, via: 'province' });
 		else if (s) goto(localizeHref(`/shelters?focus=${s.ShelterID}`));
@@ -65,7 +65,7 @@
 		<kbd class="rounded border border-line px-1 font-mono text-[10px]">/</kbd>
 	</label>
 	<datalist id="top-search-list">
-		{#each places() as p (p.name)}<option value={p.name}></option>{/each}
+		{#each places() as p (p.name)}<option value={placeName(p.name)}></option>{/each}
 		{#each shelters as s (s.ShelterID)}<option value={s.ShelterName}></option>{/each}
 	</datalist>
 	<nav aria-label={m.tabs_label()} class="ml-2 hidden gap-1 md:flex">

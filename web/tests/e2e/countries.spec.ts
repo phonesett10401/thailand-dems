@@ -243,4 +243,19 @@ test.describe('Sweden map: SMHI warning areas', () => {
 		await page.getByRole('button', { name: 'List', exact: true }).click();
 		await expect(page.getByText('No SMHI warnings right now.').last()).toBeVisible();
 	});
+
+	test('Burmese: SMHI event, area and county names are in Burmese', async ({ page }) => {
+		const sea = [{ areaId: 56, level: 'warning', event: 'Wind at sea', code: 'WIND_SEA', start: '2026-10-01T00:00:00Z', end: null, zoneId: 2, areas: ['Kattegat'], areaIds: [56], geometry: poly(11, 57) }];
+		await page.route('**/api/warnings/se', (r) => r.fulfill({ contentType: 'application/json', body: JSON.stringify(sea) }));
+		await page.goto('/my/map');
+		const chip = page.getByRole('button', { name: 'ပင်လယ်ပြင်တွင် လေပြင်း', exact: true }); // WIND_SEA in Burmese
+		await expect(chip).toBeVisible();
+		await expect(page.getByRole('button', { name: 'Wind at sea' })).toHaveCount(0);
+		await page.getByRole('button', { name: 'စာရင်း', exact: true }).click();
+		const row = page.getByRole('button', { name: /ကတ်တီဂတ်/ });
+		await expect(row).toBeVisible();
+		await expect(row).not.toContainText(/Wind at sea|Kattegat/);
+		await expect(row).toContainText(/[က-႟]/);
+		await expect(page.locator('select option', { hasText: 'စတော့ဟုမ်းခရိုင်' })).toHaveCount(1);
+	});
 });
