@@ -69,7 +69,7 @@ describe('SMHI names in the reader language', () => {
 });
 
 describe('rainOutlook', () => {
-	const at = (h: number) => new Date(2026, 9, 13, h);
+	const at = (h: number) => new Date(Date.UTC(2026, 9, 13, h - 7)); // h in Bangkok time (UTC+7)
 	const hrs = (chances: number[]) => chances.map((c, i) => ({ time: at(9 + i), temp: 30, rainChance: c }));
 	it('says rain is unlikely when no hour reaches 50%', () => {
 		expect(rainOutlook(hrs([10, 49, 30]))).toBe('Rain unlikely in the next 24 h');
