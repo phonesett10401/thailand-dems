@@ -241,7 +241,7 @@
 	"now_recent": "Recent events",
 	"now_recent_none": "No recent events near you.",
 	"tile_rain": "Rain today",
-	"tile_air": "Air PM2.5",
+	"tile_air": "Air quality",
 	"tile_river": "River",
 	"tile_quakes": "Quakes 24 h",
 	"tile_rising": "Rising",
@@ -447,5 +447,13 @@
 	"smhi_ev_water_shortage": "Risk for water shortage",
 	"smhi_ev_high_flow": "High water discharge",
 	"smhi_ev_flooding": "Flooding",
-	"smhi_ev_fire": "Fire risk"
+	"smhi_ev_fire": "Fire risk",
+	"rain_band_none": "No rain",
+	"rain_band_light": "Light rain",
+	"rain_band_moderate": "Moderate rain",
+	"rain_band_heavy": "Heavy rain",
+	"rain_band_very_heavy": "Very heavy rain",
+	"rain_likely_now": "Rain likely now",
+	"rain_likely_from": "Rain likely from {time}",
+	"rain_unlikely": "Rain unlikely in the next 24 h"
 }

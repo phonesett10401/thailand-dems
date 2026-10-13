@@ -760,3 +760,17 @@ These are the "During" steps. The first three of each are shown on the Now scree
 Added after sign-off (2026-10-13): SMHI event and Swedish/Myanmar place names — please glance at these
 
 Reviewed by: Phone Sett Paing Kyaw (owner, native speaker) — approved  Date: 2026-10-13
+
+## Added 2026-10-13: plain-words weather tiles (not yet reviewed)
+
+| Key | English | မြန်မာ |
+|---|---|---|
+| `tile_air` | Air quality | လေထုအရည်အသွေး |
+| `rain_band_none` | No rain | မိုးမရွာ |
+| `rain_band_light` | Light rain | မိုးအနည်းငယ် |
+| `rain_band_moderate` | Moderate rain | မိုးအသင့်အတင့် |
+| `rain_band_heavy` | Heavy rain | မိုးသည်း |
+| `rain_band_very_heavy` | Very heavy rain | မိုးအလွန်သည်း |
+| `rain_likely_now` | Rain likely now | ယခု မိုးရွာနိုင်သည် |
+| `rain_likely_from` | Rain likely from {time} | {time} မှစ၍ မိုးရွာနိုင်သည် |
+| `rain_unlikely` | Rain unlikely in the next 24 h | နောက် 24 နာရီအတွင်း မိုးရွာဖွယ် မရှိပါ |

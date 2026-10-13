@@ -3,7 +3,7 @@ import air from './fixtures/air.json';
 import forecast from './fixtures/forecast.json';
 import river from './fixtures/river.json';
 import { country } from '../country.svelte';
-import { airUrl, forecastUrl, parseAir, parseForecast, parseRiver, pm25Band } from './openmeteo';
+import { airUrl, forecastUrl, parseAir, parseForecast, parseRiver, pm25Band, rainBand } from './openmeteo';
 
 describe('parseForecast', () => {
 	it('maps current, 24 hours and 7 days', () => {
@@ -82,5 +82,19 @@ describe('request day follows the country', () => {
 		expect(airUrl(p)).toContain('timezone=Europe%2FStockholm');
 		country.code = 'TH';
 		expect(forecastUrl(p)).toContain('timezone=Asia%2FBangkok');
+	});
+});
+
+describe('rainBand (TMD daily bands)', () => {
+	it('classifies a day of rain', () => {
+		expect(rainBand(0)).toBe('none');
+		expect(rainBand(0.05)).toBe('none');
+		expect(rainBand(9)).toBe('light');
+		expect(rainBand(10)).toBe('light');
+		expect(rainBand(10.1)).toBe('moderate');
+		expect(rainBand(35)).toBe('moderate');
+		expect(rainBand(35.1)).toBe('heavy');
+		expect(rainBand(90)).toBe('heavy');
+		expect(rainBand(90.1)).toBe('very_heavy');
 	});
 });

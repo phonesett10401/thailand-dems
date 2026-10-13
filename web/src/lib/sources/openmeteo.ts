@@ -24,6 +24,7 @@ export type Forecast = {
 };
 export type Air = { time: Date; pm25: number; aqi: number };
 export type River = { today: number; peak: number; peakDate: string; rising: boolean };
+export type RainBand = 'none' | 'light' | 'moderate' | 'heavy' | 'very_heavy';
 export type Pm25Band = 'very_good' | 'good' | 'moderate' | 'unhealthy_some' | 'unhealthy';
 
 const unix = (s: number) => new Date(s * 1000);
@@ -88,6 +89,15 @@ export function parseRiver(r: RawRiver): River | null {
 	const peak = v[peakIdx] as number;
 	const pastMax = Math.max(-Infinity, ...all.slice(0, t).filter((x): x is number => x !== null));
 	return { today, peak, peakDate: r.daily.time[t + peakIdx], rising: peak > today * 1.5 && peak - today > 1 && peak > pastMax };
+}
+
+/** Thai Meteorological Department daily rain bands (mm); heavy/very heavy match our Watch (35) and Warning (90). */
+export function rainBand(mm: number): RainBand {
+	if (mm < 0.1) return 'none';
+	if (mm <= 10) return 'light';
+	if (mm <= 35) return 'moderate';
+	if (mm <= 90) return 'heavy';
+	return 'very_heavy';
 }
 
 /** Thai Pollution Control Department 24-hour PM2.5 bands (µg/m³). */

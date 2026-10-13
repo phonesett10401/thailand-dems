@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import type { Hazard } from './levels';
-import { hazLine, markerLabel, nearestOpen, nowTitle, smhiEventName } from './labels';
+import { hazLine, markerLabel, nearestOpen, nowTitle, rainOutlook, smhiEventName } from './labels';
 import { overwriteGetLocale } from './paraglide/runtime.js';
 import type { Shelter } from './types';
 
@@ -65,5 +65,20 @@ describe('SMHI names in the reader language', () => {
 		expect(line).not.toMatch(/Wind at sea|Kattegat/);
 		expect(line).toContain('Nowhere Bay');
 		expect(nowTitle([zone])).toMatch(/^[က-႟]/);
+	});
+});
+
+describe('rainOutlook', () => {
+	const at = (h: number) => new Date(2026, 9, 13, h);
+	const hrs = (chances: number[]) => chances.map((c, i) => ({ time: at(9 + i), temp: 30, rainChance: c }));
+	it('says rain is unlikely when no hour reaches 50%', () => {
+		expect(rainOutlook(hrs([10, 49, 30]))).toBe('Rain unlikely in the next 24 h');
+		expect(rainOutlook([])).toBe('');
+	});
+	it('says rain is likely now when the first hour is 50% or more', () => {
+		expect(rainOutlook(hrs([60, 20]))).toBe('Rain likely now');
+	});
+	it('names the first hour with a 50% chance', () => {
+		expect(rainOutlook(hrs([10, 20, 50, 80]))).toMatch(/^Rain likely from 11/);
 	});
 });

@@ -137,3 +137,16 @@ Myanmar states and regions (`src/lib/countries/mm.ts`):
 - Shan State → รัฐฉาน
 - Tanintharyi Region → เขตตะนาวศรี
 - Yangon Region → เขตย่างกุ้ง
+
+
+## Added 2026-10-13: plain-words weather tiles (please check)
+
+- `tile_air`: Air quality → คุณภาพอากาศ
+- `rain_band_none`: No rain → ไม่มีฝน
+- `rain_band_light`: Light rain → ฝนเล็กน้อย
+- `rain_band_moderate`: Moderate rain → ฝนปานกลาง
+- `rain_band_heavy`: Heavy rain → ฝนหนัก
+- `rain_band_very_heavy`: Very heavy rain → ฝนหนักมาก
+- `rain_likely_now`: Rain likely now → มีโอกาสฝนตกตอนนี้
+- `rain_likely_from`: Rain likely from {time} → มีโอกาสฝนตกตั้งแต่ {time} น.
+- `rain_unlikely`: Rain unlikely in the next 24 h → ไม่น่าจะมีฝนใน 24 ชม. ข้างหน้า

@@ -241,7 +241,7 @@
 	"now_recent": "เหตุการณ์ล่าสุด",
 	"now_recent_none": "ไม่มีเหตุการณ์ล่าสุดใกล้คุณ",
 	"tile_rain": "ฝนวันนี้",
-	"tile_air": "ฝุ่น PM2.5",
+	"tile_air": "คุณภาพอากาศ",
 	"tile_river": "แม่น้ำ",
 	"tile_quakes": "แผ่นดินไหว 24 ชม.",
 	"tile_rising": "กำลังขึ้น",
@@ -447,5 +447,13 @@
 	"smhi_ev_water_shortage": "เสี่ยงขาดแคลนน้ำ",
 	"smhi_ev_high_flow": "น้ำในแม่น้ำไหลแรงและสูง",
 	"smhi_ev_flooding": "น้ำท่วม",
-	"smhi_ev_fire": "เสี่ยงไฟป่า"
+	"smhi_ev_fire": "เสี่ยงไฟป่า",
+	"rain_band_none": "ไม่มีฝน",
+	"rain_band_light": "ฝนเล็กน้อย",
+	"rain_band_moderate": "ฝนปานกลาง",
+	"rain_band_heavy": "ฝนหนัก",
+	"rain_band_very_heavy": "ฝนหนักมาก",
+	"rain_likely_now": "มีโอกาสฝนตกตอนนี้",
+	"rain_likely_from": "มีโอกาสฝนตกตั้งแต่ {time} น.",
+	"rain_unlikely": "ไม่น่าจะมีฝนใน 24 ชม. ข้างหน้า"
 }
