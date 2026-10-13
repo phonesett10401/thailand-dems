@@ -142,6 +142,10 @@ describe('collect (map view)', () => {
 		expect(all).toHaveLength(1);
 		expect(all[0].km).toBeGreaterThan(500);
 	});
+	it('near=false shows quakes from the last 7 days only', () => {
+		const f = { ...calm(), quakes: [quake(4.6, 20.9, 94.8, 6 * 24), quake(4.9, 20.1, 93.5, 8 * 24)] };
+		expect(collect(f, BKK, NOW, false, TH).map((h) => h.value)).toEqual([4.6]);
+	});
 });
 
 describe('feed links', () => {

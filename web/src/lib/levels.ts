@@ -61,6 +61,7 @@ export const T = {
 	quake: [4.5, 6] as [number, number],
 	quakeKm: 300,
 	quakeHours: 24,
+	mapQuakeDays: 7, // the map keeps a quake a week (aftershock window); your level only 24 h
 	gdacsKm: 300,
 	cycloneKm: 500,
 	sampleKm: 100,
@@ -145,6 +146,7 @@ export function collect(f: Feeds, at: Pt, now: number, near: boolean, c: Country
 		const fresh = now - Date.parse(q.time) <= T.quakeHours * 3600_000;
 		const level = over(q.mag ?? 0, T.quake, true);
 		if (near && (km > T.quakeKm || !fresh || level === 'safe')) continue;
+		if (!near && now - Date.parse(q.time) > T.mapQuakeDays * 86_400_000) continue;
 		out.push(live({ id: q.id, type: 'earthquake', level, name: q.title, value: q.mag ?? null, km, lat: q.lat, lon: q.lon, time: q.time, source: 'USGS', url: safeUrl(q.url) }));
 	}
 	for (const g of f.gdacs ?? []) {
