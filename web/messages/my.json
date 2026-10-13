@@ -241,7 +241,7 @@
 	"now_recent": "မကြာသေးမီ ဖြစ်ရပ်များ",
 	"now_recent_none": "သင့်အနီးတွင် မကြာသေးမီ ဖြစ်ရပ် မရှိပါ။",
 	"tile_rain": "ယနေ့ မိုးရေ",
-	"tile_air": "လေထု PM2.5",
+	"tile_air": "လေထုအရည်အသွေး",
 	"tile_river": "မြစ်",
 	"tile_quakes": "ငလျင် 24 နာရီ",
 	"tile_rising": "မြင့်တက်နေ",
@@ -447,5 +447,13 @@
 	"smhi_ev_water_shortage": "ရေရှားပါးနိုင်ခြေ",
 	"smhi_ev_high_flow": "မြစ်ရေ စီးဆင်းမှု မြင့်မားခြင်း",
 	"smhi_ev_flooding": "ရေကြီးမှု",
-	"smhi_ev_fire": "တောမီး ဖြစ်နိုင်ခြေ"
+	"smhi_ev_fire": "တောမီး ဖြစ်နိုင်ခြေ",
+	"rain_band_none": "မိုးမရွာ",
+	"rain_band_light": "မိုးအနည်းငယ်",
+	"rain_band_moderate": "မိုးအသင့်အတင့်",
+	"rain_band_heavy": "မိုးသည်း",
+	"rain_band_very_heavy": "မိုးအလွန်သည်း",
+	"rain_likely_now": "ယခု မိုးရွာနိုင်သည်",
+	"rain_likely_from": "{time} မှစ၍ မိုးရွာနိုင်သည်",
+	"rain_unlikely": "နောက် 24 နာရီအတွင်း မိုးရွာဖွယ် မရှိပါ"
 }

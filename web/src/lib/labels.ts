@@ -1,6 +1,6 @@
 import { m } from '$lib/paraglide/messages.js';
-import type { Pm25Band } from './sources/openmeteo';
-import { fmtDateTime } from './format';
+import type { Pm25Band, RainBand } from './sources/openmeteo';
+import { fmtDateTime, fmtTime } from './format';
 import { sortByDistance, toNum } from './geo';
 import type { FeedKey, Hazard, HazardType, Overall } from './levels';
 import type { Pt, ReportSeverity, ReportType, Shelter } from './types';
@@ -139,3 +139,13 @@ const NUM_LABEL: Record<string, () => string> = {
 export const numLabel = (key: string): string => NUM_LABEL[key]?.() ?? key;
 /** "11414" → "114 14" for display; the tel: link keeps the digits only. */
 export const showTel = (tel: string): string => (tel === '11414' ? '114 14' : tel === '11313' ? '113 13' : tel);
+
+export const rainLabel = (b: RainBand): string =>
+	({ none: m.rain_band_none, light: m.rain_band_light, moderate: m.rain_band_moderate, heavy: m.rain_band_heavy, very_heavy: m.rain_band_very_heavy })[b]();
+
+/** One plain sentence for the 24 h rain-chance chart: the first hour at 50% or more. */
+export function rainOutlook(hours: { time: Date; rainChance: number }[]): string {
+	if (!hours.length) return '';
+	const i = hours.findIndex((h) => h.rainChance >= 50);
+	return i === -1 ? m.rain_unlikely() : i === 0 ? m.rain_likely_now() : m.rain_likely_from({ time: fmtTime(hours[i].time) });
+}

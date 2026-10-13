@@ -8,7 +8,7 @@
 	import { fmtHour, fmtTime } from '$lib/format';
 	import { occupancyPct, sortByDistance, toNum } from '$lib/geo';
 	import { currentLevel, live } from '$lib/hazards.svelte';
-	import { hazName, hazTitle, markerLabel, nearestOpen } from '$lib/labels';
+	import { hazName, hazTitle, markerLabel, nearestOpen, rainOutlook } from '$lib/labels';
 	import type { Hazard } from '$lib/levels';
 	import { here } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
@@ -29,6 +29,7 @@
 	const coords = (s: Shelter) => ({ lat: toNum(s.Latitude), lon: toNum(s.Longitude) });
 	const closest = $derived(sortByDistance(shelters, here.place, coords).filter((x) => x.km !== null).slice(0, 3));
 	const hours = $derived(live.feeds?.forecast?.hours ?? []);
+	let bar = $state<number | null>(null);
 	const recent = $derived(
 		(live.a?.hazards ?? []).filter((h) => !h.sample && h.name && h.time).sort((a, b) => b.time!.localeCompare(a.time!)).slice(0, 4)
 	);
@@ -75,10 +76,16 @@
 				</div>
 				<div class="glass flex flex-col gap-2 rounded-2xl p-3.5">
 					<h2 class="label">{m.now_rain24()}</h2>
-					<div class="flex flex-1 items-end gap-[3px]" aria-hidden="true">
-						{#each hours as h (h.time.getTime())}
-							<i class="flex-1 rounded-t-sm bg-gradient-to-b from-info to-info/30" style="height:{Math.max(4, h.rainChance)}%" title="{fmtHour(h.time)}: {h.rainChance}%"></i>
+					<p class="text-sm font-medium">{rainOutlook(hours)}</p>
+					<!-- svelte-ignore a11y_no_static_element_interactions (the sentence above carries the meaning; tapping a bar is extra) -->
+					<div class="flex min-h-16 flex-1 items-end gap-[3px]" aria-hidden="true" onpointerleave={() => (bar = null)}>
+						{#each hours as h, i (h.time.getTime())}
+							<i class="flex-1 rounded-t-sm bg-gradient-to-b from-info to-info/30 {bar === i ? 'brightness-150' : ''}" style="height:{Math.max(4, h.rainChance)}%" title="{fmtHour(h.time)}: {h.rainChance}%" onpointerenter={() => (bar = i)} onpointerdown={() => (bar = i)}></i>
 						{/each}
+					</div>
+					<div class="flex justify-between font-mono text-[10px] text-muted" aria-hidden="true">
+						{#if bar !== null && hours[bar]}<span>{fmtTime(hours[bar].time)} · {hours[bar].rainChance}%</span>
+						{:else}{#each [0, 6, 12, 18] as i (i)}{#if hours[i]}<span>{fmtTime(hours[i].time)}</span>{/if}{/each}{/if}
 					</div>
 				</div>
 				<div class="glass flex flex-col gap-2 rounded-2xl p-3.5">
