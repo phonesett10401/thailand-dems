@@ -2,7 +2,8 @@
 	import { ArrowRight, TriangleAlert } from '@lucide/svelte';
 	import { fmtTime } from '$lib/format';
 	import { feedName, hazName, nowTitle } from '$lib/labels';
-	import type { Assessment, FeedKey, Feeds, Hazard, HazardType, Overall } from '$lib/levels';
+	import { quietTypes, type Assessment, type Feeds, type Hazard, type HazardType, type Overall } from '$lib/levels';
+	import { callParams, currentCountry, defaultCity, placeName } from '$lib/country.svelte';
 	import { here } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
 	import { localizeHref } from '$lib/paraglide/runtime.js';
@@ -28,26 +29,14 @@
 	} = $props();
 
 	const place = $derived(
-		here.place.via === 'gps' ? m.location_gps() : here.place.via === 'default' ? m.location_default() : here.place.name
+		here.place.via === 'gps' ? m.location_gps() : here.place.via === 'default' ? m.location_default({ city: defaultCity() }) : placeName(here.place.name)
 	);
 	const active = $derived(a ? a.hazards.filter((h) => !h.sample && h.level !== 'safe') : []);
-	const QUIET: HazardType[] = ['flood', 'storm', 'earthquake', 'smoke', 'heat'];
-	const NEEDS: Partial<Record<HazardType, FeedKey[]>> = {
-		smoke: ['air'],
-		heat: ['forecast'],
-		flood: ['river', 'gdacs'],
-		storm: ['gdacs'],
-		earthquake: ['quakes']
-	};
 	// a type whose feed failed is unknown, not quiet
-	const quiet = $derived(
-		a && level !== 'unknown'
-			? QUIET.filter((t) => !a.hazards.some((h) => h.type === t) && !NEEDS[t]?.some((k) => a.failed.includes(k))).map(hazName)
-			: []
-	);
+	const quiet = $derived(a && level !== 'unknown' ? quietTypes(a, currentCountry()).map(hazName) : []);
 	const checking = $derived(a === null); // assess() always returns an Assessment once a refresh finishes
 	const title = $derived(
-		checking ? m.now_checking_title() : level === 'unknown' ? m.now_unknown_title() : level === 'safe' ? m.now_safe_title() : nowTitle(active.map((h) => h.type))
+		checking ? m.now_checking_title() : level === 'unknown' ? m.now_unknown_title() : level === 'safe' ? m.now_safe_title() : nowTitle(active)
 	);
 	const reason = $derived(
 		level === 'unknown'
@@ -60,7 +49,7 @@
 					? m.now_reason_1()
 					: m.now_reason_n({ count: active.length })
 	);
-	const steps = $derived(level === 'warning' && active[0] ? stepsFor(active[0].type, 'warning') : []);
+	const steps = $derived(level === 'warning' && active[0] ? stepsFor(active[0], 'warning') : []);
 	const shelterHref = $derived(nearest ? localizeHref(`/route?to=shelter:${nearest.s.ShelterID}`) : localizeHref('/shelters'));
 </script>
 
@@ -75,7 +64,7 @@
 	{#if a && a.failed.length && level !== 'unknown'}
 		<p class="text-xs text-watch">{m.now_partial({ feeds: a.failed.map(feedName).join(', ') })}</p>
 	{/if}
-	<p class="text-xs text-muted">{m.now_guidance()}</p>
+	<p class="text-xs text-muted">{m.now_guidance(callParams())}</p>
 	{#if !checking}<LevelScale {level} />{/if}
 	{#if steps.length}
 		<section class="lv-warning">

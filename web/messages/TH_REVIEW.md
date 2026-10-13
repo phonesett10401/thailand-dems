@@ -12,7 +12,7 @@ Login (Supabase backend) keys added later, also drafts: `login_admin_title`, `lo
 
 ## Citizen redesign (2026-10)
 
-Keys added for the redesigned citizen app (all Thai drafts, need native review): `nav_now`, `nav_prepare`, `nav_more`, `live_label`, `sos_aria`, `demo_chip`, `demo_chip_aria`, `place_change`, `search_label`, `first_visit_body`, `first_visit_ok`, `lvl_safe`, `lvl_watch`, `lvl_warning`, `lvl_unknown`, `haz_flood`, `haz_rain`, `haz_storm`, `haz_smoke`, `haz_heat`, `haz_earthquake`, `haz_tsunami`, `haz_landslide`, `haz_drought`, `haz_wildfire`, `haz_volcano`, `haz_chemical`, `haz_other`, `line_pm25`, `line_heat`, `line_rain`, `line_river`, `line_quake`, `line_event`, `feed_air`, `feed_forecast`, `feed_river`, `feed_gdacs`, `feed_quakes`, `now_updated`, `now_safe_title`, `now_safe_body`, `now_unknown_title`, `now_unknown_body`, `now_unknown_never`, `now_title_1`, `now_title_2`, `now_title_3`, `now_reason_1`, `now_reason_n`, `now_partial`, `now_guidance`, `now_quiet`, `now_steps`, `now_shelter`, `now_shelter_go`, `now_shelter_sub`, `now_shelter_none`, `now_report`, `now_shelters`, `now_rain24`, `now_recent`, `now_recent_none`, `tile_rain`, `tile_air`, `tile_river`, `tile_quakes`, `tile_rising`, `tile_normal`, `tile_none`, `sample_tag`, `hazard_source`, `hazard_distance`, `hazard_sample_note`, `hazard_guide`, `hazard_open_source`, `now_all_shelters`, `now_checking_title`, `map_layers`, `map_shelters`, `map_all_hazards`, `map_none`, `map_report`, `map_list`, `f_open`, `f_space`, `f_medical`, `f_pets`, `f_cleanAir`, `shelters_filters`, `shelters_none`, `shelter_route`, `shelter_gmaps`, `shelter_facilities`, `evac_list_title`, `evac_line`, `route_title`, `route_mode`, `mode_foot`, `mode_car`, `mode_bike`, `route_summary`, `route_avoided`, `route_not_avoided`, `route_steps`, `route_start`, `route_stop`, `route_recalc`, `route_loading`, `route_limited`, `route_outside`, `route_fallback`, `route_no_dest`, `route_pick_shelter`, `step_unnamed`, `step_0`, `step_1`, `step_2`, `step_3`, `step_4`, `step_5`, `step_6`, `step_7`, `step_8`, `step_9`, `step_10`, `step_11`, `step_12`, `step_13`, `dir_n`, `dir_ne`, `dir_e`, `dir_se`, `dir_s`, `dir_sw`, `dir_w`, `dir_nw`, `route_gps_error`, `prep_title`, `prep_intro`, `prep_guides`, `prep_bag`, `prep_bag_count`, `prep_bag_reset`, `prep_bag_note`, `prep_numbers`, `prep_before`, `prep_during`, `prep_after`, `prep_back`, `prep_call`, `more_title`, `more_report`, `more_language`, `more_about`, `more_demo`, `more_staff`, `more_admin`, `more_volunteer`, `more_ask`, `coming_soon`, `about_levels_title`, `about_levels_body`, `about_row_pm25`, `about_row_heat`, `about_row_rain`, `about_row_quake`, `about_row_gdacs`, `about_row_river`, `about_row_sample`, `about_limits_title`, `about_limits_body`, `about_real_routes`, `route_attribution`.
+Keys added for the redesigned citizen app (all Thai drafts, need native review): `nav_now`, `nav_prepare`, `nav_more`, `live_label`, `sos_aria`, `demo_chip`, `demo_chip_aria`, `place_change`, `search_label`, `first_visit_body`, `first_visit_ok`, `lvl_safe`, `lvl_watch`, `lvl_warning`, `lvl_unknown`, `haz_flood`, `haz_rain`, `haz_storm`, `haz_smoke`, `haz_heat`, `haz_earthquake`, `haz_tsunami`, `haz_landslide`, `haz_drought`, `haz_wildfire`, `haz_volcano`, `haz_chemical`, `haz_other`, `line_pm25`, `line_heat`, `line_rain`, `line_river`, `line_quake`, `line_event`, `feed_air`, `feed_forecast`, `feed_river`, `feed_gdacs`, `feed_quakes`, `now_updated`, `now_safe_title`, `now_safe_body`, `now_unknown_title`, `now_unknown_body`, `now_unknown_never`, `now_title_1`, `now_title_2`, `now_title_3`, `now_reason_1`, `now_reason_n`, `now_partial`, `now_guidance`, `now_quiet`, `now_steps`, `now_shelter`, `now_shelter_go`, `now_shelter_sub`, `now_shelter_none`, `now_report`, `now_shelters`, `now_rain24`, `now_recent`, `now_recent_none`, `tile_rain`, `tile_air`, `tile_river`, `tile_quakes`, `tile_rising`, `tile_normal`, `tile_none`, `sample_tag`, `hazard_source`, `hazard_distance`, `hazard_sample_note`, `hazard_guide`, `hazard_open_source`, `now_all_shelters`, `now_checking_title`, `map_layers`, `map_shelters`, `map_all_hazards`, `map_none`, `map_smhi_none`, `map_report`, `map_list`, `f_open`, `f_space`, `f_medical`, `f_pets`, `f_cleanAir`, `shelters_filters`, `shelters_none`, `shelter_route`, `shelter_gmaps`, `shelter_facilities`, `evac_list_title`, `evac_line`, `route_title`, `route_mode`, `mode_foot`, `mode_car`, `mode_bike`, `route_summary`, `route_avoided`, `route_not_avoided`, `route_steps`, `route_start`, `route_stop`, `route_recalc`, `route_loading`, `route_limited`, `route_outside`, `route_fallback`, `route_no_dest`, `route_pick_shelter`, `step_unnamed`, `step_0`, `step_1`, `step_2`, `step_3`, `step_4`, `step_5`, `step_6`, `step_7`, `step_8`, `step_9`, `step_10`, `step_11`, `step_12`, `step_13`, `dir_n`, `dir_ne`, `dir_e`, `dir_se`, `dir_s`, `dir_sw`, `dir_w`, `dir_nw`, `route_gps_error`, `prep_title`, `prep_intro`, `prep_guides`, `prep_bag`, `prep_bag_count`, `prep_bag_reset`, `prep_bag_note`, `prep_numbers`, `prep_before`, `prep_during`, `prep_after`, `prep_back`, `prep_call`, `more_title`, `more_report`, `more_language`, `more_about`, `more_demo`, `more_staff`, `more_admin`, `more_volunteer`, `more_ask`, `coming_soon`, `about_levels_title`, `about_levels_body`, `about_row_pm25`, `about_row_heat`, `about_row_rain`, `about_row_quake`, `about_row_gdacs`, `about_row_river`, `about_row_sample`, `about_limits_title`, `about_limits_body`, `about_real_routes`, `route_attribution`.
 
 The Prepare guide text in `src/lib/prepare/guides.ts` (the `th:` fields) also needs native review, especially the life-critical steps.
 
@@ -38,3 +38,102 @@ New keys (Thai drafts, need native review): `demo_title`, `demo_video_label`, `d
 Also new (About page link): `about_demo_link`.
 
 Also new (Map note): `map_scope`.
+
+## Countries (2026-10)
+
+New Thai drafts needing native review: `country_label`, `country_TH`, `country_MM`, `country_SE`, `country_banner`, `country_switch`, `country_not_now`, `shelters_th_note`, `shelters_dev_title`, `shelters_dev_body`, `shelters_se_title`, `shelters_se_body`, `shelters_se_cta`. Reworded: `location_default` (now `{city} (default)`), `sos_aria` (now `Call {num}, emergency number`).
+Also reworded for any country: `location_pick` ("Choose an area"), `location_denied`; `shelters_se_body` and `shelters_se_cta` now name MCF (formerly MSB).
+
+Keys added for SMHI official warnings (Thai drafts, need native review): `haz_official`, `feed_smhi`, `official_badge`.
+
+Prepare for Sweden (Thai drafts, need native review): `num_1155`, `num_1182`, `num_mm_199`, `num_mm_192`, `num_mm_191`, `num_se_112`, `num_se_1177`, `num_se_11414`, `num_se_11313`, `haz_cold`. The new `cold` and `snow` guides and the `cold` go-bag kit in `src/lib/prepare/guides.ts` (`th:` fields) also need native review, especially the hypothermia and carbon-monoxide steps.
+
+Burmese-round changes that touched Thai too (drafts, need native review): new `emergency_call_first_one` and `report_done_body_one` (used when a country has one number). Reworded and now taking the country's numbers as parameters: `first_visit_body`, `now_guidance`, `about_limits_body`, `report_done_body`, `emergency_call_first`.
+
+Copy and docs for three countries (Task 7): new `about_real_smhi`, `about_row_pm25_who`, `demo_video_th_note`. Reworded: `app_name` (now just "DEMS"), `about_intro`, `about_sample_shelters` (now one line per country), `demo_hood_flow_body` (adds the SMHI sentence), `demo_video_label` (says it is the Thailand version).
+
+Countries final-review fixes (Thai drafts, need native review): reworded `map_all_hazards` (now takes the country name: "ภัยใน{country}"); new `line_from` ("ตั้งแต่ {time}", shown for an SMHI warning that has not started yet).
+
+Map follows the country (Thai draft, need native review): reworded `map_scope` (now takes the country name: "แผนที่แสดงภัยใน{country} ระดับภัยของคุณนับเฉพาะภัยที่อยู่ใกล้คุณ").
+
+## SMHI events and Swedish/Myanmar place names (2026-10-13)
+
+Thai drafts, need native review. SMHI event keys (`messages/th.json`):
+
+- `smhi_ev_thunder`: Thunderstorm → พายุฝนฟ้าคะนอง
+- `smhi_ev_wind`: Wind → ลมแรง
+- `smhi_ev_wind_mountains`: Wind in the alpine region → ลมแรงบนเขตภูเขาสูง
+- `smhi_ev_strong_cooling`: Strong cooling → ความหนาวเย็นจัดจากลม
+- `smhi_ev_snow`: Snow → หิมะตก
+- `smhi_ev_black_ice`: Black ice → น้ำแข็งเคลือบถนน
+- `smhi_ev_rain`: Rain → ฝนตกหนัก
+- `smhi_ev_high_temperatures`: High temperatures → อุณหภูมิสูง
+- `smhi_ev_wind_sea`: Wind at sea → ลมแรงในทะเล
+- `smhi_ev_ice_accretion`: Ice accretion → น้ำแข็งเกาะเรือในทะเล
+- `smhi_ev_low_sea_level`: Low sea level → ระดับน้ำทะเลต่ำ
+- `smhi_ev_high_sealevel`: High sea level → ระดับน้ำทะเลสูง
+- `smhi_ev_water_shortage`: Risk for water shortage → เสี่ยงขาดแคลนน้ำ
+- `smhi_ev_high_flow`: High water discharge → น้ำในแม่น้ำไหลแรงและสูง
+- `smhi_ev_flooding`: Flooding → น้ำท่วม
+- `smhi_ev_fire`: Fire risk → เสี่ยงไฟป่า
+
+Swedish counties and SMHI sea districts (`src/lib/countries/se-areas.ts`):
+
+- Stockholm County → เทศมณฑลสตอกโฮล์ม
+- Uppsala County → เทศมณฑลอุปซอลา
+- Södermanland County → เทศมณฑลเซอเดอร์มันลันด์
+- Östergötland County → เทศมณฑลเอิสเตอร์เยิตลันด์
+- Jönköping County → เทศมณฑลเยินเชอปิง
+- Kronoberg County → เทศมณฑลโครโนแบร์ย
+- Kalmar County → เทศมณฑลคาลมาร์
+- Gotland County → เทศมณฑลกอตลันด์
+- Blekinge County → เทศมณฑลเบลคิงเง
+- Skåne County → เทศมณฑลสโกเน
+- Halland County → เทศมณฑลฮัลลันด์
+- Västra Götaland County → เทศมณฑลเวสตราเยอตาลันด์
+- Värmland County → เทศมณฑลแวร์มลันด์
+- Örebro County → เทศมณฑลเออเรบรู
+- Västmanland County → เทศมณฑลเวสต์มันลันด์
+- Dalarna County → เทศมณฑลดาลาร์นา
+- Gävleborg County → เทศมณฑลแยฟเลบอร์ย
+- Västernorrland County → เทศมณฑลเวสเตอร์นอร์ลันด์
+- Jämtland County → เทศมณฑลแยมต์ลันด์
+- Västerbotten County → เทศมณฑลเวสเตอร์บ็อตเทน
+- Norrbotten County → เทศมณฑลนอร์บ็อตเทน
+- Bay of Bothnia → อ่าวบอทเนีย
+- The Quark → ช่องแคบควาร์เกน
+- Northern Sea of Bothnia → ทะเลบอทเนียตอนเหนือ
+- Southern Sea of Bothnia → ทะเลบอทเนียตอนใต้
+- Sea of Åland → ทะเลโอลันด์
+- Archipelago Sea → ทะเลหมู่เกาะ
+- Gulf of Finland → อ่าวฟินแลนด์
+- Northern Baltic → ทะเลบอลติกตอนเหนือ
+- Central Baltic → ทะเลบอลติกตอนกลาง
+- Gulf of Riga → อ่าวริกา
+- Southeastern Baltic → ทะเลบอลติกตะวันออกเฉียงใต้
+- Southern Baltic → ทะเลบอลติกตอนใต้
+- Western Baltic → ทะเลบอลติกตะวันตก
+- The Belts → ช่องแคบเบลต์
+- The Sound → ช่องแคบเออเรซุนด์
+- Kattegat → ช่องแคบคัตเตกัต
+- Skagerrak → ช่องแคบสกาเกอร์รัก
+- Lake Vänern → ทะเลสาบแวเนิร์น
+
+Myanmar states and regions (`src/lib/countries/mm.ts`):
+
+- Yangon → ย่างกุ้ง
+- Ayeyarwady Region → เขตอิระวดี
+- Bago Region → เขตพะโค
+- Chin State → รัฐชิน
+- Kachin State → รัฐคะฉิ่น
+- Kayah State → รัฐกะยา
+- Kayin State → รัฐกะเหรี่ยง
+- Magway Region → เขตมะกเว
+- Mandalay Region → เขตมัณฑะเลย์
+- Mon State → รัฐมอญ
+- Naypyidaw Union Territory → ดินแดนสหภาพเนปยีดอ
+- Rakhine State → รัฐยะไข่
+- Sagaing Region → เขตสะกาย
+- Shan State → รัฐฉาน
+- Tanintharyi Region → เขตตะนาวศรี
+- Yangon Region → เขตย่างกุ้ง

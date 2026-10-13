@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { thresholdRows } from '$lib/thresholds';
 	import { PlayCircle } from '@lucide/svelte';
+	import { callParams } from '$lib/country.svelte';
 	import { m } from '$lib/paraglide/messages.js';
 	import { localizeHref } from '$lib/paraglide/runtime.js';
 
@@ -17,7 +18,7 @@
 	<section class="mt-8">
 		<h2 class="label mb-2">{m.about_real()}</h2>
 		<ul class="glass divide-y divide-line rounded-2xl text-sm">
-			{#each [m.about_real_weather(), m.about_real_events(), m.about_real_quakes(), m.about_real_map(), m.about_real_routes()] as t (t)}<li class="px-4 py-3">{t}</li>{/each}
+			{#each [m.about_real_weather(), m.about_real_smhi(), m.about_real_events(), m.about_real_quakes(), m.about_real_map(), m.about_real_routes()] as t (t)}<li class="px-4 py-3">{t}</li>{/each}
 		</ul>
 	</section>
 	<section class="mt-6">
@@ -35,7 +36,7 @@
 	</section>
 	<section class="mt-6">
 		<h2 class="label mb-2">{m.about_limits_title()}</h2>
-		<p class="text-sm text-[#c9c9cf]">{m.about_limits_body()}</p>
+		<p class="text-sm text-[#c9c9cf]">{m.about_limits_body(callParams())}</p>
 	</section>
 	<p class="mt-6 text-xs text-muted">{m.about_th_note()}</p>
 </div>

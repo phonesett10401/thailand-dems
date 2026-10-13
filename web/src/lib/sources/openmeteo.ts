@@ -1,4 +1,5 @@
 import type { Pt } from '../types';
+import { currentCountry } from '../country.svelte';
 import { fetchJson } from './http';
 
 type RawForecast = {
@@ -27,14 +28,14 @@ export type Pm25Band = 'very_good' | 'good' | 'moderate' | 'unhealthy_some' | 'u
 
 const unix = (s: number) => new Date(s * 1000);
 const where = (p: Pt) => `latitude=${p.lat.toFixed(3)}&longitude=${p.lon.toFixed(3)}`;
-const TZ = 'timezone=Asia%2FBangkok&timeformat=unixtime';
+const TZ = () => `timezone=${encodeURIComponent(currentCountry().timeZone)}&timeformat=unixtime`;
 
 export const forecastUrl = (p: Pt) =>
-	`https://api.open-meteo.com/v1/forecast?${where(p)}&current=temperature_2m,precipitation,wind_speed_10m,weather_code&hourly=temperature_2m,precipitation_probability&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,apparent_temperature_max&forecast_days=7&forecast_hours=24&${TZ}`;
+	`https://api.open-meteo.com/v1/forecast?${where(p)}&current=temperature_2m,precipitation,wind_speed_10m,weather_code&hourly=temperature_2m,precipitation_probability&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,apparent_temperature_max&forecast_days=7&forecast_hours=24&${TZ()}`;
 export const airUrl = (p: Pt) =>
-	`https://air-quality-api.open-meteo.com/v1/air-quality?${where(p)}&current=pm2_5,us_aqi&${TZ}`;
+	`https://air-quality-api.open-meteo.com/v1/air-quality?${where(p)}&current=pm2_5,us_aqi&${TZ()}`;
 export const riverUrl = (p: Pt) =>
-	`https://flood-api.open-meteo.com/v1/flood?${where(p)}&daily=river_discharge&forecast_days=7`;
+	`https://flood-api.open-meteo.com/v1/flood?${where(p)}&daily=river_discharge&past_days=30&forecast_days=7`;
 
 export function parseForecast(r: RawForecast): Forecast {
 	return {
@@ -73,8 +74,11 @@ export function parseAir(r: RawAir): Air {
 	return { time: unix(r.current.time), pm25: r.current.pm2_5, aqi: r.current.us_aqi };
 }
 
+/** Rising = the 7-day peak is well above today AND above anything in the past days (the place's own recent normal). */
 export function parseRiver(r: RawRiver): River | null {
-	const v = r.daily.river_discharge;
+	const all = r.daily.river_discharge;
+	const t = Math.max(0, all.length - 7); // forecast_days=7: the last 7 rows are today onward
+	const v = all.slice(t);
 	if (!v.length || v[0] === null) return null;
 	let peakIdx = 0;
 	v.forEach((x, i) => {
@@ -82,7 +86,8 @@ export function parseRiver(r: RawRiver): River | null {
 	});
 	const today = v[0];
 	const peak = v[peakIdx] as number;
-	return { today, peak, peakDate: r.daily.time[peakIdx], rising: peak > today * 1.5 && peak - today > 1 };
+	const pastMax = Math.max(-Infinity, ...all.slice(0, t).filter((x): x is number => x !== null));
+	return { today, peak, peakDate: r.daily.time[t + peakIdx], rising: peak > today * 1.5 && peak - today > 1 && peak > pastMax };
 }
 
 /** Thai Pollution Control Department 24-hour PM2.5 bands (µg/m³). */

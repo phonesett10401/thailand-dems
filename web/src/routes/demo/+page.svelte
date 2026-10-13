@@ -56,7 +56,7 @@
 	];
 </script>
 
-<svelte:head><title>{m.demo_title()} · DEMS Thailand</title></svelte:head>
+<svelte:head><title>{m.demo_title()} · DEMS</title></svelte:head>
 
 <div class="page max-w-4xl">
 	<div class="demo-frame relative mx-auto overflow-hidden rounded-3xl border border-line bg-black">
@@ -69,6 +69,7 @@
 			{#if muted}<VolumeX size={18} aria-hidden="true" />{:else}<Volume2 size={18} aria-hidden="true" />{/if}
 		</button>
 	</div>
+	<p class="mt-2 text-center text-xs text-muted">{m.demo_video_th_note()}</p>
 	<div role="group" aria-label={m.demo_chapters()} class="chip-row mx-auto mt-3 w-fit max-w-full">
 		{#each chapters as c (c.at)}
 			<Chip on={c.at === activeAt} onclick={() => jump(c.at)}>{c.name()}</Chip>

@@ -2,6 +2,7 @@
 	import { CircleCheck, LocateFixed, PhoneCall } from '@lucide/svelte';
 	import { fly } from 'svelte/transition';
 	import { api } from '$lib/config';
+	import { callParams } from '$lib/country.svelte';
 	import { reportSeverityLabel, reportTypeLabel } from '$lib/labels';
 	import { ms } from '$lib/motion';
 	import { m } from '$lib/paraglide/messages.js';
@@ -62,20 +63,22 @@
 		if (step === 3) submit();
 		else next();
 	}
+	const p = $derived(callParams());
+	const one = $derived(p.medical === p.police); // Sweden: 112 for everything
 	const field = 'w-full rounded-lg border border-muted bg-raised px-3 py-2';
 </script>
 
 <div class="page">
 	<h1 class="headline text-3xl">{m.report_title()}</h1>
 	<p class="mt-3 flex items-start gap-2 rounded-xl bg-[#e5251b] p-3 text-sm font-semibold text-white">
-		<PhoneCall size={18} aria-hidden="true" class="mt-0.5 shrink-0" />{m.emergency_call_first()}
+		<PhoneCall size={18} aria-hidden="true" class="mt-0.5 shrink-0" />{one ? m.emergency_call_first_one(p) : m.emergency_call_first(p)}
 	</p>
 
 	{#if step === 'done'}
 		<section class="mt-8 flex flex-col items-center gap-3 text-center" in:fly={{ y: 12, duration: ms(220) }}>
 			<CircleCheck size={48} aria-hidden="true" />
 			<h2 class="text-xl font-bold">{m.report_done_title()}</h2>
-			<p>{m.report_done_body()}</p>
+			<p>{one ? m.report_done_body_one(p) : m.report_done_body(p)}</p>
 			<button type="button" onclick={again} class="min-h-11 rounded-lg border border-line px-4 py-2 font-semibold"
 				>{m.report_again()}</button
 			>

@@ -5,7 +5,7 @@ import { pascalize } from './rows';
 type Sql = postgres.Sql;
 const rows = (r: readonly Record<string, unknown>[]) => r.map(pascalize);
 
-export async function listShelters(sql: Sql) {
+export async function listShelters(sql: Sql, country: string) {
 	return rows(await sql`
 		select s.*,
 		  (s.capacity - s.current_occupancy) as "AvailableSpace",
@@ -13,18 +13,20 @@ export async function listShelters(sql: Sql) {
 		  count(distinct ds.disaster_id)::int as "ActiveDisasterCount"
 		from public.shelters s
 		left join public.disaster_shelters ds on s.shelter_id = ds.shelter_id and ds.deactivated_at is null
+		where s.country = ${country}
 		group by s.shelter_id
 		order by s.shelter_name`);
 }
 
-export async function listDisasters(sql: Sql) {
-	return rows(await sql`select * from public.disasters order by start_date desc`);
+export async function listDisasters(sql: Sql, country: string) {
+	return rows(await sql`select * from public.disasters where country = ${country} order by start_date desc`);
 }
 
-export async function listAlerts(sql: Sql) {
+export async function listAlerts(sql: Sql, country: string) {
 	return rows(await sql`
 		select a.*, d.disaster_name as "DisasterName", d.disaster_type as "DisasterType", d.severity as "DisasterSeverity"
 		from public.alerts a left join public.disasters d on a.disaster_id = d.disaster_id
+		where a.country = ${country}
 		order by a.issued_at desc`);
 }
 

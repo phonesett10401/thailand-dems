@@ -1,13 +1,13 @@
-# DEMS Thailand: Disaster and Emergency Management System
+# DEMS: Disaster and Emergency Management System
 
-![DEMS Thailand](web/static/og.png)
+![DEMS](web/static/og.png)
 
-A mobile-first web app that tells people in Thailand how safe their location is right now, where the nearest shelter is, and how to get there.
+A mobile-first web app that tells people in Thailand, Myanmar and Sweden how safe their location is right now, where the nearest shelter is, and how to get there.
 
 - Live app: https://thailand-dems.vercel.app
 - Demo tour: https://thailand-dems.vercel.app/demo
 
-> **This is a student project, not an official warning service.** Levels are estimates computed from public data. Shelters, sample disasters and evacuation routes are sample data. Always follow TMD and DDPM, and call 1784 in an emergency.
+> **This is a student project, not an official warning service.** Levels are estimates computed from public data. Shelters, sample disasters and evacuation routes are sample data. Always follow your national agencies (in Thailand TMD and DDPM, call 1784; in Myanmar call 199; in Sweden SMHI and your municipality, call 112).
 
 ## What it does (citizens)
 
@@ -17,9 +17,24 @@ A mobile-first web app that tells people in Thailand how safe their location is 
 - **Safe routes:** walking, driving or cycling directions to a shelter that steer around known danger zones (openrouteservice).
 - **Prepare:** a guide for each emergency type, plus a go-bag checklist and emergency numbers.
 - **Report an incident:** send a short report (type, severity, description, location). It goes to the demo database only; no authority sees it.
-- **English and ไทย:** the whole UI is translated. The Thai text is a draft awaiting native review, see [`web/messages/TH_REVIEW.md`](web/messages/TH_REVIEW.md).
+- **English, ไทย and မြန်မာ:** the whole UI is translated, in every country. The Thai and Burmese texts are drafts awaiting native review, see [`web/messages/TH_REVIEW.md`](web/messages/TH_REVIEW.md) and [`web/messages/MY_REVIEW.md`](web/messages/MY_REVIEW.md).
 
 Admin and volunteer consoles exist as **sign-in only** for now (Supabase Auth, invite-only accounts). After login you see your email and a "coming in Phase 2 / Phase 3" note. The real tools are not built yet.
+
+## Countries
+
+Pick Thailand, Myanmar or Sweden in the app. The choice is separate from the language, is remembered on the device (`dems.country`), and a GPS fix in another supported country only offers a switch, never applies it. Clock times use the country's time zone.
+
+| | Thailand | Myanmar | Sweden |
+|---|---|---|---|
+| Default place | Bangkok | Yangon | Stockholm |
+| Emergency number (SOS) | 1784 | 199 | 112 |
+| Weather level | DEMS rules (heat, rain, river) | DEMS rules (heat, rain, river) | SMHI official warnings only |
+| PM2.5 source label | Thai PCD | WHO interim target | WHO interim target |
+| Shelters | sample data | in development | link to MCF's (formerly MSB) shelter map |
+| Time zone | Asia/Bangkok | Asia/Yangon | Europe/Stockholm |
+
+Earthquake and GDACS rules are the same everywhere. See the country files in [`web/src/lib/countries/`](web/src/lib/countries/).
 
 ## How levels work
 
@@ -27,13 +42,14 @@ Each hazard near you is rated Safe, Watch or Warning from public thresholds (val
 
 | Hazard | Watch | Warning | Source |
 |---|---|---|---|
-| PM2.5 air | above 37.5 µg/m³ | above 75 µg/m³ | Open-Meteo (Thai PCD bands) |
+| PM2.5 air | above 37.5 µg/m³ | above 75 µg/m³ | Open-Meteo (Thai PCD bands; WHO interim target in Myanmar and Sweden) |
 | Heat (feels-like, today) | 41 °C or more | 54 °C or more | Open-Meteo |
 | Rain (today) | 35 mm or more | 90 mm or more | Open-Meteo (TMD bands) |
 | Earthquake, within 300 km, last 24 h | M4.5 or more | M6 or more | USGS |
 | GDACS event, within 300 km (cyclones 500 km) | orange | red | GDACS |
 | River model rising | yes (Watch only, it is a forecast) | never | Open-Meteo |
 
+- **Sweden:** weather comes from SMHI warnings for your county (yellow = Watch, orange or red = Warning) instead of the heat, rain and river rules above.
 - **The worst live hazard sets your level.**
 - **Unknown, never Safe, when data is missing:** if every live feed fails, the level is Unknown.
 - **Stale after 3 hours:** an old result turns Unknown on its own.
@@ -44,8 +60,10 @@ Each hazard near you is rated Safe, Watch or Warning from public thresholds (val
 | Real (live public sources) | Sample (this demo's own database) |
 |---|---|
 | Weather, air quality, river forecast: Open-Meteo | Shelters and their capacity |
-| Disaster alerts: GDACS | Disasters and alerts stored in the database |
-| Earthquakes: USGS | Evacuation routes |
+| Official weather warnings in Sweden: SMHI | Disasters and alerts stored in the database |
+| Disaster alerts: GDACS | Evacuation routes |
+| Earthquakes: USGS | |
+| Sweden shelters: link to MCF's official shelter map (formerly MSB) | |
 | Map tiles: OpenFreeMap / OpenStreetMap | |
 | Walking, driving, cycling routes: openrouteservice | |
 
@@ -68,7 +86,7 @@ web/                    the app (Vercel Root Directory)
   supabase/migrations/  SQL schema, triggers and fixes
   scripts/db/           database helper scripts
   tests/e2e/            Playwright browser tests
-  messages/             English and Thai strings
+  messages/             English, Thai and Burmese strings
 demo-video/             Remotion project that renders the demo video (arrives with PR #5)
 docs/superpowers/       design specs and implementation plans
 .github/workflows/      CI
@@ -101,7 +119,7 @@ Database scripts (run from `web/`, they read `web/.env`):
 
 | Command | Does |
 |---|---|
-| `npm run db:apply` | apply the SQL in `supabase/migrations` |
+| `npm run db:apply` | apply the SQL in `supabase/migrations` (including `0004_countries.sql`, which adds a `country` column to shelters, disasters and alerts; apply it before deploying the country-aware API) |
 | `npm run db:create-admin` | create an admin sign-in |
 | `npm run db:volunteers` | create volunteer sign-ins |
 | `npm run db:smoke` | check the live database against the expected tables |
@@ -129,8 +147,8 @@ DEMS began as an Express + MySQL API with a separate Next.js frontend. It was re
 ## Credits and licences
 
 - Map data: OpenStreetMap contributors (ODbL); tiles from OpenFreeMap / OpenMapTiles
-- Data and services: Open-Meteo, USGS, GDACS, openrouteservice (HeiGIT)
-- Fonts: Geist, Anuphan
+- Data and services: Open-Meteo, USGS, GDACS, SMHI, openrouteservice (HeiGIT)
+- Fonts: Geist, Anuphan, Noto Sans Myanmar
 - Demo music: "Background Technology Theme" by The_Mountain (Pixabay)
 
 This repository has no LICENSE file yet.

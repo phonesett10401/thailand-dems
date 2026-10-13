@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import usgs from './fixtures/usgs.json';
-import { parseQuakes, quakeLevel } from './usgs';
+import { COUNTRIES } from '../countries';
+import { parseQuakes, quakeLevel, usgsUrl } from './usgs';
 
 describe('quakeLevel', () => {
 	it('grades by magnitude', () => {
@@ -39,5 +40,14 @@ describe('parseQuakes', () => {
 	});
 	it('handles null input', () => {
 		expect(parseQuakes(null)).toEqual([]);
+	});
+});
+
+describe('usgsUrl', () => {
+	it('uses the quake box of the country', () => {
+		const now = new Date('2026-10-13T00:00:00Z');
+		expect(usgsUrl(COUNTRIES.SE, now)).toContain('minlatitude=53&maxlatitude=71&minlongitude=8&maxlongitude=26');
+		expect(usgsUrl(COUNTRIES.MM, now)).toContain('minlatitude=8&maxlatitude=30&minlongitude=90&maxlongitude=103');
+		expect(usgsUrl(COUNTRIES.TH, now)).toContain('minlatitude=4&maxlatitude=22&minlongitude=95&maxlongitude=107');
 	});
 });

@@ -2,12 +2,13 @@
 	import { Check, Phone } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import { live } from '$lib/hazards.svelte';
-	import { hazName } from '$lib/labels';
+	import { hazName, numLabel, showTel } from '$lib/labels';
 	import { m } from '$lib/paraglide/messages.js';
 	import { localizeHref } from '$lib/paraglide/runtime.js';
 	import { loadChecks, saveChecks, toggled } from '$lib/prepare/checklist';
+	import { country, currentCountry } from '$lib/country.svelte';
 	import Chip from '$lib/components/Chip.svelte';
-	import { bagFor, defaultKit, GUIDE, GUIDES, KIT_NOTE, KITS, NUMBERS, tx, type KitId } from '$lib/prepare/guides';
+	import { bagFor, defaultKit, GUIDE, GUIDES, KIT_NOTE, KITS, tx, type KitId } from '$lib/prepare/guides';
 
 	let done = $state(new Set<string>());
 	let kit = $state<KitId | null>(null);
@@ -23,7 +24,11 @@
 		settled = true;
 		auto = kit = defaultKit(live.a.hazards);
 	});
+	const kitName = (k: KitId) => (k === 'cold' ? m.haz_cold() : hazName(k));
 	onMount(() => (done = loadChecks()));
+	$effect(() => {
+		if (kit === 'cold' && country.code !== 'SE') pick(live.a ? defaultKit(live.a.hazards) : null);
+	});
 	const items = $derived(bagFor(kit));
 	const note = $derived(kit ? KIT_NOTE[kit] : undefined);
 	function flip(id: string) {
@@ -42,7 +47,7 @@
 
 	<h2 class="label mt-8 mb-3">{m.prep_guides()}</h2>
 	<ul class="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-		{#each GUIDES as id (id)}
+		{#each GUIDES.filter((id) => (id !== 'cold' && id !== 'snow') || currentCountry().weather === 'smhi') as id (id)}
 			<li>
 				<a href={localizeHref(`/prepare/${id}`)} class="glass flex h-full flex-col gap-1 rounded-2xl p-4 hover:bg-white/[0.07]">
 					<span class="font-semibold">{tx(GUIDE[id].title)}</span>
@@ -60,11 +65,11 @@
 			</div>
 			<div role="group" aria-label={m.prep_kit_label()} class="mb-2 flex flex-wrap gap-2">
 				<Chip on={kit === null} onclick={() => pick(null)}>{m.prep_kit_basics()}</Chip>
-				{#each KITS as k (k)}
-					<Chip on={kit === k} onclick={() => pick(k)}>{hazName(k)}</Chip>
+				{#each KITS.filter((k) => k !== 'cold' || country.code === 'SE') as k (k)}
+					<Chip on={kit === k} onclick={() => pick(k)}>{kitName(k)}</Chip>
 				{/each}
 			</div>
-			{#if auto}<p class="mb-2 text-xs text-muted">{m.prep_kit_auto({ hazard: hazName(auto) })}</p>{/if}
+			{#if auto}<p class="mb-2 text-xs text-muted">{m.prep_kit_auto({ hazard: kitName(auto) })}</p>{/if}
 			{#if note}<p class="mb-2 rounded-xl border border-warning/40 px-3 py-2 text-sm text-warning">{tx(note)}</p>{/if}
 			<ul class="glass divide-y divide-line rounded-2xl">
 				{#each items as item (item.id)}
@@ -87,12 +92,12 @@
 		<section>
 			<h2 class="label mb-3">{m.prep_numbers()}</h2>
 			<ul class="flex flex-col gap-2">
-				{#each NUMBERS as n (n.tel)}
+				{#each currentCountry().numbers as n (n.tel)}
 					<li>
-						<a href="tel:{n.tel}" aria-label={m.prep_call({ tel: n.tel, name: tx(n.name) })} class="glass flex min-h-14 items-center gap-3 rounded-2xl px-4">
+						<a href="tel:{n.tel}" aria-label={m.prep_call({ tel: n.tel, name: numLabel(n.key) })} class="glass flex min-h-14 items-center gap-3 rounded-2xl px-4">
 							<Phone size={16} class="text-warning" aria-hidden="true" />
-							<span class="font-mono text-xl font-semibold">{n.tel}</span>
-							<span class="text-sm text-muted">{tx(n.name)}</span>
+							<span class="font-mono text-xl font-semibold">{showTel(n.tel)}</span>
+							<span class="text-sm text-muted">{numLabel(n.key)}</span>
 						</a>
 					</li>
 				{/each}

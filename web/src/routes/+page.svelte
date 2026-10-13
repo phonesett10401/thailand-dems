@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { MediaQuery } from 'svelte/reactivity';
+		import { MediaQuery } from 'svelte/reactivity';
 	import HazardSheet from '$lib/components/HazardSheet.svelte';
 	import MapView from '$lib/components/MapView.svelte';
 	import NowPanel from '$lib/components/NowPanel.svelte';
 	import { api } from '$lib/config';
+	import { country, currentCountry } from '$lib/country.svelte';
 	import { fmtHour, fmtTime } from '$lib/format';
 	import { occupancyPct, sortByDistance, toNum } from '$lib/geo';
 	import { currentLevel, live } from '$lib/hazards.svelte';
-	import { hazName, markerLabel, nearestOpen } from '$lib/labels';
+	import { hazName, hazTitle, markerLabel, nearestOpen } from '$lib/labels';
 	import type { Hazard } from '$lib/levels';
 	import { here } from '$lib/location.svelte';
 	import { m } from '$lib/paraglide/messages.js';
@@ -18,7 +18,9 @@
 	const wide = new MediaQuery('min-width: 1024px');
 	let shelters = $state<Shelter[]>([]);
 	let picked = $state<Hazard | null>(null);
-	onMount(() => {
+	// Reload when the country changes: shelters belong to one country.
+	$effect(() => {
+		void country.code;
 		api.shelters().then((r) => (shelters = r.data));
 	});
 
@@ -52,6 +54,14 @@
 			<MapView class="relative" {markers} center={here.place} zoom={8} focus={here.place} onselect={select} />
 			<div class="grid grid-cols-[1.35fr_1fr_1fr] gap-3 border-t border-line p-3">
 				<div class="glass flex flex-col gap-2 rounded-2xl p-3.5">
+					{#if currentCountry().shelters === 'link'}
+						<h2 class="label">{m.shelters_se_title()}</h2>
+						<p class="text-xs text-muted">{m.shelters_se_body()}</p>
+						<a href={currentCountry().shelterLink} target="_blank" rel="noopener" class="mt-auto inline-flex min-h-11 items-center self-start rounded-lg bg-white/10 px-4 text-sm font-semibold">{m.shelters_se_cta()}</a>
+					{:else if currentCountry().shelters === 'in-development'}
+						<h2 class="label">{m.shelters_dev_title()}</h2>
+						<p class="text-xs text-muted">{m.shelters_dev_body()}</p>
+					{:else}
 					<div class="flex justify-between"><h2 class="label">{m.now_shelters()}</h2><a class="grid min-h-11 min-w-11 place-items-center text-xs text-muted" href={localizeHref('/shelters')} aria-label={m.now_all_shelters()}>→</a></div>
 					{#each closest as { item: s, km } (s.ShelterID)}
 						{@const pct = occupancyPct(s.CurrentOccupancy, s.Capacity)}
@@ -61,6 +71,7 @@
 							<span class="text-right font-mono text-xs text-muted">{km!.toFixed(1)} km</span>
 						</div>
 					{/each}
+					{/if}
 				</div>
 				<div class="glass flex flex-col gap-2 rounded-2xl p-3.5">
 					<h2 class="label">{m.now_rain24()}</h2>
@@ -73,7 +84,7 @@
 				<div class="glass flex flex-col gap-2 rounded-2xl p-3.5">
 					<h2 class="label">{m.now_recent()}</h2>
 					{#each recent as h (h.id)}
-						<div class="grid grid-cols-[44px_1fr] gap-2 text-xs"><span class="font-mono text-muted">{fmtTime(h.time!)}</span><span class="truncate">{hazName(h.type)} · {h.name ?? ''}</span></div>
+						<div class="grid grid-cols-[44px_1fr] gap-2 text-xs"><span class="font-mono text-muted">{fmtTime(h.time!)}</span><span class="truncate">{hazName(h.type)} · {h.type === 'official' ? hazTitle(h) : (h.name ?? '')}</span></div>
 					{:else}
 						<p class="text-xs text-muted">{m.now_recent_none()}</p>
 					{/each}

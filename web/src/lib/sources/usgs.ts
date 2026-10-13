@@ -1,5 +1,7 @@
 import type { Lvl } from '../levels';
 import type { HazardEvent } from '../types';
+import type { Country } from '../countries';
+import { currentCountry } from '../country.svelte';
 import { fetchJson } from './http';
 
 type RawQuakes = {
@@ -12,10 +14,11 @@ type RawQuakes = {
 
 const DAY = 86_400_000;
 
-/** Thailand and neighbours, last 30 days, M3+. */
-export function usgsUrl(now = new Date()): string {
+/** The country's box (and a little beyond), last 30 days, M3+. */
+export function usgsUrl(c: Country, now = new Date()): string {
+	const [minLat, maxLat, minLon, maxLon] = c.quakeBox;
 	const start = new Date(now.getTime() - 30 * DAY).toISOString().slice(0, 10);
-	return `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minlatitude=4&maxlatitude=22&minlongitude=95&maxlongitude=107&minmagnitude=3&orderby=time&limit=50&starttime=${start}`;
+	return `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minlatitude=${minLat}&maxlatitude=${maxLat}&minlongitude=${minLon}&maxlongitude=${maxLon}&minmagnitude=3&orderby=time&limit=50&starttime=${start}`;
 }
 
 export function quakeLevel(mag: number): Lvl {
@@ -43,4 +46,4 @@ export function parseQuakes(raw: RawQuakes | null, now = Date.now()): HazardEven
 	});
 }
 
-export const getQuakes = async () => parseQuakes(await fetchJson<RawQuakes>(usgsUrl()));
+export const getQuakes = async (c: Country = currentCountry()) => parseQuakes(await fetchJson<RawQuakes>(usgsUrl(c)));

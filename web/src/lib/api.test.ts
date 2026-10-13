@@ -22,7 +22,7 @@ describe('createApi GET', () => {
 		const fetchFn = vi.fn(async () => json([{ ShelterID: 1 }]));
 		const api = createApi('http://x/api', onOffline, fetchFn);
 		expect(await api.shelters()).toEqual({ data: [{ ShelterID: 1 }], live: true });
-		expect(fetchFn).toHaveBeenCalledWith('http://x/api/shelters', expect.anything());
+		expect(fetchFn).toHaveBeenCalledWith('http://x/api/shelters?country=TH', expect.anything());
 		expect(onOffline).not.toHaveBeenCalled();
 	});
 
@@ -40,6 +40,26 @@ describe('createApi GET', () => {
 		const api = createApi('http://x/api', onOffline, async () => json({ error: 'db down' }, 500));
 		expect((await api.shelters()).live).toBe(false);
 		expect(onOffline).toHaveBeenCalledOnce();
+	});
+});
+
+describe('createApi countries', () => {
+	it('sends the current country', async () => {
+		const fetchFn = vi.fn(async () => json([]));
+		const api = createApi('http://x/api', () => {}, fetchFn, () => 'SE');
+		await api.shelters();
+		expect((fetchFn.mock.calls[0] as unknown as [string])[0]).toMatch(/\/shelters\?country=SE$/);
+	});
+	it('falls back to an empty list outside Thailand (sample data is Thai)', async () => {
+		const down = async () => {
+			throw new TypeError('Failed to fetch');
+		};
+		const mm = createApi('http://x/api', () => {}, down, () => 'MM');
+		expect((await mm.shelters()).data).toEqual([]);
+		expect((await mm.disasters()).data).toEqual([]);
+		expect((await mm.alerts()).data).toEqual([]);
+		const th = createApi('http://x/api', () => {}, down, () => 'TH');
+		expect((await th.shelters()).data).toEqual(sampleShelters);
 	});
 });
 

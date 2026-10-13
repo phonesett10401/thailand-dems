@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import air from './fixtures/air.json';
 import forecast from './fixtures/forecast.json';
 import river from './fixtures/river.json';
-import { parseAir, parseForecast, parseRiver, pm25Band } from './openmeteo';
+import { country } from '../country.svelte';
+import { airUrl, forecastUrl, parseAir, parseForecast, parseRiver, pm25Band } from './openmeteo';
 
 describe('parseForecast', () => {
 	it('maps current, 24 hours and 7 days', () => {
@@ -45,6 +46,17 @@ describe('parseRiver', () => {
 		const r = parseRiver({ daily: { time: ['a', 'b'], river_discharge: [10, 12] } });
 		expect(r?.rising).toBe(false);
 	});
+	it('is not rising when the peak is normal for the last 30 days (Yangon, 2026-10-13)', () => {
+		const past = [3.97, 2.41, 2.52, 3.88, 3.0, 2.85, 4.92, 5.46, 7.61, 7.02, 5.62, 3.61, 2.72, 3.19, 4.01, 7.61, 14.45, 9.14, 6.1, 3.83, 2.6, 1.86, 1.5, 1.8, 1.65, 1.4, 1.0, 0.52, 0.6, 0.79];
+		const next = [0.8, 1.19, 2.21, 4.16, 3.15, 2.72, 1.94];
+		const v = [...past, ...next];
+		const r = parseRiver({ daily: { time: v.map((_, i) => `d${i}`), river_discharge: v } });
+		expect(r).toEqual({ today: 0.8, peak: 4.16, peakDate: 'd33', rising: false });
+	});
+	it('is rising when the peak beats the last 30 days', () => {
+		const v = [...Array(30).fill(5), 4, 6, 9, 12, 8, 6, 5];
+		expect(parseRiver({ daily: { time: v.map((_, i) => `d${i}`), river_discharge: v } })?.rising).toBe(true);
+	});
 	it('returns null when the model has no data here', () => {
 		expect(parseRiver({ daily: { time: [], river_discharge: [] } })).toBeNull();
 		expect(parseRiver({ daily: { time: ['a'], river_discharge: [null] } })).toBeNull();
@@ -59,5 +71,16 @@ describe('pm25Band (Thai PCD 24-hour bands)', () => {
 		expect(pm25Band(30)).toBe('moderate');
 		expect(pm25Band(50)).toBe('unhealthy_some');
 		expect(pm25Band(120)).toBe('unhealthy');
+	});
+});
+
+describe('request day follows the country', () => {
+	it('asks for the time zone of the current country', () => {
+		const p = { lat: 59.33, lon: 18.07 };
+		country.code = 'SE';
+		expect(forecastUrl(p)).toContain('timezone=Europe%2FStockholm');
+		expect(airUrl(p)).toContain('timezone=Europe%2FStockholm');
+		country.code = 'TH';
+		expect(forecastUrl(p)).toContain('timezone=Asia%2FBangkok');
 	});
 });
