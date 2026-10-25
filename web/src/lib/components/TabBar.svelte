@@ -9,7 +9,7 @@
 
 <nav
 	aria-label={m.tabs_label()}
-	class="glass fixed inset-x-0 bottom-0 z-30 border-x-0 border-b-0 bg-bg/80 pb-[env(safe-area-inset-bottom)] md:hidden"
+	class="glass fixed inset-x-0 bottom-0 z-30 border-x-0 border-b-0 bg-bg/95 pb-[env(safe-area-inset-bottom)] md:hidden"
 >
 	<ul class="grid grid-cols-5">
 		{#each TABS as t (t.path)}

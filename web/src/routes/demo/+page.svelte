@@ -77,7 +77,7 @@
 	</div>
 
 	<h1 class="headline mt-8 text-4xl">{m.demo_title()}</h1>
-	<ul class="mt-4 flex flex-col gap-2 text-[#c9c9cf]">
+	<ul class="mt-4 flex flex-col gap-2 text-soft">
 		{#each [m.demo_lead_1(), m.demo_lead_2(), m.demo_lead_3()] as line (line)}<li>{line}</li>{/each}
 	</ul>
 	<p class="glass mt-4 rounded-2xl px-4 py-3 text-sm text-muted">{m.demo_honest()}</p>
@@ -86,7 +86,7 @@
 	</a>
 
 	<section class="mt-10">
-		<h2 class="label mb-3">{m.demo_roles_title()}</h2>
+		<h2 class="mb-3 text-xl font-semibold">{m.demo_roles_title()}</h2>
 		<ul class="grid gap-3 sm:grid-cols-3">
 			{#each roles as r (r.name)}
 				<li class="glass rounded-2xl p-4 {r.live ? '' : 'opacity-80'}">
@@ -94,20 +94,20 @@
 						<h3 class="font-semibold">{r.name()}</h3>
 						<span class="label {r.live ? 'text-safe' : ''}">{r.live ? m.demo_live() : m.demo_phase2()}</span>
 					</div>
-					<p class="mt-2 text-sm text-[#c9c9cf]">{r.body()}</p>
+					<p class="mt-2 text-sm text-soft">{r.body()}</p>
 				</li>
 			{/each}
 		</ul>
 	</section>
 
 	<section class="mt-10">
-		<h2 class="label">{m.demo_hood_title()}</h2>
+		<h2 class="text-xl font-semibold">{m.demo_hood_title()}</h2>
 		<p class="mt-1 mb-3 text-sm text-muted">{m.demo_hood_intro()}</p>
 		<div class="flex flex-col gap-2">
 			{#each hood as h (h.title)}
 				<details class="glass rounded-2xl">
 					<summary class="flex min-h-14 cursor-pointer items-center px-4 font-semibold">{h.title()}</summary>
-					<div class="px-4 pb-4 text-sm text-[#c9c9cf]">
+					<div class="px-4 pb-4 text-sm text-soft">
 						{#if h.chain}
 							<ol class="mb-3 flex flex-wrap items-center gap-2 text-xs">
 								{#each h.chain as c, i (c)}

@@ -1,3 +1,10 @@
+/* Hallmark · checked: 2026-10-25 · genre: atmospheric (inferred: dark emergency app) · scope: app
+ * floor: 0 real FAIL (13 gate-50 lines are message calls, not words; :where(h1, h2, h3) wraps them, checked in the browser)
+ * fixed: 7a, 19, 26a, 26b, 34, 40, 48, 54, 63, 67, 75 · structural: none rebuilt (F25 printed)
+ * waive 39b: hazard and shelter rows are list rows that open a sheet, not buttons; their height is the row
+ * waive 64: font-mono stays on figures (km, times, codes), never on labels
+ * dismissed: 28b (the demo video's poster is bound at runtime), 72 (closed <details> measured)
+ * built: the project · redesign: polish · v2.0.0 */
 @import 'tailwindcss';
 @import '@fontsource-variable/geist';
 @import '@fontsource-variable/geist-mono';
@@ -23,11 +30,27 @@
 	--color-warning: #ff453a;
 	--color-unknown: #6b6b72;
 	--color-info: #0a84ff;
+	--color-soft: #c9c9cf; /* body copy one step quieter than text */
+	--color-field: #63636b; /* field edges: 3:1 against bg */
+	--color-glass: rgb(255 255 255 / 0.05);
+	--color-ring: rgb(255 255 255 / 0.35);
+	--color-sos: #e5251b; /* call buttons: white text passes 4.5:1 */
+	--color-sos-glow: rgb(229 37 27 / 0.35);
+	--color-live-glow: rgb(255 69 58 / 0.2);
 	--font-sans: 'Geist Variable', 'Anuphan Variable', 'Noto Sans Myanmar', system-ui, sans-serif;
 	--font-mono: 'Geist Mono Variable', 'Noto Sans Myanmar', ui-monospace, monospace;
 }
 
+/* Unlayered so long words in any heading wrap (Burmese and Thai have no spaces). */
+:where(h1, h2, h3) {
+	overflow-wrap: break-word;
+}
+
 @layer base {
+	html,
+	body {
+		overflow-x: clip;
+	}
 	html {
 		background: var(--color-bg);
 		color: var(--color-text);
@@ -51,9 +74,18 @@
 		--leading-tight: 1.5;
 		--leading-snug: 1.6;
 	}
-	:focus-visible {
+	:focus-visible,
+	label:has(> input.sr-only:focus-visible) {
 		outline: 2px solid var(--color-info);
 		outline-offset: 2px;
+	}
+	:where(h1, h2, h3) {
+		min-width: 0;
+		text-wrap: balance;
+	}
+	/* Pressed: a one-pixel press, no animation, so it holds under reduced motion too. */
+	:where(a, button, summary, [role='button']):active:not(:disabled) {
+		transform: translateY(1px);
 	}
 }
 
@@ -82,7 +114,7 @@
 	}
 
 	.glass {
-		background: rgb(255 255 255 / 0.05);
+		background: var(--color-glass);
 		backdrop-filter: blur(20px) saturate(1.3);
 		-webkit-backdrop-filter: blur(20px) saturate(1.3);
 		border: 1px solid var(--color-line);
@@ -101,11 +133,8 @@
 	}
 
 	.label {
-		font-family: var(--font-mono);
-		font-size: 10px;
+		font-size: 12px;
 		font-weight: 500;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
 		color: var(--color-muted);
 	}
 	.headline {
@@ -118,9 +147,6 @@
 		--tw-leading: 1.35;
 		letter-spacing: 0;
 		line-height: 1.35;
-	}
-	.label:lang(my) {
-		letter-spacing: 0;
 	}
 
 	.lv-safe {
@@ -179,8 +205,8 @@
 		width: 16px;
 		height: 16px;
 		border-radius: 9999px;
-		border: 2px solid #0a0a0c;
-		box-shadow: 0 0 0 1px rgb(255 255 255 / 0.35);
+		border: 2px solid var(--color-bg);
+		box-shadow: 0 0 0 1px var(--color-ring);
 		cursor: pointer;
 	}
 	/* 44 px hit area, 16 px visible dot. */
@@ -199,10 +225,10 @@
 		width: 14px;
 		height: 14px;
 		background: var(--color-info);
-		border-color: #fff;
+		border-color: var(--color-text);
 	}
 	.map-dot-shelter {
-		background: #f2f2f4;
+		background: var(--color-text);
 		border-radius: 5px;
 	}
 	.map-dot-safe {
@@ -215,7 +241,7 @@
 		background: var(--color-warning);
 	}
 	.map-dot-sample {
-		background: #0a0a0c;
+		background: var(--color-bg);
 		border: 3px solid var(--color-watch);
 	}
 }

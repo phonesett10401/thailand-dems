@@ -70,7 +70,7 @@
 
 <div class="page">
 	<h1 class="headline text-3xl">{m.report_title()}</h1>
-	<p class="mt-3 flex items-start gap-2 rounded-xl bg-[#e5251b] p-3 text-sm font-semibold text-white">
+	<p class="mt-3 flex items-start gap-2 rounded-xl bg-sos p-3 text-sm font-semibold text-white">
 		<PhoneCall size={18} aria-hidden="true" class="mt-0.5 shrink-0" />{one ? m.emergency_call_first_one(p) : m.emergency_call_first(p)}
 	</p>
 
@@ -88,7 +88,7 @@
 		<form class="mt-2 flex flex-col gap-4" {onsubmit} novalidate>
 			{#if step === 1}
 				<fieldset>
-					<legend class="font-semibold">{m.report_what()} — {m.report_type_label()}</legend>
+					<legend class="font-semibold">{m.report_what()} <span class="font-normal text-muted">{m.report_type_label()}</span></legend>
 					<div class="mt-2 grid grid-cols-2 gap-2">
 						{#each REPORT_TYPES as t (t)}
 							<label

@@ -47,7 +47,7 @@
 		</button>
 		<label class="flex flex-col gap-1 text-xs text-muted">
 			{m.location_pick()}
-			<select onchange={pick} class="min-h-11 rounded-lg border border-line bg-raised px-2 text-sm text-text">
+			<select onchange={pick} class="min-h-11 rounded-lg border border-field bg-raised px-2 text-sm text-text">
 				<option value="">{m.location_pick()}</option>
 				{#each places() as p (p.name)}
 					<option value={p.name} selected={here.place.via === 'province' && here.place.name === p.name}>{placeName(p.name)}</option>

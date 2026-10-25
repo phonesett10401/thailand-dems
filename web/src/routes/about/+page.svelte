@@ -10,7 +10,7 @@
 
 <div class="page max-w-2xl">
 	<h1 class="headline text-4xl">{m.about_title()}</h1>
-	<p class="mt-3 text-[#c9c9cf]">{m.about_intro()}</p>
+	<p class="mt-3 text-soft">{m.about_intro()}</p>
 	<a href={localizeHref('/demo')} class="glass mt-4 inline-flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-semibold">
 		<PlayCircle size={18} aria-hidden="true" />{m.about_demo_link()}
 	</a>
@@ -29,14 +29,14 @@
 	</section>
 	<section class="mt-6">
 		<h2 class="label mb-2">{m.about_levels_title()}</h2>
-		<p class="text-sm text-[#c9c9cf]">{m.about_levels_body()}</p>
+		<p class="text-sm text-soft">{m.about_levels_body()}</p>
 		<ul class="mt-3 flex flex-col gap-1.5 font-mono text-xs text-muted">
 			{#each rows as r (r)}<li>{r}</li>{/each}
 		</ul>
 	</section>
 	<section class="mt-6">
 		<h2 class="label mb-2">{m.about_limits_title()}</h2>
-		<p class="text-sm text-[#c9c9cf]">{m.about_limits_body(callParams())}</p>
+		<p class="text-sm text-soft">{m.about_limits_body(callParams())}</p>
 	</section>
 	<p class="mt-6 text-xs text-muted">{m.about_th_note()}</p>
 </div>

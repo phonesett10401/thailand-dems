@@ -63,7 +63,7 @@
 						<h2 class="label">{m.shelters_dev_title()}</h2>
 						<p class="text-xs text-muted">{m.shelters_dev_body()}</p>
 					{:else}
-					<div class="flex justify-between"><h2 class="label">{m.now_shelters()}</h2><a class="grid min-h-11 min-w-11 place-items-center text-xs text-muted" href={localizeHref('/shelters')} aria-label={m.now_all_shelters()}>→</a></div>
+					<div class="flex items-center justify-between"><h2 class="label">{m.now_shelters()}</h2><a class="inline-flex min-h-11 items-center text-xs text-muted underline-offset-4 hover:text-text hover:underline" href={localizeHref('/shelters')}>{m.now_all_shelters()}</a></div>
 					{#each closest as { item: s, km } (s.ShelterID)}
 						{@const pct = occupancyPct(s.CurrentOccupancy, s.Capacity)}
 						<div class="grid grid-cols-[1fr_64px_56px] items-center gap-3 text-sm">
@@ -83,7 +83,7 @@
 							<i class="flex-1 rounded-t-sm bg-gradient-to-b from-info to-info/30 {bar === i ? 'brightness-150' : ''}" style="height:{Math.max(4, h.rainChance)}%" title="{fmtHour(h.time)}: {h.rainChance}%" onpointerenter={() => (bar = i)} onpointerdown={() => (bar = i)}></i>
 						{/each}
 					</div>
-					<div class="flex justify-between font-mono text-[10px] text-muted" aria-hidden="true">
+					<div class="flex justify-between font-mono text-[11px] text-muted" aria-hidden="true">
 						{#if bar !== null && hours[bar]}<span>{fmtTime(hours[bar].time)} · {hours[bar].rainChance}%</span>
 						{:else}{#each [0, 6, 12, 18] as i (i)}{#if hours[i]}<span>{fmtTime(hours[i].time)}</span>{/if}{/each}{/if}
 					</div>
