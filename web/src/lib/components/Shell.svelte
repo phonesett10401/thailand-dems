@@ -9,6 +9,7 @@
 	import FirstVisitNote from './FirstVisitNote.svelte';
 	import TabBar from './TabBar.svelte';
 	import TopBar from './TopBar.svelte';
+	import { m } from '$lib/paraglide/messages.js';
 
 	let { children }: { children: Snippet } = $props();
 	let headerH = $state(56);
@@ -37,12 +38,14 @@
 	});
 </script>
 
+<a href="#main" class="sr-only z-50 rounded-lg bg-text px-4 py-3 font-semibold text-bg focus:not-sr-only focus:fixed focus:top-2 focus:left-2">{m.skip_to_content()}</a>
+
 <header bind:clientHeight={headerH} class="glass fixed inset-x-0 top-0 z-30 border-x-0 border-t-0 bg-bg/70">
 	<TopBar {level} />
 	<CountryBanner />
 </header>
 
-<main>{@render children()}</main>
+<main id="main" tabindex="-1" class="outline-none">{@render children()}</main>
 
 <FirstVisitNote />
 <TabBar />

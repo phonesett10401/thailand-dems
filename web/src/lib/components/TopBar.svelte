@@ -51,18 +51,18 @@
 </script>
 
 <div class="mx-auto flex h-14 max-w-[1600px] items-center gap-2 px-3 md:gap-3 md:px-4">
-	<a href={localizeHref('/')} class="flex min-h-11 items-center gap-2 font-bold tracking-tight">
+	<a href={localizeHref('/')} class="flex min-h-11 min-w-11 items-center gap-2 font-bold tracking-tight">
 		<Logo {level} size={26} /><span class="sr-only sm:not-sr-only">DEMS</span>
-		<span class="flex items-center gap-1 font-mono text-[10px] font-semibold tracking-[0.1em] uppercase {level === 'unknown' ? 'text-muted' : 'text-warning'}">
-			<span class="size-1.5 rounded-full {level === 'unknown' ? 'bg-unknown' : 'bg-warning shadow-[0_0_0_3px_rgb(255_69_58/0.2)]'}" aria-hidden="true"></span><span class="hidden sm:inline">{m.live_label()}</span>
+		<span class="flex items-center gap-1 text-xs font-semibold {level === 'unknown' ? 'text-muted' : 'text-warning'}">
+			<span class="size-1.5 rounded-full {level === 'unknown' ? 'bg-unknown' : 'bg-warning shadow-[0_0_0_3px_var(--color-live-glow)]'}" aria-hidden="true"></span><span class="hidden sm:inline">{m.live_label()}</span>
 		</span>
 	</a>
 	<PlacePicker />
-	<label class="ml-2 hidden min-h-11 w-48 items-center xl:w-72 gap-2 rounded-lg border border-line bg-raised px-3 text-sm text-muted lg:flex">
+	<label class="ml-2 hidden min-h-11 w-48 items-center xl:w-72 gap-2 rounded-lg border border-field bg-raised px-3 text-sm text-muted focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-info lg:flex">
 		<Search size={14} aria-hidden="true" />
 		<span class="sr-only">{m.search_label()}</span>
 		<input id="top-search" list="top-search-list" placeholder={m.search_label()} onchange={search} class="min-w-0 flex-1 bg-transparent text-text outline-none placeholder:text-muted" />
-		<kbd class="rounded border border-line px-1 font-mono text-[10px]">/</kbd>
+		<kbd class="rounded border border-field px-1 font-mono text-[11px]">/</kbd>
 	</label>
 	<datalist id="top-search-list">
 		{#each places() as p (p.name)}<option value={placeName(p.name)}></option>{/each}
@@ -79,13 +79,13 @@
 		{/each}
 	</nav>
 	<div class="ml-auto flex items-center gap-2">
-		<a href={localizeHref('/about')} aria-label={m.demo_chip_aria()} class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-line px-2.5 font-mono text-[10px] tracking-[0.1em] text-muted uppercase">{m.demo_chip()}</a>
+		<a href={localizeHref('/about')} aria-label={m.demo_chip_aria()} class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-line px-3 text-xs font-medium text-muted">{m.demo_chip()}</a>
 		<!-- Three language links don't fit beside the tabs; the full switch is on More. -->
 		<a href={localizeHref('/more')} aria-label={m.more_language()} class="hidden size-11 shrink-0 items-center justify-center rounded-lg border border-line text-muted hover:text-text md:inline-flex"><Languages size={16} aria-hidden="true" /></a>
 		<a
 			href="tel:{currentCountry().sos}"
 			aria-label={m.sos_aria({ num: currentCountry().sos })}
-			class="flex min-h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-[#e5251b] px-3 text-xs font-bold text-white shadow-[0_4px_18px_rgb(229_37_27/0.35)]"
+			class="flex min-h-11 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-sos px-3 text-xs font-bold text-white shadow-[0_4px_18px_var(--color-sos-glow)]"
 		>
 			<Phone size={13} aria-hidden="true" />SOS · {currentCountry().sos}
 		</a>

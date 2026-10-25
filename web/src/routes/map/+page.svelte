@@ -103,9 +103,9 @@
 			{#each zoneEvents as e (e)}
 				<Chip on={!hidden.has(`smhi:${e}`)} color={eventColor(e)} onclick={() => toggle(`smhi:${e}`)}>{smhiEventName(zones.find((z) => z.event === e)?.code ?? null, e)}</Chip>
 			{/each}
-			{#if currentCountry().shelters === 'sample'}<Chip on={!hidden.has('shelters')} color="#f2f2f4" onclick={() => toggle('shelters')}>{m.map_shelters()}</Chip>{/if}
+			{#if currentCountry().shelters === 'sample'}<Chip on={!hidden.has('shelters')} color="var(--color-text)" onclick={() => toggle('shelters')}>{m.map_shelters()}</Chip>{/if}
 		</div>
-		<p class="glass pointer-events-none absolute top-16 left-3 max-w-[16rem] rounded-xl bg-bg/70 px-3 py-1.5 text-[11px] leading-snug text-muted">{m.map_scope({ country: countryName })}</p>
+		<p class="glass pointer-events-none absolute top-16 left-3 max-w-[16rem] rounded-xl bg-bg/70 px-3 py-1.5 text-xs leading-snug text-muted">{m.map_scope({ country: countryName })}</p>
 		{#if showList}
 			<div class="glass absolute inset-x-3 {failed ? 'bottom-40' : 'bottom-3'} max-h-[55%] overflow-y-auto rounded-2xl bg-bg/80 p-3 lg:hidden">
 				{#if listed.length}<HazardList hazards={listed} onselect={(h) => (picked = h)} />{:else}<p class="text-sm text-muted">{smhiOn && live.feeds?.smhi && !zones.length ? m.map_smhi_none() : m.map_none()}</p>{/if}

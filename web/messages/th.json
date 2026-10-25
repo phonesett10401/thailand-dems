@@ -455,5 +455,7 @@
 	"rain_band_very_heavy": "ฝนหนักมาก",
 	"rain_likely_now": "มีโอกาสฝนตกตอนนี้",
 	"rain_likely_from": "มีโอกาสฝนตกตั้งแต่ {time} น.",
-	"rain_unlikely": "ไม่น่าจะมีฝนใน 24 ชม. ข้างหน้า"
+	"rain_unlikely": "ไม่น่าจะมีฝนใน 24 ชม. ข้างหน้า",
+	"skip_to_content": "ข้ามไปยังเนื้อหา",
+	"prep_bag_reset_confirm": "ล้างเครื่องหมายทั้งหมดในรายการนี้?"
 }

@@ -23,7 +23,7 @@
 					>
 					<span class="block truncate text-xs text-muted">{hazLine(h)}</span>
 				</span>
-				<span class="lv-text font-mono text-[10px] font-semibold tracking-[0.08em] uppercase">{levelWord(h.level)}</span>
+				<span class="lv-text text-xs font-semibold">{levelWord(h.level)}</span>
 			</button>
 		</li>
 	{/each}

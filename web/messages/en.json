@@ -455,5 +455,7 @@
 	"rain_band_very_heavy": "Very heavy rain",
 	"rain_likely_now": "Rain likely now",
 	"rain_likely_from": "Rain likely from {time}",
-	"rain_unlikely": "Rain unlikely in the next 24 h"
+	"rain_unlikely": "Rain unlikely in the next 24 h",
+	"skip_to_content": "Skip to content",
+	"prep_bag_reset_confirm": "Clear all ticks on this list?"
 }

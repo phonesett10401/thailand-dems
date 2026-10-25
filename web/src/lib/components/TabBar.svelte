@@ -9,7 +9,7 @@
 
 <nav
 	aria-label={m.tabs_label()}
-	class="glass fixed inset-x-0 bottom-0 z-30 border-x-0 border-b-0 bg-bg/80 pb-[env(safe-area-inset-bottom)] md:hidden"
+	class="glass fixed inset-x-0 bottom-0 z-30 border-x-0 border-b-0 bg-bg/95 pb-[env(safe-area-inset-bottom)] md:hidden"
 >
 	<ul class="grid grid-cols-5">
 		{#each TABS as t (t.path)}
@@ -18,7 +18,7 @@
 				<a
 					href={localizeHref(t.path)}
 					aria-current={on ? 'page' : undefined}
-					class="flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-medium {on ? 'text-text' : 'text-muted'}"
+					class="flex h-16 flex-col items-center justify-center gap-1 text-xs font-medium {on ? 'text-text' : 'text-muted'}"
 				>
 					<t.icon size={22} strokeWidth={on ? 2.2 : 1.7} aria-hidden="true" />
 					{t.label()}

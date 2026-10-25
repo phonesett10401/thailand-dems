@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ArrowRight, TriangleAlert } from '@lucide/svelte';
 	import { fmtTime } from '$lib/format';
-	import { feedName, hazName, nowTitle } from '$lib/labels';
+	import { feedName, hazName, levelWord, nowTitle } from '$lib/labels';
 	import { quietTypes, type Assessment, type Feeds, type Hazard, type HazardType, type Overall } from '$lib/levels';
 	import { callParams, currentCountry, defaultCity, placeName } from '$lib/country.svelte';
 	import { here } from '$lib/location.svelte';
@@ -56,11 +56,13 @@
 <div class="flex flex-col gap-4">
 	<div class="flex items-baseline justify-between gap-2 text-sm text-muted">
 		<span>{place}</span>
-		{#if a}<span class="font-mono text-[11px]">{m.now_updated({ time: fmtTime(new Date(a.checkedAt)) })}</span>{/if}
+		{#if a}<span class="font-mono text-xs text-soft">{m.now_updated({ time: fmtTime(new Date(a.checkedAt)) })}</span>{/if}
 	</div>
 	{#if !checking}<LevelBadge {level} />{/if}
 	<h1 class="headline text-[2.4rem]">{title}</h1>
-	{#if !checking}<p class="-mt-1 text-[15px] leading-snug text-[#c9c9cf]">{reason}</p>{/if}
+	<!-- Announce the level when it is first known and whenever it changes. -->
+	<p class="sr-only" aria-live="polite">{checking ? '' : `${levelWord(level)}: ${title}`}</p>
+	{#if !checking}<p class="-mt-1 text-[15px] leading-snug text-soft">{reason}</p>{/if}
 	{#if a && a.failed.length && level !== 'unknown'}
 		<p class="text-xs text-watch">{m.now_partial({ feeds: a.failed.map(feedName).join(', ') })}</p>
 	{/if}
@@ -81,7 +83,7 @@
 	<a
 		href={shelterHref}
 		class="flex min-h-14 items-center gap-3 rounded-2xl px-4 py-3 font-bold {level === 'warning'
-			? 'bg-[#e5251b] text-white shadow-[0_8px_30px_rgb(229_37_27/0.35)]'
+			? 'bg-sos text-white shadow-[0_8px_30px_var(--color-sos-glow)]'
 			: 'bg-text text-bg'}"
 	>
 		<span class="flex-1">
