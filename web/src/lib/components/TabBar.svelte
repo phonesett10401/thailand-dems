@@ -18,7 +18,7 @@
 				<a
 					href={localizeHref(t.path)}
 					aria-current={on ? 'page' : undefined}
-					class="flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-medium {on ? 'text-text' : 'text-muted'}"
+					class="flex h-16 flex-col items-center justify-center gap-1 text-xs font-medium {on ? 'text-text' : 'text-muted'}"
 				>
 					<t.icon size={22} strokeWidth={on ? 2.2 : 1.7} aria-hidden="true" />
 					{t.label()}

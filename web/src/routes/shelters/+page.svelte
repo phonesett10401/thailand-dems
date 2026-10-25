@@ -88,6 +88,7 @@
 									<span><span class="block font-semibold">{r.s.ShelterName}</span><span class="block text-xs text-muted">{r.s.City} · {shelterStatusLabel(r.s.Status)}</span></span>
 									<span class="font-mono text-sm" data-km={r.km ?? undefined}>{r.km === null ? m.shelter_distance_unknown() : `${r.km.toFixed(1)} km`}</span>
 								</span>
+								<span class="sr-only">{m.shelter_capacity({ occupied: r.s.CurrentOccupancy, capacity: r.s.Capacity })}</span>
 								<span class="h-1.5 overflow-hidden rounded-full bg-white/10" aria-hidden="true">
 									<i class="block h-full {r.pct >= 90 ? 'bg-warning' : r.pct >= 70 ? 'bg-watch' : 'bg-safe'}" style="width:{r.pct}%"></i>
 								</span>

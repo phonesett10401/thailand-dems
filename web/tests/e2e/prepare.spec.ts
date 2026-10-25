@@ -70,3 +70,15 @@ test('Thai guide text', async ({ page }) => {
 	await page.goto('/th/prepare/flood');
 	await expect(page.getByRole('heading', { name: 'น้ำท่วม', level: 1 })).toBeVisible();
 });
+
+test('Reset asks first: Cancel keeps the ticks, OK clears them', async ({ page }) => {
+	await page.goto('/prepare');
+	await page.getByRole('button', { name: 'Basics only' }).click();
+	await page.getByText('First-aid kit').click();
+	page.once('dialog', (d) => d.dismiss());
+	await page.getByRole('button', { name: 'Reset' }).click();
+	await expect(page.getByText('1 of 13 ready')).toBeVisible();
+	page.once('dialog', (d) => d.accept());
+	await page.getByRole('button', { name: 'Reset' }).click();
+	await expect(page.getByText('0 of 13 ready')).toBeVisible();
+});

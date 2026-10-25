@@ -103,7 +103,7 @@
 			{#each zoneEvents as e (e)}
 				<Chip on={!hidden.has(`smhi:${e}`)} color={eventColor(e)} onclick={() => toggle(`smhi:${e}`)}>{smhiEventName(zones.find((z) => z.event === e)?.code ?? null, e)}</Chip>
 			{/each}
-			{#if currentCountry().shelters === 'sample'}<Chip on={!hidden.has('shelters')} color="#f2f2f4" onclick={() => toggle('shelters')}>{m.map_shelters()}</Chip>{/if}
+			{#if currentCountry().shelters === 'sample'}<Chip on={!hidden.has('shelters')} color="var(--color-text)" onclick={() => toggle('shelters')}>{m.map_shelters()}</Chip>{/if}
 		</div>
 		<p class="glass pointer-events-none absolute top-16 left-3 max-w-[16rem] rounded-xl bg-bg/70 px-3 py-1.5 text-xs leading-snug text-muted">{m.map_scope({ country: countryName })}</p>
 		{#if showList}

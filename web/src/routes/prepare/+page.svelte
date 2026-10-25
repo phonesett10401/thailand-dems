@@ -36,6 +36,7 @@
 		saveChecks(done);
 	}
 	function reset() {
+		if (!confirm(m.prep_bag_reset_confirm())) return;
 		done = new Set();
 		saveChecks(done);
 	}

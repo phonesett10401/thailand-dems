@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ArrowRight, TriangleAlert } from '@lucide/svelte';
 	import { fmtTime } from '$lib/format';
-	import { feedName, hazName, nowTitle } from '$lib/labels';
+	import { feedName, hazName, levelWord, nowTitle } from '$lib/labels';
 	import { quietTypes, type Assessment, type Feeds, type Hazard, type HazardType, type Overall } from '$lib/levels';
 	import { callParams, currentCountry, defaultCity, placeName } from '$lib/country.svelte';
 	import { here } from '$lib/location.svelte';
@@ -60,6 +60,8 @@
 	</div>
 	{#if !checking}<LevelBadge {level} />{/if}
 	<h1 class="headline text-[2.4rem]">{title}</h1>
+	<!-- Announce the level when it is first known and whenever it changes. -->
+	<p class="sr-only" aria-live="polite">{checking ? '' : `${levelWord(level)}: ${title}`}</p>
 	{#if !checking}<p class="-mt-1 text-[15px] leading-snug text-soft">{reason}</p>{/if}
 	{#if a && a.failed.length && level !== 'unknown'}
 		<p class="text-xs text-watch">{m.now_partial({ feeds: a.failed.map(feedName).join(', ') })}</p>

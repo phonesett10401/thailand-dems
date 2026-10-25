@@ -68,7 +68,7 @@
 						{@const pct = occupancyPct(s.CurrentOccupancy, s.Capacity)}
 						<div class="grid grid-cols-[1fr_64px_56px] items-center gap-3 text-sm">
 							<span class="truncate">{s.ShelterName}</span>
-							<span class="h-1.5 overflow-hidden rounded-full bg-white/10"><i class="block h-full {pct >= 90 ? 'bg-warning' : pct >= 70 ? 'bg-watch' : 'bg-safe'}" style="width:{pct}%"></i></span>
+							<span class="sr-only">{m.shelter_capacity({ occupied: s.CurrentOccupancy, capacity: s.Capacity })}</span><span class="h-1.5 overflow-hidden rounded-full bg-white/10" aria-hidden="true"><i class="block h-full {pct >= 90 ? 'bg-warning' : pct >= 70 ? 'bg-watch' : 'bg-safe'}" style="width:{pct}%"></i></span>
 							<span class="text-right font-mono text-xs text-muted">{km!.toFixed(1)} km</span>
 						</div>
 					{/each}

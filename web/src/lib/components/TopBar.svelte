@@ -51,7 +51,7 @@
 </script>
 
 <div class="mx-auto flex h-14 max-w-[1600px] items-center gap-2 px-3 md:gap-3 md:px-4">
-	<a href={localizeHref('/')} class="flex min-h-11 items-center gap-2 font-bold tracking-tight">
+	<a href={localizeHref('/')} class="flex min-h-11 min-w-11 items-center gap-2 font-bold tracking-tight">
 		<Logo {level} size={26} /><span class="sr-only sm:not-sr-only">DEMS</span>
 		<span class="flex items-center gap-1 text-xs font-semibold {level === 'unknown' ? 'text-muted' : 'text-warning'}">
 			<span class="size-1.5 rounded-full {level === 'unknown' ? 'bg-unknown' : 'bg-warning shadow-[0_0_0_3px_var(--color-live-glow)]'}" aria-hidden="true"></span><span class="hidden sm:inline">{m.live_label()}</span>

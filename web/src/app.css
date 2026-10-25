@@ -52,6 +52,9 @@
 		overflow-x: clip;
 	}
 	html {
+		/* Keep a focused or jumped-to element clear of the fixed header and the phone tab bar. */
+		scroll-padding-top: calc(var(--header-h, 3.5rem) + 0.5rem);
+		scroll-padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
 		background: var(--color-bg);
 		color: var(--color-text);
 		color-scheme: dark;
